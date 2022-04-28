@@ -1,13 +1,20 @@
 package Controller;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginForm implements Initializable {
+public class CreateScheduleController implements Initializable
+{
+    @FXML
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("HELLO");
+
+
     }
 }
