@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="Initial Commit">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DAO/UserDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Contact.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Country.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Division.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/CreateScheduleForm.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Scheduling Application/Controller/LoginForm.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Scheduling Application/Main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Scheduling Application/Main/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Scheduling Application/View/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Scheduling Application/View/LoginForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/JDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/DBConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateScheduleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/LoginForm.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +17,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
