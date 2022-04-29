@@ -1,12 +1,15 @@
 package Main;
 
+import DAO.JDBC_Connector;
+import DAO.userQuery;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * Main class. The main method is called in this class.
@@ -41,12 +44,11 @@ public class Main extends Application {
         return apptID++;
     }
 
-    public static void main(String[] args) throws SQLException {
-//        DBConnection.openConnection();
-        launch();
-//        Statement selectStatement = DBConnection.connection.createStatement();
-//        ResultSet resultSet = selectStatement.executeQuery("SELECT * FROM appointments");
-//        System.out.println(resultSet.getString(1));
-//        DBConnection.closeConnection();
+    public static void main(String[] args) throws Exception {
+        JDBC_Connector.openConnection();
+        userQuery.select();
+        launch(args);
+
+        JDBC_Connector.closeConnection();
     }
 }
