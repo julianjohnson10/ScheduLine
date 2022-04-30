@@ -4,7 +4,6 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import static DAO.JDBC_Connector.connection;
 
@@ -22,4 +21,27 @@ public abstract class userQuery {
             System.out.print(userName + " ");
         }
     }
+
+    public static boolean getLogin(String username, String password) throws SQLException {
+        String sqlStatement = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        statement.setString(1, username);
+        statement.setString(2,password);
+        ResultSet results = statement.executeQuery();
+
+        if(results.next()) {
+            int userId = results.getInt("User_ID");
+            String userName = results.getString("User_Name");
+            String pwd = results.getString("Password");
+            System.out.println(userName + " " + pwd);
+            return true;
+        }
+        else if(!results.next()){
+            return false;
+        }
+        else {
+            return false;
+        }
+    }
+
 }

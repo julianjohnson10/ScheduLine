@@ -31,6 +31,14 @@ public class Main extends Application {
 
     private static int apptID = 0;
 
+    /**
+     * ERROR: Exception in Application Start Method
+     * Caused by: javafx.fxml.LoadException: Error resolving onAction='#loginButton', either the event handler is not in the Namespace or there is an error in the script.
+     * FIX:
+     * @param stage
+     * @throws Exception
+     */
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/View/LoginForm.fxml"));
@@ -49,25 +57,18 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws Exception {
+        //Start the JDBC Connector
         JDBC_Connector.openConnection();
-//        userQuery.select();
 
-//        Locale fr_FR = new Locale("fr", "FR");
-//        Locale en_US = new Locale("en", "US");
-//
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Enter a language: en, fr");
-//        String language = scanner.next();
-//
-//        if(language.equals("fr")){
-//            Locale.setDefault(fr_FR);
-//        }
-//        else if(language.equals("en")){
-//            Locale.setDefault(en_US);
-//        }
-//        else
-//            System.out.println("Language not supported");
+        //Get OS default locale
+        Locale currentLocale = Locale.getDefault();
+
+        //Print language and country. Useful for a function to return.
+        System.out.println("Language: " + currentLocale.getLanguage());
+        System.out.println("Country code: " + currentLocale.getCountry());
+
 //        ZoneId.getAvailableZoneIds().stream().filter(zone->zone.contains("America")).forEach(System.out::println);
+        //Get current Date
         LocalDate date = LocalDate.now(); // Use a date picker.
 //        LocalTime time = LocalTime.of(01,16);
         LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());
@@ -76,6 +77,7 @@ public class Main extends Application {
         System.out.println(localDateTime);
         ZoneId zoneId = ZoneId.systemDefault();
         ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime,zoneId);
+
         System.out.println(zonedDateTime.toLocalDate()); // Local Date
         System.out.println(zonedDateTime.toLocalTime()); // Local Time
         System.out.println(zonedDateTime.toLocalDate().toString() + " " + zonedDateTime.toLocalTime().toString()); // Concatenation of dates and times.\
@@ -84,7 +86,13 @@ public class Main extends Application {
         ZoneId utcZone = ZoneId.of("UTC");
         ZonedDateTime utcZonedDateTime = ZonedDateTime.ofInstant(zonedDateTime.toInstant(), utcZone);
         System.out.println("Local Time to UTC: " + utcZonedDateTime);
+
+        zonedDateTime = ZonedDateTime.ofInstant(utcZonedDateTime.toInstant(),zoneId);
+        System.out.println("UTC To User Time: ");
+
         ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
+
+
 
         try
         {
