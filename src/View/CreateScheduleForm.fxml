@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="555.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CreateScheduleForm">
+<AnchorPane prefHeight="555.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateScheduleController">
    <children>
       <Button layoutX="472.0" layoutY="393.0" mnemonicParsing="false" text="Create" />
       <Button layoutX="572.0" layoutY="393.0" mnemonicParsing="false" text="Cancel" />

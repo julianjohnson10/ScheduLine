@@ -8,8 +8,6 @@ import java.util.ResourceBundle;
 
 public class CreateScheduleController implements Initializable
 {
-    @FXML
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
