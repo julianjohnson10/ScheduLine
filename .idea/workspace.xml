@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="Testing Date logic">
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="updated Main. updated user DAO.">
+      <change afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Utilities/Locales.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Utilities/alertBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Utilities/dateClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CreateScheduleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateScheduleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/userQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/UserDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/userQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/CreateScheduleForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/CreateScheduleForm.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/LoginForm.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -116,7 +121,35 @@
       <option name="project" value="LOCAL" />
       <updated>1651221573167</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Finished Login logic. Validated using BIND variables.">
+      <created>1651302137743</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1651302137743</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Building FXML for schedule form.">
+      <created>1651302177022</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1651302177022</updated>
+    </task>
+    <task id="LOCAL-00008" summary="updated appointment class">
+      <created>1651302199501</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1651302199501</updated>
+    </task>
+    <task id="LOCAL-00009" summary="updated Main. updated user DAO.">
+      <created>1651302221637</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1651302221637</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -136,7 +169,11 @@
     <MESSAGE value="added classes, and DAOs" />
     <MESSAGE value="Set language properties" />
     <MESSAGE value="Testing Date logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testing Date logic" />
+    <MESSAGE value="Finished Login logic. Validated using BIND variables." />
+    <MESSAGE value="Building FXML for schedule form." />
+    <MESSAGE value="updated appointment class" />
+    <MESSAGE value="updated Main. updated user DAO." />
+    <option name="LAST_COMMIT_MESSAGE" value="updated Main. updated user DAO." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

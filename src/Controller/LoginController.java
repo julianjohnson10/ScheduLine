@@ -1,27 +1,41 @@
 package Controller;
 
 import Model.Appointment;
+import Utilities.Locales;
+import Utilities.alertBox;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
-
+import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
     public Button loginButton;
-    public TextField usernameField;
+    public Button exitButton;
+    public TextField userIDField;
     public PasswordField passwordField;
+    public Label errorLabel;
+    public Label timeZoneLabel;
+    public Label uidLabel;
+    public Label pwdLabel;
+    public Label headerLabel;
+
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
 
     @FXML
     private void exitPlatform(){
-        Platform.exit();
+
+        Optional<ButtonType> alertOption = alertBox.raiseAlert("Exit?", resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
+        if(alertOption.isPresent() && alertOption.get() == ButtonType.OK) {
+            Platform.exit();
+        }
     }
 
     /**
@@ -31,29 +45,48 @@ public class LoginController implements Initializable {
      * Login method holds all login logic, and runs queries from the userQuery dao.
      */
 
-
-
     @FXML
     public void login(javafx.event.ActionEvent actionEvent) throws SQLException, IOException {
+
         //get text in username form.
-        String userName = usernameField.getText();
-        System.out.println("Username: " + userName);
+        int userID = Integer.parseInt(userIDField.getText());
 
         //get text in password form.
         String password = passwordField.getText();
-
         //run a query on both username and password to determine if they match in the database.
-        if(DAO.userQuery.getLogin(userName, password)){
-            System.out.println("Login Successful!");
+
+        if(DAO.userDAO.getLogin(String.valueOf(userID), password)){
             Appointment.apptsMenu(actionEvent);
         }
         else {
-            System.out.println("Login Failed!");
+            errorLabel.setText(resourceBundle.getString("LoginError"));
         }
     }
 
+    /**
+     * ERROR: Missing Resource Exception
+     * Can't find resource for bundle java.util.PropertyResourceBundle, key Time Zone
+     * Fix: Accidentally added a space. The resourceBundle calls the Time Zone as "TimeZone"
+     * @param url url
+     * @param resourceBundle resourceBundle for the language conversions
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        System.out.println("HELLO");
+        resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
+        uidLabel.setText(resourceBundle.getString("User_ID") + ":");
+        pwdLabel.setText(resourceBundle.getString("Password") + ":");
+        loginButton.setText(resourceBundle.getString("LoginButton"));
+        timeZoneLabel.setText(Locales.getZoneId());
+        exitButton.setText(resourceBundle.getString("Cancel"));
+        headerLabel.setText(resourceBundle.getString("Header"));
+
+
+        if(Objects.equals(Locales.getLanguage(), "en")){
+            System.out.println("Current Language: English");
+
+        }
+        else if (Objects.equals(Locales.getLanguage(), "fr")){
+            System.out.println("Current Language: English");
+        }
     }
 }

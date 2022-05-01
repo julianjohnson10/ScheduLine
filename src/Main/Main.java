@@ -1,19 +1,19 @@
 package Main;
 
 import DAO.JDBC_Connector;
-import DAO.userQuery;
+import Utilities.alertBox;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.time.*;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 /**
  * Main class. The main method is called in this class.
@@ -28,24 +28,37 @@ public class Main extends Application {
  * Runtime Exception: Location is required.
  * Wasn't pointing to the correct FXML file for the main form.
  */
-
+    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
     private static int apptID = 0;
 
     /**
      * ERROR: Exception in Application Start Method
      * Caused by: javafx.fxml.LoadException: Error resolving onAction='#loginButton', either the event handler is not in the Namespace or there is an error in the script.
-     * FIX:
-     * @param stage
-     * @throws Exception
+     * FIX: added loginButton action to the FXML.
+     * ERROR
+     * @param stage Login Form stage.
+     * @throws Exception exception
      */
 
     @Override
     public void start(Stage stage) throws Exception {
+
         Parent root = FXMLLoader.load(getClass().getResource("/View/LoginForm.fxml"));
-        stage.setTitle("Login");
-        stage.setScene(new Scene(root, 473, 316));
-        stage.setResizable(false);
+        stage.setTitle(resourceBundle.getString("Title"));
+        stage.setScene(new Scene(root));
+        stage.setOnCloseRequest(windowEvent -> {
+            windowEvent.consume();
+            shutdown(stage);
+        });
         stage.show();
+        stage.setResizable(false);
+    }
+
+    public void shutdown(Stage stage){
+        Optional<ButtonType> alertOption = alertBox.raiseAlert(resourceBundle.getString("ExitTitle"), resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
+        if(alertOption.isPresent() && alertOption.get() == ButtonType.OK) {
+            Platform.exit();
+        }
     }
 
     /**
@@ -57,15 +70,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        //Start the JDBC Connector
+        /* Start the JDBC Connector */
         JDBC_Connector.openConnection();
-
-        //Get OS default locale
-        Locale currentLocale = Locale.getDefault();
-
-        //Print language and country. Useful for a function to return.
-        System.out.println("Language: " + currentLocale.getLanguage());
-        System.out.println("Country code: " + currentLocale.getCountry());
 
 //        ZoneId.getAvailableZoneIds().stream().filter(zone->zone.contains("America")).forEach(System.out::println);
         //Get current Date
@@ -90,26 +96,7 @@ public class Main extends Application {
         zonedDateTime = ZonedDateTime.ofInstant(utcZonedDateTime.toInstant(),zoneId);
         System.out.println("UTC To User Time: ");
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
-
-
-
-        try
-        {
-            if (Locale.getDefault().getLanguage().equals("fr")) {
-                System.out.println(resourceBundle.getString("Username"));
-            }
-            else if (Locale.getDefault().getLanguage().equals("en"))
-                System.out.println(resourceBundle.getString("Username"));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
         launch(args);
-
-
         JDBC_Connector.closeConnection();
     }
 }
