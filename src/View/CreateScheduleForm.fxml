@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="555.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateScheduleController">
+<AnchorPane prefHeight="555.0" prefWidth="1522.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateSchedule">
    <children>
-      <Button layoutX="472.0" layoutY="393.0" mnemonicParsing="false" text="Create" />
-      <Button layoutX="572.0" layoutY="393.0" mnemonicParsing="false" text="Cancel" />
-      <TableView layoutX="146.0" layoutY="159.0" prefHeight="200.0" prefWidth="461.0">
+      <Button fx:id="createCustomer" layoutX="472.0" layoutY="393.0" mnemonicParsing="false" onAction="#addCustomerMenu" text="Create Customer" />
+      <Button layoutX="863.0" layoutY="393.0" mnemonicParsing="false" text="Cancel" />
+      <TableView layoutX="36.0" layoutY="78.0" prefHeight="200.0" prefWidth="1450.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Name" />
-          <TableColumn prefWidth="75.0" text="Country" />
+          <TableColumn prefWidth="107.0" text="Appointment ID" />
+          <TableColumn minWidth="0.0" prefWidth="198.0" text="Title" />
+            <TableColumn prefWidth="195.0" text="Description" />
+            <TableColumn minWidth="0.0" prefWidth="94.0" text="Location" />
+            <TableColumn minWidth="0.0" prefWidth="81.0" text="Type" />
+            <TableColumn minWidth="0.0" prefWidth="94.0" text="Start Date" />
+            <TableColumn minWidth="0.0" prefWidth="107.0" text="End Date" />
+            <TableColumn minWidth="0.0" prefWidth="123.0" text="Create Date" />
+            <TableColumn minWidth="0.0" prefWidth="107.0" text="Created By" />
+            <TableColumn minWidth="0.0" prefWidth="137.0" text="Last Updated By" />
+            <TableColumn minWidth="0.0" text="Customer ID" />
+            <TableColumn minWidth="0.0" prefWidth="58.0" text="User ID" />
+            <TableColumn minWidth="0.0" prefWidth="68.0" text="Contact ID" />
         </columns>
       </TableView>
    </children>
