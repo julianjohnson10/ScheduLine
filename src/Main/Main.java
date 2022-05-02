@@ -28,7 +28,7 @@ public class Main extends Application {
  * Runtime Exception: Location is required.
  * Wasn't pointing to the correct FXML file for the main form.
  */
-    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
     private static int apptID = 0;
 
     /**
@@ -54,7 +54,7 @@ public class Main extends Application {
         stage.setResizable(false);
     }
 
-    public void shutdown(Stage stage){
+    public static void shutdown(Stage stage){
         Optional<ButtonType> alertOption = alertBox.raiseAlert(resourceBundle.getString("ExitTitle"), resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
         if(alertOption.isPresent() && alertOption.get() == ButtonType.OK) {
             Platform.exit();
