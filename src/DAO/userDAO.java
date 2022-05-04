@@ -29,10 +29,6 @@ public abstract class userDAO {
 
         try {
             if(results.next()) {
-                int userId = results.getInt("User_ID");
-
-                String pwd = results.getString("Password");
-                System.out.println(userId + " " + pwd);
                 return true;
             }
             else if(!results.next()){
