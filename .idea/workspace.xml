@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="updated login controller">
-      <change afterPath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" afterDir="false" />
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="removed password from printing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CreateSchedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/createAppointment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/userDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/createAppointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/createAppointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/dateClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/dateClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/CreateScheduleForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/createAppointment.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/createAppointment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/createAppointment.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +181,28 @@
       <option name="project" value="LOCAL" />
       <updated>1651473192189</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="added more appointment methods">
+      <created>1651639879189</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1651639879189</updated>
+    </task>
+    <task id="LOCAL-00016" summary="renamed files">
+      <created>1651639898875</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1651639898875</updated>
+    </task>
+    <task id="LOCAL-00017" summary="removed password from printing">
+      <created>1651639916591</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1651639916591</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -212,7 +231,10 @@
     <MESSAGE value="updated tableview" />
     <MESSAGE value="added more CRUD functions" />
     <MESSAGE value="updated login controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated login controller" />
+    <MESSAGE value="added more appointment methods" />
+    <MESSAGE value="renamed files" />
+    <MESSAGE value="removed password from printing" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed password from printing" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

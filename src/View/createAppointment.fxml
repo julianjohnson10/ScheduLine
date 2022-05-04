@@ -11,19 +11,20 @@
       <Button layoutX="863.0" layoutY="393.0" mnemonicParsing="false" text="Cancel" />
       <TableView fx:id="appointmentTableView" layoutX="36.0" layoutY="78.0" prefHeight="200.0" prefWidth="1450.0">
         <columns>
-          <TableColumn prefWidth="107.0" text="Appointment ID" />
-          <TableColumn minWidth="0.0" prefWidth="198.0" text="Title" />
-            <TableColumn prefWidth="195.0" text="Description" />
-            <TableColumn minWidth="0.0" prefWidth="94.0" text="Location" />
-            <TableColumn minWidth="0.0" prefWidth="81.0" text="Type" />
-            <TableColumn minWidth="0.0" prefWidth="94.0" text="Start Date" />
-            <TableColumn minWidth="0.0" prefWidth="107.0" text="End Date" />
-            <TableColumn minWidth="0.0" prefWidth="123.0" text="Create Date" />
-            <TableColumn minWidth="0.0" prefWidth="107.0" text="Created By" />
-            <TableColumn minWidth="0.0" prefWidth="137.0" text="Last Updated By" />
-            <TableColumn minWidth="0.0" text="Customer ID" />
-            <TableColumn minWidth="0.0" prefWidth="58.0" text="User ID" />
-            <TableColumn minWidth="0.0" prefWidth="68.0" text="Contact ID" />
+          <TableColumn fx:id="apptIDColumn" prefWidth="107.0" text="Appointment ID" />
+          <TableColumn fx:id="titleColumn" minWidth="0.0" prefWidth="198.0" text="Title" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="195.0" text="Description" />
+            <TableColumn fx:id="locCol" minWidth="0.0" prefWidth="94.0" text="Location" />
+            <TableColumn fx:id="typeCol" minWidth="0.0" prefWidth="81.0" text="Type" />
+            <TableColumn fx:id="startCol" minWidth="0.0" prefWidth="94.0" text="Start Date" />
+            <TableColumn fx:id="endCol" minWidth="0.0" prefWidth="107.0" text="End Date" />
+            <TableColumn fx:id="createDateCol" minWidth="0.0" prefWidth="123.0" text="Create Date" />
+            <TableColumn fx:id="createdBy" minWidth="0.0" prefWidth="107.0" text="Created By" />
+            <TableColumn fx:id="lastUpdate" minWidth="0.0" prefWidth="137.0" text="Last Updated By" />
+            <TableColumn fx:id="customerID" minWidth="0.0" text="Customer ID" />
+            <TableColumn fx:id="userID" minWidth="0.0" prefWidth="58.0" text="User ID" />
+            <TableColumn fx:id="contactID" minWidth="0.0" prefWidth="68.0" text="Contact ID" />
+            <TableColumn fx:id="apptIDColumn1" prefWidth="107.0" text="Appointment ID" />
         </columns>
       </TableView>
    </children>
