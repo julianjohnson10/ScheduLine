@@ -4,6 +4,8 @@ import Model.Appointment;
 import Utilities.Locales;
 import Utilities.alertBox;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +36,7 @@ public class LoginController implements Initializable {
     public Label pwdLabel;
     public Label headerLabel;
 
+
     ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
 
     @FXML
@@ -63,7 +66,7 @@ public class LoginController implements Initializable {
         //run a query on both username and password to determine if they match in the database.
 
         if(DAO.userDAO.getLogin(String.valueOf(userID), password)){
-            Appointment.apptsMenu(actionEvent);
+            Appointment.mainMenu(actionEvent);
         }
         else {
             errorLabel.setText(resourceBundle.getString("LoginError"));
