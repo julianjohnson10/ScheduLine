@@ -5,11 +5,11 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="555.0" prefWidth="1522.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateSchedule">
+<AnchorPane prefHeight="555.0" prefWidth="1522.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.createAppointment">
    <children>
       <Button fx:id="createCustomer" layoutX="472.0" layoutY="393.0" mnemonicParsing="false" onAction="#addCustomerMenu" text="Create Customer" />
       <Button layoutX="863.0" layoutY="393.0" mnemonicParsing="false" text="Cancel" />
-      <TableView layoutX="36.0" layoutY="78.0" prefHeight="200.0" prefWidth="1450.0">
+      <TableView fx:id="appointmentTableView" layoutX="36.0" layoutY="78.0" prefHeight="200.0" prefWidth="1450.0">
         <columns>
           <TableColumn prefWidth="107.0" text="Appointment ID" />
           <TableColumn minWidth="0.0" prefWidth="198.0" text="Title" />

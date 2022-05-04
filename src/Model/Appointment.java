@@ -1,8 +1,8 @@
 package Model;
 
-import Main.Main;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -14,9 +14,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Appointment {
-    private ObservableList allAppointments;
-    private int apptId;
-    private String title;
+    private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private String description;
     private String location;
     private String type;
@@ -30,10 +28,7 @@ public class Appointment {
     private int userId;
     private int contactId;
 
-    public Appointment(ObservableList allAppointments, int apptId, String title, String description, String location, String type, Date startDate, Date endDate, Date createdDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
-        this.allAppointments = allAppointments;
-        this.apptId = apptId;
-        this.title = title;
+    public Appointment(int apptId, String title, String description, String location, String type, Date startDate, Date endDate, Date createdDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
         this.description = description;
         this.location = location;
         this.type = type;
@@ -48,12 +43,21 @@ public class Appointment {
         this.contactId = contactId;
     }
 
-    public static void apptsMenu(Event event) throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("/View/CreateScheduleForm.fxml"));
+    public static void mainMenu(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Main.Main.class.getResource("/View/createAppointment.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
+    public static ObservableList<Appointment> getAllAppointments() {
+        return allAppointments;
+    }
+
+    public static void addAppointment(Appointment newAppointment) {
+        allAppointments.add(newAppointment);
+    }
+
 }
 
