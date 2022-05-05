@@ -1,110 +1,125 @@
 package Model;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Customer {
-    private int customerID;
-    private String customerName;
-    private String address;
-    private String postalCode;
-    private String phoneNumber;
-    private Date createDate;
-    private String createdBy;
-    private Timestamp lastUpdate;
-    private String lastUpdatedBy;
-    private int divID;
+    private static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    private final SimpleIntegerProperty customerID;
+    private final SimpleStringProperty customerName;
+    private final SimpleStringProperty address;
+    private final SimpleStringProperty postalCode;
+    private final SimpleStringProperty phoneNumber;
+    private final SimpleObjectProperty<Date> createDate;
+    private final SimpleStringProperty createdBy;
+    private final SimpleObjectProperty<Timestamp> lastUpdate;
+    private final SimpleStringProperty lastUpdatedBy;
+    private final SimpleIntegerProperty divID;
 
-    public Customer(int customerID, String customerName, String address, String postalCode, String phoneNumber, Date createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int divID){
-        this.customerID = customerID;
-        this.customerName = customerName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.phoneNumber = phoneNumber;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
-        this.divID = divID;
+    public Customer(){
+        this.customerID = new SimpleIntegerProperty();
+        this.customerName = new SimpleStringProperty();
+        this.address = new SimpleStringProperty();
+        this.postalCode = new SimpleStringProperty();
+        this.phoneNumber = new SimpleStringProperty();
+        this.createDate = new SimpleObjectProperty<>();
+        this.createdBy = new SimpleStringProperty();
+        this.lastUpdate = new SimpleObjectProperty<>();
+        this.lastUpdatedBy = new SimpleStringProperty();
+        this.divID = new SimpleIntegerProperty();
+    }
+
+    public static ObservableList<Customer> getAllCustomers() {
+        return allCustomers;
+    }
+
+    public static void addCustomer(Customer newCustomer) {
+        allCustomers.add(newCustomer);
     }
 
     public int getCustomerID(){
-        return customerID;
+        return customerID.get();
     }
 
     public String getCustomerName(){
-        return customerName;
+        return customerName.get();
     }
 
     public String getAddress(){
-        return address;
+        return address.get();
     }
 
     public String getPostalCode(){
-        return postalCode;
+        return postalCode.get();
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return phoneNumber.get();
     }
 
     public Date getCreateDate() {
-        return createDate;
+        return createDate.get();
     }
 
     public String getCreatedBy() {
-        return createdBy;
+        return createdBy.get();
     }
 
     public Timestamp getLastUpdate() {
-        return lastUpdate;
+        return lastUpdate.get();
     }
 
     public String getLastUpdatedBy() {
-        return lastUpdatedBy;
+        return lastUpdatedBy.get();
     }
 
     public int getDivID(){
-        return divID;
+        return divID.get();
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.address.set(address);
     }
 
     public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+        this.createDate.set(createDate);
     }
 
     public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+        this.customerID.set(customerID);
     }
 
     public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+        this.createdBy.set(createdBy);
     }
 
     public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+        this.customerName.set(customerName);
     }
 
     public void setDivID(int divID) {
-        this.divID = divID;
+        this.divID.set(divID);
     }
 
     public void setLastUpdate(Timestamp lastUpdate) {
-        this.lastUpdate = lastUpdate;
+        this.lastUpdate.set(lastUpdate);
     }
 
     public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
+        this.lastUpdatedBy.set(lastUpdatedBy);
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber.set(phoneNumber);
     }
 
     public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+        this.postalCode.set(postalCode);
     }
 }

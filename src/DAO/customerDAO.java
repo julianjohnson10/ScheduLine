@@ -1,6 +1,10 @@
 package DAO;
 
 
+import Model.Appointment;
+import Model.Customer;
+import javafx.collections.ObservableList;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,14 +13,29 @@ import static DAO.JDBC_Connector.connection;
 
 public abstract class customerDAO {
 
-    /**
-     * Creates customer records.
-     */
-//    public static int create() throws SQLException {
-//        String sqlStatement = "INSERT INTO customers(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES(?,?,?,?,?,?,?,?,?,?)";
-//        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-//    }
+    public static ObservableList<Customer> getAllCustomers() throws SQLException {
+        String sqlStatement = "SELECT * FROM customers";
 
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        ResultSet results = statement.executeQuery();
+
+        Customer customer;
+        while (results.next()) {
+            customer = new Customer();
+            customer.setCustomerID(results.getInt("Customer_ID"));
+            customer.setCustomerName(results.getString("Customer_Name"));
+            customer.setAddress(results.getString("Address"));
+            customer.setPostalCode(results.getString("Postal_Code"));
+            customer.setPhoneNumber(results.getString("Phone"));
+            customer.setCreateDate(results.getDate("Create_Date"));
+            customer.setCreatedBy(results.getString("Created_By"));
+            customer.setLastUpdate(results.getTimestamp("Last_Update"));
+            customer.setLastUpdatedBy(results.getString("Last_Updated_By"));
+            customer.setDivID(results.getInt("Division_ID"));
+            Customer.addCustomer(customer);
+        }
+        return Customer.getAllCustomers();
+    }
 
     public static void selectCustomer() throws SQLException {
         String sqlStatement = "SELECT * FROM customers";
