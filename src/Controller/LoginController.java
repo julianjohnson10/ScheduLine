@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Appointment;
+//import Model.User;
 import Utilities.Locales;
 import Utilities.alertBox;
 import javafx.application.Platform;
@@ -26,6 +27,8 @@ public class LoginController implements Initializable {
     public Label uidLabel;
     public Label pwdLabel;
     public Label headerLabel;
+    public static Integer userId;
+    public boolean isAdmin;
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
 
@@ -49,18 +52,21 @@ public class LoginController implements Initializable {
     public void login(javafx.event.ActionEvent actionEvent) throws SQLException, IOException {
 
         //get text in username form.
-        int userID = Integer.parseInt(userIDField.getText());
-
+        userId = Integer.parseInt(userIDField.getText());
         //get text in password form.
         String password = passwordField.getText();
         //run a query on both username and password to determine if they match in the database.
 
-        if(DAO.userDAO.getLogin(String.valueOf(userID), password)){
+        if(DAO.userDAO.getLogin(userId, password)){
             Appointment.mainMenu(actionEvent);
         }
         else {
             errorLabel.setText(resourceBundle.getString("LoginError"));
         }
+    }
+
+    public static Integer getUserID(){
+        return userId;
     }
 
     /**

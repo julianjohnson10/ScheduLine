@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="removed password from printing">
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="edited Appointment class">
+      <change afterPath="$PROJECT_DIR$/src/Controller/appointmentFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/View/appointmentForm.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/createAppointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/createAppointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/createAppointment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/createCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/createCustomer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/customerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/userDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/createAppointment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/createAppointment.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilities/dateClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/dateClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/CreateCustomerForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/CreateCustomerForm.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/createAppointment.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,9 +27,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JavaFXApplication" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -57,6 +67,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="DAO" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\julia\OneDrive\School\College\Classes\C195- Software II\Scheduling Application\src\Utilities" />
     </key>
@@ -202,7 +215,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651639916591</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="edited Appointment class">
+      <created>1651645247323</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1651645247323</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -234,7 +254,18 @@
     <MESSAGE value="added more appointment methods" />
     <MESSAGE value="renamed files" />
     <MESSAGE value="removed password from printing" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed password from printing" />
+    <MESSAGE value="edited Appointment class" />
+    <option name="LAST_COMMIT_MESSAGE" value="edited Appointment class" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalStateException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
