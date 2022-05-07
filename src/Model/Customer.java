@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Customer {
     private static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
@@ -16,7 +17,7 @@ public class Customer {
     private final SimpleStringProperty address;
     private final SimpleStringProperty postalCode;
     private final SimpleStringProperty phoneNumber;
-    private final SimpleObjectProperty<Date> createDate;
+    private final SimpleObjectProperty<LocalDateTime> createDate;
     private final SimpleStringProperty createdBy;
     private final SimpleObjectProperty<Timestamp> lastUpdate;
     private final SimpleStringProperty lastUpdatedBy;
@@ -42,6 +43,9 @@ public class Customer {
     public static void addCustomer(Customer newCustomer) {
         allCustomers.add(newCustomer);
     }
+    public static void deleteCustomer(Customer customer) {
+        allCustomers.remove(customer);
+    }
 
     public int getCustomerID(){
         return customerID.get();
@@ -63,7 +67,7 @@ public class Customer {
         return phoneNumber.get();
     }
 
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate.get();
     }
 
@@ -87,7 +91,7 @@ public class Customer {
         this.address.set(address);
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate.set(createDate);
     }
 
