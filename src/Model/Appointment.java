@@ -47,8 +47,14 @@ public class Appointment {
         this.contactId = new SimpleIntegerProperty();
     }
 
+    /**
+     *
+     * @param event Event is handled on the login controller. when the login is true, mainMenu is called.
+     * @throws IOException exceptions
+     * ERROR: Runtime Exception: Error resolving onAction='#createAppt'
+     */
     public static void mainMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Main.Main.class.getResource("/View/appointmentForm.fxml"));
+        Parent root = FXMLLoader.load(Main.Main.class.getResource("/View/MainForm.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -62,6 +68,11 @@ public class Appointment {
     public static void addAppointment(Appointment newAppointment) {
         allAppointments.add(newAppointment);
     }
+
+    public static void deleteAppointment(Appointment newAppointment) {
+        allAppointments.remove(newAppointment);
+    }
+
 
     public int getApptId() {
         return apptId.get();
