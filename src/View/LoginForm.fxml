@@ -8,82 +8,62 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="400.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="310.0" prefWidth="458.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+<AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="302.0" prefWidth="410.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="458.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <Group BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" fillWidth="false" layoutY="14.0" prefHeight="40.0" prefWidth="410.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="headerLabel" alignment="CENTER" contentDisplay="CENTER" text="Application Title">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Group layoutX="94.0" layoutY="24.0">
+         <children>
+            <Label fx:id="errorLabel" layoutX="98.0" layoutY="156.0" textFill="RED" />
+            <VBox layoutY="71.0" spacing="20.0">
                <children>
-                  <VBox alignment="CENTER" fillWidth="false" layoutX="13.0" layoutY="79.0" prefHeight="71.0" prefWidth="201.0">
+                  <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="31.0">
                      <children>
-                        <Label fx:id="errorLabel" textFill="RED" />
-                        <HBox alignment="CENTER" centerShape="false" layoutX="10.0" layoutY="48.0" prefHeight="1.0" prefWidth="148.0" scaleShape="false">
-                           <children>
-                              <Button id="loginButton" fx:id="loginButton" mnemonicParsing="false" onAction="#login" text="Login">
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button id="exitButton" fx:id="exitButton" mnemonicParsing="false" onAction="#exitPlatform" text="Cancel">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                           <padding>
-                              <Insets top="10.0" />
-                           </padding>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <HBox alignment="CENTER" fillHeight="false" prefHeight="79.0" prefWidth="227.0">
-                     <children>
-                        <VBox fillWidth="false" maxWidth="1.7976931348623157E308" prefHeight="108.0" prefWidth="84.0" spacing="27.0">
-                           <children>
-                              <Label fx:id="uidLabel" text="User ID:" />
-                              <Label fx:id="pwdLabel" text="Password:" />
-                           </children>
-                           <padding>
-                              <Insets top="4.0" />
-                           </padding>
-                        </VBox>
-                        <VBox prefHeight="79.0" prefWidth="141.0" spacing="20.0">
-                           <children>
-                              <TextField fx:id="userIDField" prefHeight="25.0" prefWidth="141.0" />
-                              <PasswordField fx:id="passwordField" />
-                           </children>
-                        </VBox>
+                        <Label fx:id="uidLabel" text="User ID:" />
+                        <TextField fx:id="userIDField" prefHeight="25.0" prefWidth="149.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" layoutX="13.0" layoutY="162.0" prefHeight="25.0" prefWidth="236.0">
+                  <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="20.0">
                      <children>
-                        <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="76.0" text="Time Zone: " textAlignment="CENTER" />
-                        <Label fx:id="timeZoneLabel" contentDisplay="CENTER" prefHeight="17.0" prefWidth="166.0" />
+                        <Label fx:id="pwdLabel" text="Password:" />
+                        <PasswordField fx:id="passwordField" />
                      </children>
                   </HBox>
-               </children>
-            </Group>
-         </center>
-         <top>
-            <VBox alignment="CENTER" prefHeight="50.0" prefWidth="458.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label fx:id="headerLabel" alignment="CENTER" contentDisplay="CENTER" text="Application Title" textAlignment="CENTER">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Label>
                </children>
             </VBox>
-         </top>
-      </BorderPane>
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="238.0" spacing="20.0">
+               <children>
+                  <Label contentDisplay="CENTER" text="Time Zone: " textAlignment="CENTER" />
+                  <Label fx:id="timeZoneLabel" contentDisplay="CENTER" text="America/Los Angeles" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" centerShape="false" layoutX="26.0" layoutY="187.0" prefHeight="25.0" prefWidth="171.0" scaleShape="false">
+               <children>
+                  <Button id="loginButton" fx:id="loginButton" mnemonicParsing="false" onAction="#login" text="Login">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button id="exitButton" fx:id="exitButton" mnemonicParsing="false" onAction="#exitPlatform" text="Cancel">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </Group>
    </children>
    <cursor>
       <Cursor fx:constant="DEFAULT" />

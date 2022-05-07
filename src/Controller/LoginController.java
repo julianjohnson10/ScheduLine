@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.Appointment;
-//import Model.User;
 import Utilities.Locales;
 import Utilities.alertBox;
 import javafx.application.Platform;
@@ -28,13 +27,12 @@ public class LoginController implements Initializable {
     public Label pwdLabel;
     public Label headerLabel;
     public static Integer userId;
-    public boolean isAdmin;
+//    public boolean isAdmin;
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
 
     @FXML
     private void exitPlatform(){
-
         Optional<ButtonType> alertOption = alertBox.raiseAlert("Exit?", resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
         if(alertOption.isPresent() && alertOption.get() == ButtonType.OK) {
             Platform.exit();
@@ -58,6 +56,7 @@ public class LoginController implements Initializable {
         //run a query on both username and password to determine if they match in the database.
 
         if(DAO.userDAO.getLogin(userId, password)){
+            errorLabel.setText(resourceBundle.getString("LoginSuccess"));
             Appointment.mainMenu(actionEvent);
         }
         else {
