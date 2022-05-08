@@ -1,6 +1,5 @@
 package Model;
 
-import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,41 +9,41 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Appointment {
     private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-    private final SimpleIntegerProperty apptId;
-    private final SimpleStringProperty title;
-    private final SimpleStringProperty description;
-    private final SimpleStringProperty location;
-    private final SimpleStringProperty type;
-    private final SimpleObjectProperty<Date> startDate;
-    private final SimpleObjectProperty<Date> endDate;
-    private final SimpleObjectProperty<Date> createdDate;
-    private final SimpleStringProperty createdBy;
-    private final SimpleObjectProperty<Timestamp> lastUpdate;
-    private final SimpleStringProperty lastUpdatedBy;
-    private final SimpleIntegerProperty customerId;
-    private final SimpleIntegerProperty userId;
-    private final SimpleIntegerProperty contactId;
+    private final int apptId;
+    private final String title;
+    private final String description;
+    private final String location;
+    private final String type;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final LocalDate createdDate;
+    private final String createdBy;
+    private final Timestamp lastUpdate;
+    private final String lastUpdatedBy;
+    private final int customerId;
+    private final int userId;
+    private final int contactId;
 
-    public Appointment() {
-        this.apptId = new SimpleIntegerProperty();
-        this.title = new SimpleStringProperty();
-        this.description = new SimpleStringProperty();
-        this.location = new SimpleStringProperty();
-        this.type = new SimpleStringProperty();
-        this.startDate = new SimpleObjectProperty<>();
-        this.endDate = new SimpleObjectProperty<>();
-        this.createdDate = new SimpleObjectProperty<>();
-        this.createdBy = new SimpleStringProperty();
-        this.lastUpdate = new SimpleObjectProperty<>();
-        this.lastUpdatedBy = new SimpleStringProperty();
-        this.customerId = new SimpleIntegerProperty();
-        this.userId = new SimpleIntegerProperty();
-        this.contactId = new SimpleIntegerProperty();
+    public Appointment(int apptId, String title, String description, String location, String type, LocalDate startDate, LocalDate endDate, LocalDate createdDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
+        this.apptId = apptId;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createdDate = createdDate;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
+        this.customerId = customerId;
+        this.userId = userId;
+        this.contactId = contactId;
     }
 
     /**
@@ -75,114 +74,61 @@ public class Appointment {
 
 
     public int getApptId() {
-        return apptId.get();
-    }
-
-    public void setApptId(int apptId) {
-        this.apptId.set(apptId);
+        return apptId;
     }
 
     public String getTitle() {
-        return title.get();
-    }
-
-    public void setTitle(String title) {
-        this.title.set(title);
+        return title;
     }
 
     public String getDescription() {
-        return description.get();
+        return description;
     }
 
-    public void setDescription(String description) {
-        this.description.set(description);
-    }
 
     public String getLocation() {
-        return location.get();
-    }
-
-    public void setLocation(String location) {
-        this.location.set(location);
+        return location;
     }
 
     public String getType() {
-        return type.get();
+        return type;
     }
 
-    public void setType(String type) {
-        this.type.set(type);
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public Date getStartDate() {
-        return startDate.get();
+
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate.set(startDate);
-    }
-
-    public Date getEndDate() {
-        return endDate.get();
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate.set(endDate);
-    }
-
-    public Date getCreatedDate() {
-        return createdDate.get();
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate.set(createdDate);
+    public LocalDate getCreatedDate() {
+        return createdDate;
     }
 
     public String getCreatedBy() {
-        return createdBy.get();
+        return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy.set(createdBy);
+    public Timestamp getLastUpdate(){
+        return lastUpdate;
     }
 
     public String getLastUpdatedBy() {
-        return lastUpdatedBy.get();
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy.set(lastUpdatedBy);
+        return lastUpdatedBy;
     }
 
     public int getCustomerId() {
-        return customerId.get();
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId.set(customerId);
+        return customerId;
     }
 
     public int getContactId() {
-        return contactId.get();
-    }
-
-    public void setContactId(int contactId) {
-        this.contactId.set(contactId);
+        return contactId;
     }
 
     public int getUserId() {
-        return userId.get();
-    }
-
-    public void setUserId(int userId) {
-        this.userId.set(userId);
-    }
-
-    public Timestamp getLastUpdate() {
-        return lastUpdate.get();
-    }
-    public void setLastUpdate(Timestamp lastUpdate) {
-        this.lastUpdate.set(lastUpdate);
+        return userId;
     }
 }
 

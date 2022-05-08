@@ -23,59 +23,18 @@ public abstract class appointmentDAO {
 
         Appointment appointment;
         while (results.next()) {
-            appointment = new Appointment();
-            appointment.setApptId(results.getInt("Appointment_ID"));
-            appointment.setTitle(results.getString("Title"));
-            appointment.setDescription(results.getString("Description"));
-            appointment.setLocation(results.getString("Location"));
-            appointment.setType(results.getString("Type"));
-            appointment.setStartDate(results.getDate("Start"));
-            appointment.setEndDate(results.getDate("End"));
-            appointment.setCreatedDate(results.getDate("Create_Date"));
-            appointment.setCreatedBy(results.getString("Created_By"));
-            appointment.setLastUpdate(results.getTimestamp("Last_Update"));
-            appointment.setLastUpdatedBy(results.getString("Last_Updated_By"));
-            appointment.setCustomerId(results.getInt("Customer_ID"));
-            appointment.setUserId(results.getInt("User_ID"));
-            appointment.setContactId(results.getInt("Contact_ID"));
+            appointment = new Appointment(results.getInt("Appointment_ID"), results.getString("Title"),
+                    results.getString("Description"), results.getString("Location"), results.getString("Type"),
+                    results.getDate("Start").toLocalDate(), results.getDate("End").toLocalDate(),results.getDate("Create_Date").toLocalDate(),
+                    results.getString("Created_By"),results.getTimestamp("Last_Update"),results.getString("Last_Updated_By"),results.getInt("Customer_ID"),
+                    results.getInt("User_ID"),results.getInt("Contact_ID"));
             Appointment.addAppointment(appointment);
         }
         return Appointment.getAllAppointments();
     }
-//    The below method is commented out, but could be useful in the future.
-//    public static ObservableList<Appointment> getUserAppts() throws SQLException {
-//        String sqlStatement = "SELECT * FROM appointments WHERE User_ID = ?";
-//
-//        int userId = LoginController.getUserID();
-//
-//        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-//        statement.setInt(1, userId);
-//        ResultSet results = statement.executeQuery();
-//
-//        Appointment appointment;
-//        while (results.next()) {
-//            appointment = new Appointment();
-//            appointment.setApptId(results.getInt("Appointment_ID"));
-//            appointment.setTitle(results.getString("Title"));
-//            appointment.setDescription(results.getString("Description"));
-//            appointment.setLocation(results.getString("Location"));
-//            appointment.setType(results.getString("Type"));
-//            appointment.setStartDate(results.getDate("Start"));
-//            appointment.setEndDate(results.getDate("End"));
-//            appointment.setCreatedDate(results.getDate("Create_Date"));
-//            appointment.setCreatedBy(results.getString("Created_By"));
-//            appointment.setLastUpdate(results.getTimestamp("Last_Update"));
-//            appointment.setLastUpdatedBy(results.getString("Last_Updated_By"));
-//            appointment.setCustomerId(results.getInt("Customer_ID"));
-//            appointment.setUserId(results.getInt("User_ID"));
-//            appointment.setContactId(results.getInt("Contact_ID"));
-//            Appointment.addAppointment(appointment);
-//        }
-//        return Appointment.getAllAppointments();
-//    }
 
     public static int createAppt(String Title, String Description, String Location, String Type, Date Start, Date End, Date create_date, String created_by, Timestamp last_update, String last_updated_by, Integer customerId, Integer userId, Integer contactId) throws SQLException {
-        String sqlStatement = "INSERT INTO Appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sqlStatement = "INSERT INTO Appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,NOW(),?,NOW(),?,?,?,?)";
 
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         statement.setString(1, Title);
