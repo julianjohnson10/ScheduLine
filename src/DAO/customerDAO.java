@@ -22,17 +22,9 @@ public abstract class customerDAO {
 
         Customer customer;
         while (results.next()) {
-            customer = new Customer();
-            customer.setCustomerID(results.getInt("Customer_ID"));
-            customer.setCustomerName(results.getString("Customer_Name"));
-            customer.setAddress(results.getString("Address"));
-            customer.setPostalCode(results.getString("Postal_Code"));
-            customer.setPhoneNumber(results.getString("Phone"));
-            customer.setCreateDate((LocalDateTime) results.getObject("Create_Date"));
-            customer.setCreatedBy(results.getString("Created_By"));
-            customer.setLastUpdate(results.getTimestamp("Last_Update"));
-            customer.setLastUpdatedBy(results.getString("Last_Updated_By"));
-            customer.setDivID(results.getInt("Division_ID"));
+            customer = new Customer(results.getInt("Customer_ID"),results.getString("Customer_Name"), results.getString("Address"),
+                    results.getString("Postal_Code"), results.getString("Phone"), results.getDate("Create_Date").toLocalDate(),
+                    results.getString("Created_By"), results.getTimestamp("Last_Update"), results.getString("Last_Updated_By"), results.getInt("Division_ID"));
             Customer.addCustomer(customer);
         }
         return Customer.getAllCustomers();
@@ -71,11 +63,11 @@ public abstract class customerDAO {
         statement.executeUpdate();
     }
 
-    public static int createCustomer(String customer_name, String address, String postal_code, String phone) throws SQLException {
+    public static void createCustomer(String customer_name, String address, String postal_code, String phone) throws SQLException {
 
         LocalDate date = LocalDate.now(); // Use a date picker.
         LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());
-        LocalDateTime localDateTime = LocalDateTime.of(date, time);
+        LocalDate localDateTime = LocalDate.from(LocalDateTime.of(date, time));
 
         String sqlStatement = "INSERT INTO Customers(Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
@@ -84,21 +76,18 @@ public abstract class customerDAO {
         statement.setString(2, address);
         statement.setString(3, postal_code);
         statement.setString(4, phone);
-        statement.setObject(5, localDateTime);
+        statement.setDate(5, Date.valueOf("NOW()"));
 
-        String createdBy = "test";
-
-        String lastUpdatedBy = "test";
-        int divID = 1;
-
+        String createdBy = "script";
+        String lastUpdatedBy = "script";
+        int divID = 23;
         statement.setString(6, createdBy);
-        statement.setObject(7, localDateTime);
+        statement.setObject(7, "NOW()");
         statement.setString(8, lastUpdatedBy);
         statement.setInt(9, divID);
 
 
         Customer customer = new Customer();
-        customer.setCustomerID(customerID());
         customer.setCustomerName(customer_name);
         customer.setAddress(address);
         customer.setPostalCode(postal_code);
@@ -111,7 +100,7 @@ public abstract class customerDAO {
         Customer.addCustomer(customer);
 
 
-        return statement.executeUpdate();
+        statement.executeUpdate();
     }
 
     public static int customerID() throws SQLException {

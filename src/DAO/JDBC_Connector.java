@@ -21,7 +21,6 @@ public abstract class JDBC_Connector {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Connection Reference
-            System.out.println("Connection initiated!");
         }
         catch(Exception e)
         {
@@ -33,7 +32,6 @@ public abstract class JDBC_Connector {
     {
         try {
             connection.close();
-            System.out.println("Connection closed!");
         }
         catch(Exception e)
         {

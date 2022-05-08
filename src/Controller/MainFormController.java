@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.appointmentDAO;
 import DAO.customerDAO;
+import DAO.divisionDAO;
 import Model.Appointment;
 import Model.Customer;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -129,7 +130,7 @@ public class MainFormController implements Initializable {
     public TextField addressTextField;
     public TextField postalTextField;
     public TextField phoneTextField;
-    public ComboBox countryBox;
+    public ComboBox<String> countryBox;
 
     /**
      *
@@ -195,10 +196,7 @@ public class MainFormController implements Initializable {
             raiseAlert("Error", "Customer fields cannot be empty", Alert.AlertType.ERROR);
         }
         else{
-            int rows = customerDAO.createCustomer(nameTextField.getText(), addressTextField.getText(), postalTextField.getText(), phoneTextField.getText());
-            if(rows > 0){
-                System.out.println("Success");
-            }
+            customerDAO.createCustomer(nameTextField.getText(), addressTextField.getText(), postalTextField.getText(), phoneTextField.getText());
         }
 
     }
@@ -223,6 +221,13 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        try {
+            countryBox.setItems(divisionDAO.getCountries());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         try {
             customerTableView.setItems(customerDAO.getAllCustomers());
             appointmentTableView.setItems(appointmentDAO.getAllAppts());
@@ -253,7 +258,5 @@ public class MainFormController implements Initializable {
         customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         userIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         contactIDCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-
-        countryBox.setCellFactory(new PropertyValueFactory<>(""));
     }
 }

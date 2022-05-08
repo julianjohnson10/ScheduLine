@@ -4,7 +4,6 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Objects;
 
 import static DAO.JDBC_Connector.connection;
@@ -59,26 +58,4 @@ public abstract class userDAO {
     }
 }
 
-
-//    public static int getUser(int userId) throws SQLException {
-//        String sqlStatement = "SELECT * FROM users WHERE User_ID = ?";
-//        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-//        statement.setInt(1, userId);
-//        ResultSet results = statement.executeQuery();
-//
-//        try {
-//            if(results.next()) {
-//                return true;
-//            }
-//            else if(!results.next()){
-//                return false;
-//            }
-//            else {
-//                return false;
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
 
