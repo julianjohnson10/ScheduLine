@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,6 +17,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -32,47 +32,47 @@ public class MainFormController implements Initializable {
     /**
      * Customer ID column.
      */
-    public TableColumn<Customer, SimpleIntegerProperty> customerID;
+    public TableColumn<Customer, Integer> customerID;
 
     /**
      * Customer Name column.
      */
-    public TableColumn<Customer, SimpleStringProperty> customerName;
+    public TableColumn<Customer, String> customerName;
 
     /**
      * Customer address column.
      */
-    public TableColumn<Customer, SimpleStringProperty> address;
+    public TableColumn<Customer, String> address;
 
     /**
      * Customer postal code column.
      */
-    public TableColumn<Customer, SimpleStringProperty> postal_code;
+    public TableColumn<Customer, String> postal_code;
 
     /**
      * Customer phone number column.
      */
-    public TableColumn<Customer, SimpleStringProperty> phone;
+    public TableColumn<Customer, String> phone;
 
     /**
      * Customer created date column.
      */
-    public TableColumn<Customer, SimpleObjectProperty<Date>> createDate;
+//    public TableColumn<Customer, ZonedDateTime> createDate;
 
     /**
      * Customer created by column.
      */
-    public TableColumn<Customer, SimpleStringProperty> createdBy;
+//    public TableColumn<Customer, SimpleStringProperty> createdBy;
 
     /**
      * Customer last update column.
      */
-    public TableColumn<Customer, SimpleObjectProperty<Timestamp>> lastUpdate;
+//    public TableColumn<Customer, SimpleObjectProperty<Timestamp>> lastUpdate;
 
     /**
      * Customer last updated by column.
      */
-    public TableColumn<Customer, SimpleStringProperty> lastUpdatedBy;
+//    public TableColumn<Customer, SimpleStringProperty> lastUpdatedBy;
 
     /**
      * Customer Division ID column.
@@ -80,20 +80,20 @@ public class MainFormController implements Initializable {
     public TableColumn<Customer, SimpleIntegerProperty> divID;
 
     public TableView<Appointment> appointmentTableView;
-    public TableColumn<Appointment, SimpleIntegerProperty> apptIDColumn;
-    public TableColumn<Appointment, SimpleStringProperty> titleColumn;
-    public TableColumn<Appointment, SimpleStringProperty> descriptionColumn;
-    public TableColumn<Appointment, SimpleStringProperty> locCol;
-    public TableColumn<Appointment, SimpleStringProperty> typeCol;
-    public TableColumn<Appointment, SimpleObjectProperty<Date>> startCol;
-    public TableColumn<Appointment, SimpleObjectProperty<Date>> endCol;
-    public TableColumn<Appointment, SimpleObjectProperty<Date>> createDateCol;
-    public TableColumn<Appointment, SimpleStringProperty> createdByCol;
-    public TableColumn<Appointment, SimpleObjectProperty<Timestamp>> lastUpdateCol;
-    public TableColumn<Appointment, SimpleStringProperty> lastUpdatedByCol;
-    public TableColumn<Appointment, SimpleIntegerProperty> customerIDCol;
-    public TableColumn<Appointment, SimpleIntegerProperty> userIDCol;
-    public TableColumn<Appointment, SimpleIntegerProperty> contactIDCol;
+    public TableColumn<Appointment, Integer> apptIDColumn;
+    public TableColumn<Appointment, String> titleColumn;
+    public TableColumn<Appointment, String> descriptionColumn;
+    public TableColumn<Appointment, String> locCol;
+//    public TableColumn<Appointment, String> contactName;
+    public TableColumn<Appointment, String> typeCol;
+    public TableColumn<Appointment, ZonedDateTime> startCol;
+    public TableColumn<Appointment, ZonedDateTime> endCol;
+//    public TableColumn<Appointment, SimpleObjectProperty<Date>> createDateCol;
+//    public TableColumn<Appointment, SimpleStringProperty> createdByCol;
+//    public TableColumn<Appointment, SimpleObjectProperty<Timestamp>> lastUpdateCol;
+//    public TableColumn<Appointment, SimpleStringProperty> lastUpdatedByCol;
+    public TableColumn<Appointment, Integer> customerIDCol;
+    public TableColumn<Appointment, Integer> userIDCol;
 
     /**
      * Create Appointments button
@@ -131,6 +131,7 @@ public class MainFormController implements Initializable {
     public TextField postalTextField;
     public TextField phoneTextField;
     public ComboBox<String> countryBox;
+    public TableColumn<Appointment, String> contactCol;
 
     /**
      *
@@ -224,39 +225,35 @@ public class MainFormController implements Initializable {
 
         try {
             countryBox.setItems(divisionDAO.getCountries());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
             customerTableView.setItems(customerDAO.getAllCustomers());
             appointmentTableView.setItems(appointmentDAO.getAllAppts());
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         address.setCellValueFactory(new PropertyValueFactory<>("address"));
         postal_code.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        createDate.setCellValueFactory(new PropertyValueFactory<>("createDate"));
-        createdBy.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-        lastUpdate.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
-        lastUpdatedBy.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
+//        createDate.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+//        createdBy.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
+//        lastUpdate.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
+//        lastUpdatedBy.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
         divID.setCellValueFactory(new PropertyValueFactory<>("divID"));
         apptIDColumn.setCellValueFactory(new PropertyValueFactory<>("apptId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+//        contactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-        createDateCol.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
-        createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-        lastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
-        lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
+//        createDateCol.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
+//        createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
+//        lastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
+//        lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
         customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         userIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        contactIDCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
     }
 }
