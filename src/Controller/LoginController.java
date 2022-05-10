@@ -86,13 +86,13 @@ public class LoginController implements Initializable {
         headerLabel.setText(resourceBundle.getString("Header"));
 
 
-        if(Objects.equals(Locales.getLanguage(), "en")){
-            System.out.println("Current Language: English");
-
-        }
-        else if (Objects.equals(Locales.getLanguage(), "fr")){
-            System.out.println("Current Language: English");
-        }
+//        if(Objects.equals(Locales.getLanguage(), "en")){
+//            System.out.println("Current Language: English");
+//
+//        }
+//        else if (Objects.equals(Locales.getLanguage(), "fr")){
+//            System.out.println("Current Language: English");
+//        }
     }
 
 }
