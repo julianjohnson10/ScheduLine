@@ -33,6 +33,27 @@ public abstract class userDAO {
 
     /**
      *
+     * @param username String for the username.
+     * @return a boolean value that checks if the current user is "admin".
+     * @throws SQLException SQLException
+     */
+    public static String getUser(String username) throws SQLException {
+        String sqlStatement = "SELECT * FROM users WHERE User_Name = ?";
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        statement.setString(1, username);
+        ResultSet results = statement.executeQuery();
+        try {
+            if (results.next()) {
+                return results.getString("User_Name");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sqlStatement;
+    }
+
+    /**
+     *
      * @param userId Integer for the userid.
      * @return a boolean value that checks if the current user is "admin".
      * @throws SQLException SQLException

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="changed to using mainform">
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="more commits">
+      <change afterPath="$PROJECT_DIR$/src/Utilities/date_time.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MainFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/JDBC_Connector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/JDBC_Connector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/customerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/divisionDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/divisionDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/userDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilities/dateClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/MainForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/MainForm.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,7 +287,21 @@
       <option name="project" value="LOCAL" />
       <updated>1651944455939</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="updated appointment queries">
+      <created>1652006936946</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1652006936946</updated>
+    </task>
+    <task id="LOCAL-00030" summary="more commits">
+      <created>1652006955982</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1652006955982</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -301,8 +316,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added classes, and DAOs" />
-    <MESSAGE value="Set language properties" />
     <MESSAGE value="Testing Date logic" />
     <MESSAGE value="Finished Login logic. Validated using BIND variables." />
     <MESSAGE value="Building FXML for schedule form." />
@@ -326,7 +339,9 @@
     <MESSAGE value="added create/delete functions" />
     <MESSAGE value="added daos" />
     <MESSAGE value="changed to using mainform" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed to using mainform" />
+    <MESSAGE value="updated appointment queries" />
+    <MESSAGE value="more commits" />
+    <option name="LAST_COMMIT_MESSAGE" value="more commits" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
