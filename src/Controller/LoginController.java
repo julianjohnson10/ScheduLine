@@ -1,9 +1,11 @@
 package Controller;
 
+import Main.Main;
 import Model.Appointment;
 import Utilities.Locales;
 import Utilities.alertBox;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -47,7 +49,7 @@ public class LoginController implements Initializable {
      */
 
     @FXML
-    public void login(javafx.event.ActionEvent actionEvent) throws SQLException, IOException {
+    public void login(ActionEvent actionEvent) throws SQLException, IOException {
 
         //get text in username form.
         userId = Integer.parseInt(userIDField.getText());
@@ -57,7 +59,7 @@ public class LoginController implements Initializable {
 
         if(DAO.userDAO.getLogin(userId, password)){
             errorLabel.setText(resourceBundle.getString("LoginSuccess"));
-            Appointment.mainMenu(actionEvent);
+            MainFormController.mainMenu(actionEvent);
         }
         else {
             errorLabel.setText(resourceBundle.getString("LoginError"));

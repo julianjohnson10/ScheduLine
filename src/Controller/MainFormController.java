@@ -10,9 +10,16 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -53,26 +60,6 @@ public class MainFormController implements Initializable {
      * Customer phone number column.
      */
     public TableColumn<Customer, String> phone;
-
-    /**
-     * Customer created date column.
-     */
-//    public TableColumn<Customer, ZonedDateTime> createDate;
-
-    /**
-     * Customer created by column.
-     */
-//    public TableColumn<Customer, SimpleStringProperty> createdBy;
-
-    /**
-     * Customer last update column.
-     */
-//    public TableColumn<Customer, SimpleObjectProperty<Timestamp>> lastUpdate;
-
-    /**
-     * Customer last updated by column.
-     */
-//    public TableColumn<Customer, SimpleStringProperty> lastUpdatedBy;
 
     /**
      * Customer Division ID column.
@@ -126,10 +113,7 @@ public class MainFormController implements Initializable {
     public Button deleteCustomer;
     public Tab customerTab;
     public Tab appointmentTab;
-    public TextField nameTextField;
-    public TextField addressTextField;
-    public TextField postalTextField;
-    public TextField phoneTextField;
+
     public ComboBox<String> countryBox;
     public TableColumn<Appointment, String> contactCol;
 
@@ -191,15 +175,21 @@ public class MainFormController implements Initializable {
 //    }
 
     @FXML
-    public void createCustomer() throws SQLException {
-
-        if(nameTextField.getText().isEmpty()|addressTextField.getText().isEmpty()|postalTextField.getText().isEmpty()|phoneTextField.getText().isEmpty()){
-            raiseAlert("Error", "Customer fields cannot be empty", Alert.AlertType.ERROR);
-        }
-        else{
-            customerDAO.createCustomer(nameTextField.getText(), addressTextField.getText(), postalTextField.getText(), phoneTextField.getText());
-        }
-
+    public void createCustomer(ActionEvent actionEvent) throws IOException {
+        mainMenu(actionEvent);
+    }
+    /**
+     *
+     * @param event Event is handled on the login controller. when the login is true, mainMenu is called.
+     * @throws IOException exceptions
+     * ERROR: Runtime Exception: Error resolving onAction='#createAppt'
+     */
+    public static void mainMenu(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Main.Main.class.getResource("/View/MainForm.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
