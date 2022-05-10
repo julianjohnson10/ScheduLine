@@ -10,40 +10,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class Appointment {
     private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-    private final int apptId;
-    private final String title;
-    private final String description;
-    private final String location;
-    private final String type;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final LocalDate createdDate;
-    private final String createdBy;
-    private final Timestamp lastUpdate;
-    private final String lastUpdatedBy;
-    private final int customerId;
-    private final int userId;
-    private final int contactId;
+    private int apptId;
+    private String title;
+    private String description;
+    private String location;
+    private String contactName;
+    private String type;
+    private ZonedDateTime startDate;
+    private ZonedDateTime endDate;
+    private int customerId;
+    private int userId;
 
-    public Appointment(int apptId, String title, String description, String location, String type, LocalDate startDate, LocalDate endDate, LocalDate createdDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
-        this.apptId = apptId;
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this.type = type;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.createdDate = createdDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
-        this.customerId = customerId;
-        this.userId = userId;
-        this.contactId = contactId;
+    public Appointment() {
+
     }
 
     /**
@@ -90,45 +74,70 @@ public class Appointment {
         return location;
     }
 
+    public String getContactName() {
+        return contactName;
+    }
+
     public String getType() {
         return type;
     }
 
-    public LocalDate getStartDate() {
+    public ZonedDateTime getStartDate() {
         return startDate;
     }
 
 
-    public LocalDate getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
-    }
-
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public Timestamp getLastUpdate(){
-        return lastUpdate;
-    }
-
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
     }
 
     public int getCustomerId() {
         return customerId;
     }
 
-    public int getContactId() {
-        return contactId;
-    }
 
     public int getUserId() {
         return userId;
+    }
+
+    public void setApptId(int apptId) {
+        this.apptId = apptId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setStartDate(ZonedDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(ZonedDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }
 
