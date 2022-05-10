@@ -63,7 +63,7 @@ public abstract class customerDAO {
         statement.executeUpdate();
     }
 
-    public static void createCustomer(String customer_name, String address, String postal_code, String phone) throws SQLException {
+    public static void createCustomer(String customer_name, String address, String postal_code, String phone, String country, String stateProvince) throws SQLException {
 
         LocalDate date = LocalDate.now(); // Use a date picker.
         LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());

@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
  *
  */
 
-
 public class Main extends Application {
 /***
  * Runtime Exception: Location is required.
@@ -46,22 +45,9 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/LoginForm.fxml")));
         stage.setTitle(resourceBundle.getString("Header"));
         stage.setScene(new Scene(root));
+        stage.centerOnScreen();
         stage.show();
         stage.setResizable(false);
-    }
-
-    /**
-     *
-     * @param event Event is handled on the login controller. when the login is true, mainMenu is called.
-     * @throws IOException exceptions
-     * ERROR: Runtime Exception: Error resolving onAction='#createAppt'
-     */
-    public void mainMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("/View/MainForm.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public static void main(String[] args) throws Exception {

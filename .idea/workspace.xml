@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="added CreateCustomerController">
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="added CreateCustomerForm">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MainFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/customerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/divisionDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/divisionDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/MainForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/MainForm.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,7 +340,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652168378438</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="added CreateCustomerForm">
+      <created>1652169090181</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1652169090181</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -354,7 +362,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated Main. updated user DAO." />
     <MESSAGE value="added customerDAO" />
     <MESSAGE value="added customer creation" />
     <MESSAGE value="updated tableview" />
@@ -379,7 +386,8 @@
     <MESSAGE value="code comments" />
     <MESSAGE value="removed Simple Properties" />
     <MESSAGE value="added CreateCustomerController" />
-    <option name="LAST_COMMIT_MESSAGE" value="added CreateCustomerController" />
+    <MESSAGE value="added CreateCustomerForm" />
+    <option name="LAST_COMMIT_MESSAGE" value="added CreateCustomerForm" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

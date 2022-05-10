@@ -176,7 +176,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     public void createCustomer(ActionEvent actionEvent) throws IOException {
-        mainMenu(actionEvent);
+        CreateCustomerController.createCustomerMenu(actionEvent);
     }
     /**
      *
@@ -189,6 +189,7 @@ public class MainFormController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -212,9 +213,7 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
-            countryBox.setItems(divisionDAO.getCountries());
             customerTableView.setItems(customerDAO.getAllCustomers());
             appointmentTableView.setItems(appointmentDAO.getAllAppts());
         } catch (SQLException e) {
@@ -226,10 +225,6 @@ public class MainFormController implements Initializable {
         address.setCellValueFactory(new PropertyValueFactory<>("address"));
         postal_code.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-//        createDate.setCellValueFactory(new PropertyValueFactory<>("createDate"));
-//        createdBy.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-//        lastUpdate.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
-//        lastUpdatedBy.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
         divID.setCellValueFactory(new PropertyValueFactory<>("divID"));
         apptIDColumn.setCellValueFactory(new PropertyValueFactory<>("apptId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -239,11 +234,8 @@ public class MainFormController implements Initializable {
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-//        createDateCol.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
-//        createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-//        lastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
-//        lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
         customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         userIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
     }
 }
