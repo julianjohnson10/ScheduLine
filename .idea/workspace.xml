@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="more commits">
-      <change afterPath="$PROJECT_DIR$/src/Utilities/date_time.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MainFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/customerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/userDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/dateClass.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/MainForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/MainForm.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="removed Simple Properties" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -301,7 +290,42 @@
       <option name="project" value="LOCAL" />
       <updated>1652006955982</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="added date/time formats">
+      <created>1652167697084</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1652167697084</updated>
+    </task>
+    <task id="LOCAL-00032" summary="added date/time formats">
+      <created>1652167710466</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1652167710466</updated>
+    </task>
+    <task id="LOCAL-00033" summary="code comments">
+      <created>1652167735087</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1652167735087</updated>
+    </task>
+    <task id="LOCAL-00034" summary="removed Simple Properties">
+      <created>1652167762417</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1652167762417</updated>
+    </task>
+    <task id="LOCAL-00035" summary="removed Simple Properties">
+      <created>1652167807288</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1652167807288</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -316,9 +340,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Testing Date logic" />
-    <MESSAGE value="Finished Login logic. Validated using BIND variables." />
-    <MESSAGE value="Building FXML for schedule form." />
     <MESSAGE value="updated appointment class" />
     <MESSAGE value="updated Main. updated user DAO." />
     <MESSAGE value="added customerDAO" />
@@ -341,7 +362,10 @@
     <MESSAGE value="changed to using mainform" />
     <MESSAGE value="updated appointment queries" />
     <MESSAGE value="more commits" />
-    <option name="LAST_COMMIT_MESSAGE" value="more commits" />
+    <MESSAGE value="added date/time formats" />
+    <MESSAGE value="code comments" />
+    <MESSAGE value="removed Simple Properties" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed Simple Properties" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
