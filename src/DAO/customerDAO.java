@@ -69,14 +69,14 @@ public abstract class customerDAO {
         LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());
         LocalDate localDateTime = LocalDate.from(LocalDateTime.of(date, time));
 
-        String sqlStatement = "INSERT INTO Customers(Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sqlStatement = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
 
         statement.setString(1, customer_name);
         statement.setString(2, address);
         statement.setString(3, postal_code);
         statement.setString(4, phone);
-        statement.setDate(5, Date.valueOf("NOW()"));
+        statement.setObject(5, "NOW()");
 
         String createdBy = "script";
         String lastUpdatedBy = "script";
@@ -92,6 +92,7 @@ public abstract class customerDAO {
         customer.setAddress(address);
         customer.setPostalCode(postal_code);
         customer.setPhoneNumber(phone);
+
         customer.setCreateDate(localDateTime);
         customer.setCreatedBy(createdBy);
         customer.setLastUpdate(Timestamp.from(Instant.now()));
