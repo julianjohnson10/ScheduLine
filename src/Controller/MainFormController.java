@@ -3,6 +3,7 @@ package Controller;
 import DAO.appointmentDAO;
 import DAO.customerDAO;
 import DAO.divisionDAO;
+import Main.Main;
 import Model.Appointment;
 import Model.Customer;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -123,7 +124,7 @@ public class MainFormController implements Initializable {
      * @throws SQLException Raise SQL errors.
      */
     @FXML
-    public void deleteCustomer(ActionEvent event) throws SQLException {
+    public void deleteCustomer(ActionEvent event) throws SQLException, IOException {
         Customer selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         if(selectedCustomer != null){
             //Delete selected customer
@@ -132,8 +133,7 @@ public class MainFormController implements Initializable {
                 if(!appointmentDAO.checkCustomer(selectedCustomer.getCustomerID())){
                     customerDAO.deleteCustomer(selectedCustomer.getCustomerID());
                     Customer.deleteCustomer(selectedCustomer);
-                    customerTableView.refresh();
-                    customerTableView.getSelectionModel().clearSelection();
+                    customerTableView.setItems(customerDAO.getAllCustomers());
                 }
                 else {
                     raiseAlert("Error",selectedCustomer.getCustomerName() + " still has appointments and cannot be deleted. \n\nPlease delete their appointments first before deleting.", Alert.AlertType.ERROR);
@@ -154,8 +154,7 @@ public class MainFormController implements Initializable {
             if(result.isPresent() && result.get() == ButtonType.OK) {
                 appointmentDAO.deleteAppt(selectedAppointment.getApptId());
                 Appointment.deleteAppointment(selectedAppointment);
-                appointmentTableView.refresh();
-                appointmentTableView.getSelectionModel().clearSelection();
+                appointmentTableView.setItems(appointmentDAO.getAllAppts());
             }
         }
         else {
@@ -163,21 +162,33 @@ public class MainFormController implements Initializable {
         }
     }
 
-//    @FXML
-//    public void updateCustomer(Customer customer){
-//        Customer selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-//        if(selectedCustomer != null){
-//            customerDAO.updateCustomer(selectedCustomer)
-//        }
-//        else {
-//            raiseAlert("Error", "You have not selected a customer to update.", Alert.AlertType.ERROR);
-//        }
-//    }
+
+    /**
+     *
+     * @param event Event is handled on the login controller. when the login is true, mainMenu is called.
+     * @throws IOException exceptions
+     * ERROR: Runtime Exception: Error resolving onAction='#createAppt'
+     */
+    @FXML
+    public void createCustomerMenu(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Main.class.getResource("/View/CreateCustomerForm.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
 
     @FXML
-    public void createCustomer(ActionEvent actionEvent) throws IOException {
-        CreateCustomerController.createCustomerMenu(actionEvent);
+    public void createApptMenu(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Main.class.getResource("/View/CreateAppointmentForm.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
     }
+
     /**
      *
      * @param event Event is handled on the login controller. when the login is true, mainMenu is called.
@@ -185,7 +196,7 @@ public class MainFormController implements Initializable {
      * ERROR: Runtime Exception: Error resolving onAction='#createAppt'
      */
     public static void mainMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Main.Main.class.getResource("/View/MainForm.fxml"));
+        Parent root = FXMLLoader.load(Main.class.getResource("/View/MainForm.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -203,7 +214,10 @@ public class MainFormController implements Initializable {
      */
     public void resetTable() {
         try{
-            if(customerTableView.getSelectionModel().getSelectedItem() != null) {
+            if(appointmentTableView.getSelectionModel().getSelectedItem() != null) {
+                appointmentTableView.getSelectionModel().clearSelection();
+            }
+            else if(customerTableView.getSelectionModel().getSelectedItem() != null) {
                 customerTableView.getSelectionModel().clearSelection();
             }
         } catch (Exception e) {
@@ -215,27 +229,28 @@ public class MainFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             customerTableView.setItems(customerDAO.getAllCustomers());
+            customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+            customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+            address.setCellValueFactory(new PropertyValueFactory<>("address"));
+            postal_code.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+            phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+            divID.setCellValueFactory(new PropertyValueFactory<>("divID"));
+
+
             appointmentTableView.setItems(appointmentDAO.getAllAppts());
+            apptIDColumn.setCellValueFactory(new PropertyValueFactory<>("apptId"));
+            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+            locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+            contactCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+            typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+            startCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+            endCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+            customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            userIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-        customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        address.setCellValueFactory(new PropertyValueFactory<>("address"));
-        postal_code.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-        phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        divID.setCellValueFactory(new PropertyValueFactory<>("divID"));
-        apptIDColumn.setCellValueFactory(new PropertyValueFactory<>("apptId"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-//        contactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        startCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        endCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-        customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        userIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-
     }
 }

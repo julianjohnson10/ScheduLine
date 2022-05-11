@@ -2,7 +2,9 @@ package DAO;
 
 
 import Model.Customer;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 import java.sql.*;
 import java.time.Instant;
@@ -16,18 +18,21 @@ public abstract class customerDAO {
 
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
         String sqlStatement = "SELECT * FROM customers";
-
+        ObservableList<Customer> customerList = FXCollections.observableArrayList();
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         ResultSet results = statement.executeQuery();
 
-        Customer customer;
         while (results.next()) {
-            customer = new Customer(results.getInt("Customer_ID"),results.getString("Customer_Name"), results.getString("Address"),
-                    results.getString("Postal_Code"), results.getString("Phone"), results.getDate("Create_Date").toLocalDate(),
-                    results.getString("Created_By"), results.getTimestamp("Last_Update"), results.getString("Last_Updated_By"), results.getInt("Division_ID"));
-            Customer.addCustomer(customer);
+            Customer customer = new Customer();
+            customer.setCustomerID(results.getInt("Customer_ID"));
+            customer.setCustomerName(results.getString("Customer_Name"));
+            customer.setAddress(results.getString("Address"));
+            customer.setPostalCode(results.getString("Postal_Code"));
+            customer.setPhoneNumber(results.getString("Phone"));
+            customer.setDivID(results.getInt("Division_ID"));
+            customerList.add(customer);
         }
-        return Customer.getAllCustomers();
+        return customerList;
     }
 
     public static void selectCustomer() throws SQLException {
@@ -63,7 +68,7 @@ public abstract class customerDAO {
         statement.executeUpdate();
     }
 
-    public static void createCustomer(String customer_name, String address, String postal_code, String phone, String country, String stateProvince) throws SQLException {
+    public static void createCustomer(String customer_name, String address, String postal_code, String phone, String country, String division) throws SQLException {
 
         LocalDate date = LocalDate.now(); // Use a date picker.
         LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());
@@ -76,15 +81,12 @@ public abstract class customerDAO {
         statement.setString(2, address);
         statement.setString(3, postal_code);
         statement.setString(4, phone);
-        statement.setObject(5, "NOW()");
+        statement.setObject(5, LocalDateTime.now());
 
-        String createdBy = "script";
-        String lastUpdatedBy = "script";
-        int divID = 23;
-        statement.setString(6, createdBy);
-        statement.setObject(7, "NOW()");
-        statement.setString(8, lastUpdatedBy);
-        statement.setInt(9, divID);
+        statement.setString(6, userDAO.getUserInfo().getUserName());
+        statement.setObject(7, LocalDateTime.now());
+        statement.setString(8, userDAO.getUserInfo().getUserName());
+        statement.setInt(9, divisionDAO.getDivisionID(division));
 
 
         Customer customer = new Customer();
@@ -94,17 +96,17 @@ public abstract class customerDAO {
         customer.setPhoneNumber(phone);
 
         customer.setCreateDate(localDateTime);
-        customer.setCreatedBy(createdBy);
+//        customer.setCreatedBy(createdBy);
         customer.setLastUpdate(Timestamp.from(Instant.now()));
-        customer.setLastUpdatedBy(lastUpdatedBy);
-        customer.setDivID(divID);
+//        customer.setLastUpdatedBy(lastUpdatedBy);
+//        customer.setDivID(divID);
         Customer.addCustomer(customer);
 
 
         statement.executeUpdate();
     }
 
-    public static int customerID() throws SQLException {
+    public static int getCustomerID() throws SQLException {
         String sqlStatement = "SELECT MAX(Customer_ID) FROM customers";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         ResultSet result = statement.executeQuery();
@@ -112,6 +114,6 @@ public abstract class customerDAO {
         while (result.next()) {
             customerID = result.getInt("MAX(Customer_ID)");
         }
-        return customerID + 1;
+        return customerID;
     }
 }

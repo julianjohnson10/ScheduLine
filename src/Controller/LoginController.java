@@ -1,7 +1,9 @@
 package Controller;
 
+import DAO.userDAO;
 import Main.Main;
 import Model.Appointment;
+import Model.User;
 import Utilities.Locales;
 import Utilities.alertBox;
 import javafx.application.Platform;
@@ -29,7 +31,6 @@ public class LoginController implements Initializable {
     public Label pwdLabel;
     public Label headerLabel;
     public static Integer userId;
-//    public boolean isAdmin;
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
 
@@ -57,8 +58,10 @@ public class LoginController implements Initializable {
         String password = passwordField.getText();
         //run a query on both username and password to determine if they match in the database.
 
-        if(DAO.userDAO.getLogin(userId, password)){
+        if(userDAO.getLogin(userId, password)){
+
             errorLabel.setText(resourceBundle.getString("LoginSuccess"));
+
             MainFormController.mainMenu(actionEvent);
         }
         else {

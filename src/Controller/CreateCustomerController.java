@@ -2,13 +2,12 @@ package Controller;
 
 import DAO.customerDAO;
 import DAO.divisionDAO;
-import Main.Main;
-import Model.Appointment;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,7 +15,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,15 +34,19 @@ public class CreateCustomerController implements Initializable {
     public ComboBox<String> countryBox;
     public ComboBox<String> stateProvince;
     public Button cancelButton;
+    private ObservableList<String> countriesList = FXCollections.observableArrayList();
+    private ObservableList<String> divisionsList = FXCollections.observableArrayList();
 
     @FXML
-    public void createCustomer() throws SQLException {
+    public void createCustomer(ActionEvent event) throws SQLException, IOException {
 
-        if(nameTextField.getText().isEmpty()|addressTextField.getText().isEmpty()|postalTextField.getText().isEmpty()|phoneTextField.getText().isEmpty()){
+        if(nameTextField.getText().isEmpty()|addressTextField.getText().isEmpty()|postalTextField.getText().isEmpty()|phoneTextField.getText().isEmpty()|countryBox.getValue().isEmpty()|stateProvince.getValue().isEmpty()){
             raiseAlert("Error", "Customer fields cannot be empty", Alert.AlertType.ERROR);
         }
         else{
-            customerDAO.createCustomer(nameTextField.getText(), addressTextField.getText(), postalTextField.getText(), phoneTextField.getText(), countryBox.getSelectionModel().getSelectedItem().toString(), stateProvince.getSelectionModel().getSelectedItem().toString());
+            customerDAO.createCustomer(nameTextField.getText(), addressTextField.getText(), postalTextField.getText(), phoneTextField.getText(), countryBox.getSelectionModel().getSelectedItem(), stateProvince.getSelectionModel().getSelectedItem());
+            System.out.println(countryBox.getValue() + stateProvince.getValue());
+            MainFormController.mainMenu(event);
         }
 
     }
@@ -59,29 +61,10 @@ public class CreateCustomerController implements Initializable {
         window.show();
     }
 
-    /**
-     *
-     * @param event Event is handled on the login controller. when the login is true, mainMenu is called.
-     * @throws IOException exceptions
-     * ERROR: Runtime Exception: Error resolving onAction='#createAppt'
-     */
-    public static void createCustomerMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("/View/CreateCustomerForm.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
-
-//        stage.setY(screen.getHeight() / 2);
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
-    }
-
-    @FXML
     public void updateState(ActionEvent event) throws SQLException {
-        int countryID = divisionDAO.getCountryID(countryBox.getValue());
-        stateProvince.setItems(divisionDAO.getStatesProvinces(countryID));
-        System.out.println("pressed");
+
+        divisionsList = divisionDAO.getStatesProvinces(countryBox.getValue());
+        stateProvince.setItems(divisionsList);
     }
 
     /**
@@ -92,25 +75,15 @@ public class CreateCustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            countryBox.setItems(divisionDAO.getCountries());
+            countriesList = divisionDAO.getCountries();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if(countryBox.getValue() != null) {
-            int countryID = 0;
-            try {
-                countryID = divisionDAO.getCountryID(countryBox.getValue());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                stateProvince.setItems(divisionDAO.getStatesProvinces(countryID));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            customerIDField.setText(String.valueOf(customerDAO.getCustomerID()+1));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        else {
-            System.out.println("Value is null");
-        }
+        countryBox.setItems(countriesList);
     }
 }

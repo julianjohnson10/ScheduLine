@@ -2,16 +2,6 @@ package Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 public class Appointment {
     private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -21,10 +11,11 @@ public class Appointment {
     private String location;
     private String contactName;
     private String type;
-    private ZonedDateTime startDate;
-    private ZonedDateTime endDate;
+    private String startDate;
+    private String endDate;
     private int customerId;
     private int userId;
+    private int contactId;
 
     public Appointment() {
 
@@ -68,12 +59,12 @@ public class Appointment {
         return type;
     }
 
-    public ZonedDateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
 
-    public ZonedDateTime getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
@@ -81,9 +72,12 @@ public class Appointment {
         return customerId;
     }
 
-
     public int getUserId() {
         return userId;
+    }
+
+    public int getContactId() {
+        return contactId;
     }
 
     public void setApptId(int apptId) {
@@ -110,11 +104,11 @@ public class Appointment {
         this.type = type;
     }
 
-    public void setStartDate(ZonedDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(ZonedDateTime endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -124,6 +118,10 @@ public class Appointment {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
     }
 }
 

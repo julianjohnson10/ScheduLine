@@ -1,6 +1,8 @@
 package DAO;
 
 
+import Model.User;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,19 +33,38 @@ public abstract class userDAO {
         return false;
     }
 
+    public static User getUserInfo() throws SQLException {
+
+        String sqlStatement = "SELECT User_ID, User_Name FROM users";
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        ResultSet results = statement.executeQuery();
+
+        User user = new User();
+
+        while (results.next()) {
+            user.setUserId(results.getInt("User_ID"));
+            user.setUserName(results.getString("User_Name"));
+            User.addUser(user);
+        }
+        return user;
+    }
+
+
+
     /**
      *
-     * @param username String for the username.
+     *
      * @return a boolean value that checks if the current user is "admin".
      * @throws SQLException SQLException
      */
-    public static String getUser(String username) throws SQLException {
-        String sqlStatement = "SELECT * FROM users WHERE User_Name = ?";
+    public static String getUserNamefromID(int userID) throws SQLException {
+        String sqlStatement = "SELECT User_Name FROM users WHERE User_ID = ?";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
-        statement.setString(1, username);
+        statement.setInt(1, userID);
         ResultSet results = statement.executeQuery();
+
         try {
-            if (results.next()) {
+            if(results.next()){
                 return results.getString("User_Name");
             }
         } catch (SQLException e) {

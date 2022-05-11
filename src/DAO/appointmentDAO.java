@@ -1,6 +1,7 @@
 package DAO;
 
 import Model.Appointment;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
 import java.time.*;
@@ -22,7 +23,7 @@ public abstract class appointmentDAO {
      */
     public static ObservableList<Appointment> getAllAppts() throws SQLException {
         String sqlStatement = "SELECT * FROM appointments";
-
+        ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         ResultSet results = statement.executeQuery();
 
@@ -34,56 +35,30 @@ public abstract class appointmentDAO {
             appointment.setTitle(results.getString("Title"));
             appointment.setDescription(results.getString("Description"));
             appointment.setLocation(results.getString("Location"));
+
+
+
+            appointment.setContactName(contactDAO.getApptContacts(results.getInt("Contact_ID")));
             appointment.setType(results.getString("Type"));
 
             LocalDateTime start_dateL = (LocalDateTime) results.getObject("Start");
-            ZoneId zoneId = ZoneId.systemDefault();
-            ZonedDateTime start_dateZ = ZonedDateTime.of(start_dateL,zoneId);
-
             String startDate = start_dateL.format(format);
-            System.out.println("Start Date: " + startDate);
-//            String start_ldt = LocalDateTime.parse(start_dateZ.toLocalDateTime().format(format)).toString();
-//            System.out.println("Start LDT: " + start_ldt);
+            appointment.setStartDate(startDate);
 
-//            LocalDateTime startDate = LocalDateTime.parse(start_dateL,format);
-//            ZonedDateTime startDateZ = startDate.atZone(ZoneId.of("UTC"));
-//            appointment.setStartDate(startDate);
+            LocalDateTime end_dateL = (LocalDateTime) results.getObject("End");
+            String endDate = end_dateL.format(format);
+            appointment.setEndDate(endDate);
 
-
-//            LocalDate date = LocalDate.now();
-//            System.out.println("Date: " + date);// Use a date picker.
-            //        LocalTime time = LocalTime.of(01,16);
-//            LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());
-
-
-            System.out.println("Local Date: " + start_dateZ.toLocalDate()); // Local Date
-            System.out.println("Local Time: " + start_dateZ.toLocalTime()); // Local Time
-            System.out.println("Concat: " + start_dateZ.toLocalDate().toString() + " " + start_dateZ.toLocalTime().toString());
-
-
-            String end_date = results.getString("End");
-            LocalDateTime endDate = LocalDateTime.parse(end_date,format);
-            ZonedDateTime endDateZ = endDate.atZone(ZoneId.of("UTC"));
-//            appointment.setEndDate(endDateZ);
-
-            String create_date = results.getString("Create_Date");
-            LocalDateTime createDate = LocalDateTime.parse(create_date,format);
-            ZonedDateTime createDateZ = createDate.atZone(ZoneId.of("UTC"));
-//            appointment.setCreatedDate(createDateZ);
-
-            String last_update = results.getString("Last_Update");
-            LocalDateTime lastUpdate = LocalDateTime.parse(last_update,format);
-            ZonedDateTime lastUpdateZ = lastUpdate.atZone(ZoneId.of("UTC"));
-//            appointment.setLastUpdate(lastUpdateZ);
             appointment.setCustomerId(results.getInt("Customer_ID"));
             appointment.setUserId(results.getInt("User_ID"));
-            Appointment.addAppointment(appointment);
+            appointmentList.add(appointment);
+            System.out.println(appointment.getContactName());
         }
-        return Appointment.getAllAppointments();
+        return appointmentList;
     }
 
     public static int createAppt(String Title, String Description, String Location, String Type, Date Start, Date End, Date create_date, String created_by, Timestamp last_update, String last_updated_by, Integer customerId, Integer userId, Integer contactId) throws SQLException {
-        String sqlStatement = "INSERT INTO Appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,NOW(),?,NOW(),?,?,?,?)";
+        String sqlStatement = "INSERT INTO Appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         statement.setString(1, Title);

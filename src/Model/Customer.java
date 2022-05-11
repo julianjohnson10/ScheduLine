@@ -18,19 +18,6 @@ public class Customer {
     private String lastUpdatedBy;
     private int divID;
 
-    public Customer(int customerID, String customerName, String address, String postalCode, String phoneNumber, LocalDate createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int divID){
-        this.customerID = customerID;
-        this.customerName = customerName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.phoneNumber = phoneNumber;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
-        this.divID = divID;
-    }
-
     public Customer() {
 
     }
