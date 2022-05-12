@@ -11,7 +11,7 @@ import static DAO.JDBC_Connector.connection;
 
 public abstract class contactDAO {
 
-    public static ObservableList<String> getContacts() throws SQLException {
+    public static ObservableList<String> getContactNames() throws SQLException {
         String sqlStatement = "SELECT Contact_Name FROM contacts";
         ObservableList<String> contactList = FXCollections.observableArrayList();
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
@@ -37,4 +37,12 @@ public abstract class contactDAO {
         return apptContact;
     }
 
+    public static int getContactID(String contact_name) throws SQLException {
+        String sqlStatement = "SELECT Contact_ID FROM contacts WHERE Contact_Name = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        statement.setString(1, contact_name);
+        ResultSet results = statement.executeQuery();
+        return results.getInt("Contact_ID");
+    }
 }
