@@ -57,8 +57,8 @@ public class Main extends Application {
         launch(args);
         divisionDAO.getCountries();
 //        Date date = Date.valueOf(String.valueOf(LocalDate.now()));
-        ZoneId zone = ZoneId.of("UTC");
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now(zone));
+//        ZoneId zone = ZoneId.of("UTC");
+//        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now(zone));
 
         LocalDate date = LocalDate.now(); // Use a date picker.
         //        LocalTime time = LocalTime.of(01,16);
