@@ -1,7 +1,10 @@
 package Model;
 
+import DAO.appointmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
 
 public class Appointment {
     private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -21,7 +24,9 @@ public class Appointment {
 
     }
 
-    public static ObservableList<Appointment> getAllAppointments() {
+    public static ObservableList<Appointment> getAllAppointments() throws SQLException {
+        ObservableList<Appointment> appts = appointmentDAO.getAllAppts();
+        allAppointments.setAll(appts);
         return allAppointments;
     }
 
