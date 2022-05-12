@@ -9,75 +9,74 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="954.0" prefWidth="1397.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainFormController">
-   <children>
-      <BorderPane AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <TabPane prefHeight="668.0" prefWidth="974.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="954.0"
+            prefWidth="1397.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.MainFormController">
+    <BorderPane AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                AnchorPane.topAnchor="0.0">
+        <center>
+            <TabPane fx:id="tabPane" prefHeight="668.0" prefWidth="974.0" tabClosingPolicy="UNAVAILABLE">
                 <Tab fx:id="appointmentTab" text="Appointments">
-                  <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="803.0" prefWidth="1397.0">
-                           <children>
-                              <TableView fx:id="appointmentTableView" editable="true" layoutX="106.0" layoutY="32.0" prefHeight="263.0" prefWidth="1186.0">
-                                 <columns>
-                                    <TableColumn fx:id="apptIDColumn" editable="false" minWidth="0.0" prefWidth="107.0" text="Appointment ID" />
-                                    <TableColumn fx:id="titleColumn" minWidth="0.0" prefWidth="107.0" text="Title" />
-                                    <TableColumn fx:id="descriptionColumn" prefWidth="97.0" text="Description" />
-                                    <TableColumn fx:id="locCol" minWidth="0.0" prefWidth="75.0" text="Location" />
-                                    <TableColumn fx:id="contactCol" minWidth="0.0" prefWidth="190.0" text="Contact" />
-                                    <TableColumn fx:id="typeCol" minWidth="0.0" prefWidth="132.0" text="Type" />
-                                    <TableColumn fx:id="startCol" minWidth="0.0" prefWidth="180.0" text="Start Date" />
-                                    <TableColumn fx:id="endCol" minWidth="0.0" prefWidth="166.0" text="End Date" />
-                                    <TableColumn fx:id="customerIDCol" minWidth="0.0" prefWidth="82.0" text="Customer ID" />
-                                    <TableColumn fx:id="userIDCol" minWidth="0.0" prefWidth="48.0" text="User ID" />
-                                 </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <HBox layoutX="1095.0" layoutY="305.0" spacing="20.0">
-                                 <children>
-                                    <Button fx:id="createAppt" mnemonicParsing="false" onAction="#createApptMenu" text="Create" />
-                                    <Button fx:id="updateAppt" mnemonicParsing="false" text="Update" />
-                                    <Button fx:id="deleteApptButton" mnemonicParsing="false" onAction="#deleteAppt" text="Delete" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
-                  </content>
+                        <TableView fx:id="appointmentTableView" editable="true" layoutX="106.0" layoutY="32.0"
+                                   prefHeight="263.0" prefWidth="1186.0">
+                            <columns>
+                                <TableColumn fx:id="apptIDColumn" editable="false" minWidth="0.0"
+                                             prefWidth="107.0" text="Appointment ID"/>
+                                <TableColumn fx:id="titleColumn" minWidth="0.0" prefWidth="107.0"
+                                             text="Title"/>
+                                <TableColumn fx:id="descriptionColumn" prefWidth="97.0" text="Description"/>
+                                <TableColumn fx:id="locCol" minWidth="0.0" prefWidth="75.0" text="Location"/>
+                                <TableColumn fx:id="contactCol" minWidth="0.0" prefWidth="190.0"
+                                             text="Contact"/>
+                                <TableColumn fx:id="typeCol" minWidth="0.0" prefWidth="132.0" text="Type"/>
+                                <TableColumn fx:id="startCol" minWidth="0.0" prefWidth="180.0"
+                                             text="Start Date"/>
+                                <TableColumn fx:id="endCol" minWidth="0.0" prefWidth="166.0" text="End Date"/>
+                                <TableColumn fx:id="customerIDCol" minWidth="0.0" prefWidth="82.0"
+                                             text="Customer ID"/>
+                                <TableColumn fx:id="userIDCol" minWidth="0.0" prefWidth="48.0" text="User ID"/>
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                        </TableView>
+                        <HBox layoutX="1095.0" layoutY="305.0" spacing="20.0">
+                            <Button fx:id="createAppt" mnemonicParsing="false" onAction="#createApptMenu"
+                                    text="Create"/>
+                            <Button fx:id="updateAppt" mnemonicParsing="false" text="Update"/>
+                            <Button fx:id="deleteApptButton" mnemonicParsing="false" onAction="#deleteAppt"
+                                    text="Delete"/>
+                        </HBox>
+                    </AnchorPane>
                 </Tab>
                 <Tab fx:id="customerTab" onSelectionChanged="#resetTable" text="Customers">
-                  <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView fx:id="customerTableView" editable="true" layoutX="259.0" layoutY="20.0" prefHeight="400.0" prefWidth="879.0">
-                                 <columns>
-                                    <TableColumn fx:id="customerID" prefWidth="90.0" text="Customer ID" />
-                                    <TableColumn fx:id="customerName" prefWidth="114.0" text="Customer Name" />
-                                    <TableColumn fx:id="address" minWidth="0.0" prefWidth="112.0" text="Address" />
-                                    <TableColumn fx:id="postal_code" prefWidth="91.0" text="Postal Code" />
-                                    <TableColumn fx:id="phone" prefWidth="122.0" text="Phone" />
-                                    <TableColumn fx:id="divID" minWidth="0.0" prefWidth="86.0" text="Division ID" />
-                                 </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <HBox layoutX="941.0" layoutY="427.0" spacing="20.0">
-                                 <children>
-                                    <Button fx:id="createCustomer" mnemonicParsing="false" onAction="#createCustomerMenu" text="Create" />
-                                    <Button fx:id="updateCustomer" mnemonicParsing="false" text="Update" />
-                                    <Button fx:id="deleteCustomer" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
-                  </content>
+                        <TableView fx:id="customerTableView" editable="true" layoutX="259.0" layoutY="20.0"
+                                   prefHeight="400.0" prefWidth="879.0">
+                            <columns>
+                                <TableColumn fx:id="customerID" editable="false" minWidth="0.0"
+                                             prefWidth="88.0" text="Customer ID"/>
+                                <TableColumn fx:id="customerName" prefWidth="111.0" text="Customer Name"/>
+                                <TableColumn fx:id="address" minWidth="0.0" prefWidth="308.0" text="Address"/>
+                                <TableColumn fx:id="postal_code" prefWidth="87.0" text="Postal Code"/>
+                                <TableColumn fx:id="phone" prefWidth="185.0" text="Phone"/>
+                                <TableColumn fx:id="divID" minWidth="0.0" prefWidth="99.0" text="Division ID"/>
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                        </TableView>
+                        <HBox layoutX="941.0" layoutY="427.0" spacing="20.0">
+                            <Button fx:id="createCustomer" mnemonicParsing="false"
+                                    onAction="#createCustomerMenu" text="Create"/>
+                            <Button fx:id="updateCustomer" mnemonicParsing="false" text="Update"/>
+                            <Button fx:id="deleteCustomer" mnemonicParsing="false"
+                                    onAction="#deleteCustomer" text="Delete"/>
+                        </HBox>
+                    </AnchorPane>
                 </Tab>
-              </tabs>
             </TabPane>
-         </center>
-      </BorderPane>
-   </children>
+        </center>
+    </BorderPane>
 </AnchorPane>
