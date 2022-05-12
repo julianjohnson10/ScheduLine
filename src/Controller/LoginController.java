@@ -1,11 +1,8 @@
 package Controller;
 
 import DAO.userDAO;
-import Main.Main;
-import Model.Appointment;
-import Model.User;
 import Utilities.Locales;
-import Utilities.alertBox;
+import Utilities.alertError;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +12,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -36,7 +32,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private void exitPlatform(){
-        Optional<ButtonType> alertOption = alertBox.raiseAlert("Exit?", resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
+        Optional<ButtonType> alertOption = alertError.raiseAlert("Exit?", resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
         if(alertOption.isPresent() && alertOption.get() == ButtonType.OK) {
             Platform.exit();
         }
