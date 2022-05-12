@@ -22,7 +22,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import static Utilities.alertBox.raiseAlert;
+import static Utilities.alertError.raiseAlert;
 
 
 public class CreateCustomerController implements Initializable {
@@ -34,6 +34,7 @@ public class CreateCustomerController implements Initializable {
     public ComboBox<String> countryBox;
     public ComboBox<String> stateProvince;
     public Button cancelButton;
+    public Button createCustomer;
     private ObservableList<String> countriesList = FXCollections.observableArrayList();
     private ObservableList<String> divisionsList = FXCollections.observableArrayList();
 
@@ -45,7 +46,6 @@ public class CreateCustomerController implements Initializable {
         }
         else{
             customerDAO.createCustomer(nameTextField.getText(), addressTextField.getText(), postalTextField.getText(), phoneTextField.getText(), countryBox.getSelectionModel().getSelectedItem(), stateProvince.getSelectionModel().getSelectedItem());
-            System.out.println(countryBox.getValue() + stateProvince.getValue());
             MainFormController.mainMenu(event);
         }
 
@@ -57,7 +57,7 @@ public class CreateCustomerController implements Initializable {
         Scene scene = new Scene(parent);
         Stage window = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(scene);
-
+        window.centerOnScreen();
         window.show();
     }
 
@@ -76,14 +76,12 @@ public class CreateCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             countriesList = divisionDAO.getCountries();
+            customerIDField.setText(String.valueOf(customerDAO.getCustomerID()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            customerIDField.setText(String.valueOf(customerDAO.getCustomerID()+1));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         countryBox.setItems(countriesList);
+
     }
 }
