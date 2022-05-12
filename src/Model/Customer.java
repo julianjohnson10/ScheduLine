@@ -1,7 +1,10 @@
 package Model;
 
+import DAO.customerDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
@@ -22,7 +25,9 @@ public class Customer {
 
     }
 
-    public static ObservableList<Customer> getAllCustomers() {
+    public static ObservableList<Customer> getAllCustomers() throws SQLException {
+        ObservableList<Customer> customers = customerDAO.getAllCustomers();
+        allCustomers.setAll(customers);
         return allCustomers;
     }
 
