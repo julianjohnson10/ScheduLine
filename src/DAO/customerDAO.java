@@ -4,8 +4,6 @@ package DAO;
 import Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -17,7 +15,11 @@ import static DAO.JDBC_Connector.connection;
 public abstract class customerDAO {
 
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
-        String sqlStatement = "SELECT * FROM customers";
+        String sqlStatement = "SELECT * FROM customers " +
+                "LEFT JOIN first_level_divisions " +
+                "ON first_level_divisions.Division_ID = customers.Division_ID " +
+                "LEFT JOIN countries " +
+                "ON countries.Country_ID = first_level_divisions.Country_ID";
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         ResultSet results = statement.executeQuery();
@@ -33,32 +35,6 @@ public abstract class customerDAO {
             customerList.add(customer);
         }
         return customerList;
-    }
-
-    public static void selectCustomer() throws SQLException {
-        String sqlStatement = "SELECT * FROM customers";
-        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-        ResultSet results = statement.executeQuery();
-
-        while (results.next()) {
-            int userId = results.getInt("User_ID");
-            String userName = results.getString("User_Name");
-        }
-    }
-
-    public static boolean getLogin(String username, String password) throws SQLException {
-        String sqlStatement = "SELECT * FROM users WHERE User_ID = ? AND Password = ?";
-        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-        statement.setString(1, username);
-        statement.setString(2, password);
-        ResultSet results = statement.executeQuery();
-
-        try {
-            return results.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     public static void deleteCustomer(int customerID) throws SQLException{
@@ -107,13 +83,26 @@ public abstract class customerDAO {
     }
 
     public static int getCustomerID() throws SQLException {
-        String sqlStatement = "SELECT MAX(Customer_ID) FROM customers";
+        String sqlStatement = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = \"client_schedule\" AND TABLE_NAME = \"customers\"";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         ResultSet result = statement.executeQuery();
         int customerID = 0;
         while (result.next()) {
-            customerID = result.getInt("MAX(Customer_ID)");
+            customerID = result.getInt("AUTO_INCREMENT");
         }
         return customerID;
     }
+
+    public static ObservableList<Integer> getCustomerIDs() throws SQLException {
+        String sqlStatement = "SELECT * FROM customers";
+        ObservableList<Integer> customerIDs = FXCollections.observableArrayList();
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        ResultSet results = statement.executeQuery();
+
+        while (results.next()) {
+            customerIDs.add(results.getInt("Customer_ID"));
+        }
+        return customerIDs;
+    }
+
 }
