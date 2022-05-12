@@ -5,7 +5,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
-public class alertBox {
+public class alertError {
     /**
      * Custom Alert Box.
      * @param title Title of the alert box.
@@ -20,4 +20,7 @@ public class alertBox {
         return alert.showAndWait();
     }
 
+    public static String raiseError(String error){
+        return error;
+    }
 }
