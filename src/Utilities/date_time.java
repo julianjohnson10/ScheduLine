@@ -1,7 +1,11 @@
 package Utilities;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 
 public class date_time {
 
@@ -9,6 +13,15 @@ public class date_time {
         SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         return date.format(timestamp);
     }
+
+    public static ObservableList<LocalTime> timeList = FXCollections.observableArrayList();
+//
+//    public static ObservableList<LocalTime> getTimeList{
+//
+//        LocalTime.of(1,0);
+//
+//    }
+
 }
 //    LocalDate date = LocalDate.now();
 //    LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());
