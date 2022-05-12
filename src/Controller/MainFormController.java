@@ -2,13 +2,10 @@ package Controller;
 
 import DAO.appointmentDAO;
 import DAO.customerDAO;
-import DAO.divisionDAO;
 import Main.Main;
 import Model.Appointment;
 import Model.Customer;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,14 +19,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static Utilities.alertBox.raiseAlert;
+import static Utilities.alertError.raiseAlert;
 
 public class MainFormController implements Initializable {
     /**
@@ -117,6 +112,8 @@ public class MainFormController implements Initializable {
 
     public ComboBox<String> countryBox;
     public TableColumn<Appointment, String> contactCol;
+    public TabPane tabPane;
+//    SelectionModel<Tab> selectionModel = tabPane.getSelectionModel().getSelectedItem();
 
     /**
      *
@@ -187,6 +184,7 @@ public class MainFormController implements Initializable {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
+        tabPane.getSelectionModel().selectedItemProperty();
     }
 
     /**
@@ -228,7 +226,7 @@ public class MainFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            customerTableView.setItems(customerDAO.getAllCustomers());
+            customerTableView.setItems(Customer.getAllCustomers());
             customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
             customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
             address.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -236,8 +234,7 @@ public class MainFormController implements Initializable {
             phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
             divID.setCellValueFactory(new PropertyValueFactory<>("divID"));
 
-
-            appointmentTableView.setItems(appointmentDAO.getAllAppts());
+            appointmentTableView.setItems(Appointment.getAllAppointments());
             apptIDColumn.setCellValueFactory(new PropertyValueFactory<>("apptId"));
             titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
             descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
