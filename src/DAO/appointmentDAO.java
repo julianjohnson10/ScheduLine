@@ -1,6 +1,7 @@
 package DAO;
 
 import Model.Appointment;
+import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
@@ -38,16 +39,17 @@ public abstract class appointmentDAO {
             appointment.setContactName(results.getString("Contact_Name"));
             appointment.setType(results.getString("Type"));
 
-            ZonedDateTime start_dateZ = ((LocalDateTime) results.getObject("Start")).atZone(ZoneId.systemDefault());
-            String startDate = start_dateZ.format(format);
-            appointment.setStartDate(startDate);
+//            LocalDate startDate = ((LocalDate) results.getObject("Start"));
+//            System.out.println(startDate);
+
+//            appointment.setStartDate(startDate);
 
             LocalDateTime endDate = (LocalDateTime) results.getObject("End");
 
-//            appointment.setEndDate(endDate);
-            System.out.println(results.getString("End"));
-//            System.out.println(end_dateZ);
-            System.out.println(endDate);
+////            appointment.setEndDate(endDate);
+//            System.out.println(results.getString("End"));
+////            System.out.println(end_dateZ);
+//            System.out.println(endDate);
 
             appointment.setCustomerId(results.getInt("Customer_ID"));
             appointment.setUserId(results.getInt("User_ID"));
@@ -60,27 +62,19 @@ public abstract class appointmentDAO {
         return apptsList;
     }
 
-    public static int createAppt(String Title, String Description, String Location, String contact, String Type, LocalDate apptDate, LocalTime startTime, LocalTime endTime, Integer customerId, Integer userId) throws SQLException {
-        String sqlStatement = "INSERT INTO Appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-
-        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-        statement.setString(1, Title);
-        statement.setString(2, Description);
-        statement.setString(3, Location);
-        statement.setString(4, Type);
-        statement.setObject(5, LocalDate.now());
-        statement.setObject(6, LocalDate.now());
-        statement.setObject(7, LocalDateTime.now());
-        statement.setString(8, userDAO.getUserInfo().getUserName());
-        statement.setObject(9, LocalDateTime.now());
-        statement.setString(10, userDAO.getUserInfo().getUserName());
-        statement.setInt(11, customerId);
-        statement.setInt(12, userId);
-
-        return statement.executeUpdate();
-    }
-
-    public static int updateAppt(String Title, String Description, String Location, String Type, Date Start, Date End, Date create_date, String created_by, Timestamp last_update, String last_updated_by, Integer customerId, Integer userId, Integer contactId) throws SQLException {
+    /**
+     * ERROR: SQLException: Column count doesn't match value count at row 1. Forgot to update the sqlStatement String with the correct columns and bind parameters.
+     * @param Title
+     * @param Description
+     * @param Location
+     * @param contact
+     * @param Type
+     * @param apptDate
+     * @param startTime
+     * @param endTime
+     * @throws SQLException
+     */
+    public static void createAppt(String Title, String Description, String Location, String contact, String Type, LocalDate apptDate, LocalTime startTime, LocalTime endTime, Integer customerID, Integer userID, Integer contactID) throws SQLException {
         String sqlStatement = "INSERT INTO Appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
@@ -88,17 +82,38 @@ public abstract class appointmentDAO {
         statement.setString(2, Description);
         statement.setString(3, Location);
         statement.setString(4, Type);
-        statement.setDate(5, Start);
-        statement.setDate(6, End);
-        statement.setDate(7, create_date);
-        statement.setString(8, created_by);
-        statement.setTimestamp(9, last_update);
-        statement.setString(10, last_updated_by);
-        statement.setInt(11, customerId);
-        statement.setInt(12, userId);
-        statement.setInt(13, contactId);
+        statement.setObject(5, apptDate);
+        statement.setObject(6, LocalDate.now());
+        statement.setObject(7, LocalDateTime.now());
+        statement.setString(8, userDAO.getUserInfo().getUserName());
+        statement.setObject(9, LocalDateTime.now());
+        statement.setString(10, userDAO.getUserInfo().getUserName());
+        statement.setInt(11,
+                customerID);
+        statement.setInt(12, userID);
+        statement.setInt(13, contactID);
 
-        return statement.executeUpdate();
+        statement.executeUpdate();
+    }
+
+    public static void updateAppt(Integer apptID, String Title, String Description, String Location, String Type, LocalDate Start, LocalDate End, Timestamp last_update, String last_updated_by, Integer customerId, Integer userId, Integer contactId) throws SQLException {
+        String sqlStatement = "UPDATE Appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        statement.setString(1, Title);
+        statement.setString(2, Description);
+        statement.setString(3, Location);
+        statement.setString(4, Type);
+        statement.setObject(5, Start);
+        statement.setObject(6, End);
+        statement.setTimestamp(7, last_update);
+        statement.setString(8, last_updated_by);
+        statement.setInt(9, customerId);
+        statement.setInt(10, userId);
+        statement.setInt(11, contactId);
+        statement.setInt(12, apptID);
+
+        statement.executeUpdate();
     }
 
 

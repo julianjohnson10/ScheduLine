@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class Appointment {
     private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -14,7 +15,7 @@ public class Appointment {
     private String location;
     private String contactName;
     private String type;
-    private String startDate;
+    private LocalDate startDate;
     private String endDate;
     private int customerId;
     private int userId;
@@ -64,7 +65,7 @@ public class Appointment {
         return type;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
@@ -109,7 +110,7 @@ public class Appointment {
         this.type = type;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
