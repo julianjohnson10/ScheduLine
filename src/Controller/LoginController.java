@@ -27,6 +27,7 @@ public class LoginController implements Initializable {
     public Label pwdLabel;
     public Label headerLabel;
     public static Integer userId;
+    public Label tzLabel;
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
 
@@ -78,13 +79,15 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
+        Locale french_test = Locale.FRENCH;
+        resourceBundle = ResourceBundle.getBundle("Utilities/Nat", french_test);
         uidLabel.setText(resourceBundle.getString("User_ID") + ":");
         pwdLabel.setText(resourceBundle.getString("Password") + ":");
         loginButton.setText(resourceBundle.getString("LoginButton"));
         timeZoneLabel.setText(Locales.getZoneId());
         exitButton.setText(resourceBundle.getString("Cancel"));
         headerLabel.setText(resourceBundle.getString("Header"));
+        tzLabel.setText(resourceBundle.getString("TimeZone") + ":");
 
 
 //        if(Objects.equals(Locales.getLanguage(), "en")){

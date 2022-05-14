@@ -1,11 +1,12 @@
 package Controller;
 
-import DAO.appointmentDAO;
-import DAO.customerDAO;
+import DAO.*;
 import Main.Main;
 import Model.Appointment;
 import Model.Customer;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,11 +17,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -67,14 +76,9 @@ public class MainFormController implements Initializable {
     public TableColumn<Appointment, String> titleColumn;
     public TableColumn<Appointment, String> descriptionColumn;
     public TableColumn<Appointment, String> locCol;
-//    public TableColumn<Appointment, String> contactName;
     public TableColumn<Appointment, String> typeCol;
     public TableColumn<Appointment, ZonedDateTime> startCol;
     public TableColumn<Appointment, ZonedDateTime> endCol;
-//    public TableColumn<Appointment, SimpleObjectProperty<Date>> createDateCol;
-//    public TableColumn<Appointment, SimpleStringProperty> createdByCol;
-//    public TableColumn<Appointment, SimpleObjectProperty<Timestamp>> lastUpdateCol;
-//    public TableColumn<Appointment, SimpleStringProperty> lastUpdatedByCol;
     public TableColumn<Appointment, Integer> customerIDCol;
     public TableColumn<Appointment, Integer> userIDCol;
 
@@ -109,19 +113,38 @@ public class MainFormController implements Initializable {
     public Button deleteCustomer;
     public Tab customerTab;
     public Tab appointmentTab;
-
     public ComboBox<String> countryBox;
     public TableColumn<Appointment, String> contactCol;
     public TabPane tabPane;
-//    SelectionModel<Tab> selectionModel = tabPane.getSelectionModel().getSelectedItem();
+    public TextField apptIDField;
+    public ComboBox<Integer> customerBox;
+    public TextField titleField;
+    public TextArea descriptionField;
+    public TextField typeField;
+    public TextField locationField;
+    public ComboBox<String> contactBox;
+    public DatePicker datePicker;
+    public ComboBox<LocalTime> startTime;
+    public ComboBox<LocalTime> endTime;
+    public ComboBox<String> stateProvince;
+    public Button applyUpdateCustomer;
+    public Button applyUpdateAppt;
+    public TextField customerIDField;
+    public TextField nameTextField;
+    public TextField cityTextField;
+    public TextField addressTextField;
+    public TextField postalTextField;
+    public TextField phoneTextField;
+    public ComboBox<Integer> userBox;
+    public Button clearCustomer;
+    public Label deletedLabel;
 
-    /**
-     *
-     * @param event Event for clicking the deleteCustomer button.
-     * @throws SQLException Raise SQL errors.
-     */
+    private final FadeTransition fadeOut = new FadeTransition(Duration.seconds(4.0));
+    public Label deletedLabelAppt;
+
+
     @FXML
-    public void deleteCustomer(ActionEvent event) throws SQLException, IOException {
+    public void deleteCustomer() throws SQLException {
         Customer selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         if(selectedCustomer != null){
             //Delete selected customer
@@ -130,6 +153,11 @@ public class MainFormController implements Initializable {
                 if(!appointmentDAO.checkCustomer(selectedCustomer.getCustomerID())){
                     customerDAO.deleteCustomer(selectedCustomer.getCustomerID());
                     Customer.deleteCustomer(selectedCustomer);
+
+                    deletedLabel.setText(selectedCustomer.getCustomerName() + " has been deleted!"); //sets the label to show which customer was deleted. Plays a fade transition.
+                    fadeOut.setNode(deletedLabel);
+                    fadeOut.playFromStart();
+
                     customerTableView.setItems(customerDAO.getAllCustomers());
                 }
                 else {
@@ -143,15 +171,20 @@ public class MainFormController implements Initializable {
     }
 
     @FXML
-    public void deleteAppt(ActionEvent event) throws SQLException {
+    public void deleteAppt() throws SQLException {
         Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
         if(selectedAppointment != null){
             //Delete selected appointment
-            Optional<ButtonType> result = raiseAlert("Are you sure?", "Are you sure you want to delete this appointment?", Alert.AlertType.CONFIRMATION);
+            Optional<ButtonType> result = raiseAlert("Are you sure?", "Are you sure you want to cancel this appointment?", Alert.AlertType.CONFIRMATION);
             if(result.isPresent() && result.get() == ButtonType.OK) {
                 appointmentDAO.deleteAppt(selectedAppointment.getApptId());
                 Appointment.deleteAppointment(selectedAppointment);
+                deletedLabelAppt.setText("Appointment " + selectedAppointment.getApptId() + " of type " + selectedAppointment.getType() + " has been canceled!"); //sets the label to show which customer was deleted. Plays a fade transition.
+                fadeOut.setNode(deletedLabelAppt);
+                fadeOut.playFromStart();
                 appointmentTableView.setItems(appointmentDAO.getAllAppts());
+
+
             }
         }
         else {
@@ -168,7 +201,7 @@ public class MainFormController implements Initializable {
      */
     @FXML
     public void createCustomerMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("/View/CreateCustomerForm.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/CreateCustomerForm.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -178,7 +211,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     public void createApptMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("/View/CreateAppointmentForm.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/CreateAppointmentForm.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -188,13 +221,13 @@ public class MainFormController implements Initializable {
     }
 
     /**
-     *
+     * ERROR: RuntimeException: java.lang.reflect.InvocationTargetException: forgot to add an event handler for clearing customer update fields.
      * @param event Event is handled on the login controller. when the login is true, mainMenu is called.
      * @throws IOException exceptions
      * ERROR: Runtime Exception: Error resolving onAction='#createAppt'
      */
     public static void mainMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("/View/MainForm.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/MainForm.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -223,8 +256,144 @@ public class MainFormController implements Initializable {
         }
     }
 
+
+
+    public void updateApptFields() {
+        Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
+        if(selectedAppointment != null){
+            Integer apptId = selectedAppointment.getApptId();
+            Integer customerID = selectedAppointment.getCustomerId();
+            Integer userID = selectedAppointment.getUserId();
+            String title = selectedAppointment.getTitle();
+            String description = selectedAppointment.getDescription();
+            String type = selectedAppointment.getType();
+            String location = selectedAppointment.getLocation();
+            String contact = selectedAppointment.getContactName();
+
+            LocalDate date = selectedAppointment.getStartDate();
+            System.out.println(date);
+
+            apptIDField.setText(String.valueOf(apptId));
+            customerBox.setValue(customerID);
+            titleField.setText(title);
+            descriptionField.setText(description);
+            typeField.setText(type);
+            locationField.setText(location);
+            contactBox.setValue(contact);
+
+            datePicker.setValue(date);
+
+            startTime.setValue(LocalTime.now());
+            endTime.setValue(LocalTime.now());
+            userBox.setValue(userID);
+        }
+        else {
+            raiseAlert("Select an appointment:", "Please select an appointment to update.", Alert.AlertType.INFORMATION);
+        }
+
+    }
+
+    public void updateCustomerFields() {
+        Customer selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+        if (selectedCustomer != null) {
+            Integer customerID = selectedCustomer.getCustomerID();
+            String state_province = selectedCustomer.getStateProvince();
+            String customerName = selectedCustomer.getCustomerName();
+            String address = selectedCustomer.getAddress();
+
+            if (address.contains(",")) {
+                String[] addRegex = address.split(", ", 2);
+                String newAddress = addRegex[0];
+                String city = addRegex[1];
+                addressTextField.setText(newAddress);
+                cityTextField.setText(city);
+            }
+            else{
+                addressTextField.setText(address);
+            }
+
+
+            String postalCode = selectedCustomer.getPostalCode();
+            String phone = selectedCustomer.getPhoneNumber();
+            String country = selectedCustomer.getCountry();
+            Integer divisionID = selectedCustomer.getDivID();
+            customerIDField.setText(String.valueOf(customerID));
+            nameTextField.setText(customerName);
+
+            postalTextField.setText(postalCode);
+            phoneTextField.setText(phone);
+            countryBox.setValue(country);
+            stateProvince.setValue(state_province);
+        }
+    }
+
+    public void updateState() throws SQLException {
+
+        ObservableList<String> divisionsList = divisionDAO.getStatesProvinces(countryBox.getValue());
+        stateProvince.setItems(divisionsList);
+    }
+
+    /**
+     * NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "userId" is null
+     * forgot to implement updating the user in the updateApptFields method
+     * @throws SQLException sqlexceptions
+     */
+    public void applyUpdateAppt() throws SQLException {
+        Integer userID = userBox.getValue();
+        Integer customerID = customerBox.getValue();
+        Integer contactID = contactDAO.getContactID(contactBox.getValue());
+        appointmentDAO.updateAppt(Integer.valueOf(apptIDField.getText()),titleField.getText(),descriptionField.getText(),locationField.getText(),typeField.getText(),datePicker.getValue(),datePicker.getValue(), Timestamp.from(Instant.now()), userDAO.getUserInfo().getUserName(),customerID,userID,contactID);
+        appointmentTableView.setItems(Appointment.getAllAppointments());
+    }
+
+    public void applyUpdateCustomer() throws SQLException {
+
+        Integer customerID = Integer.valueOf(customerIDField.getText());
+        Integer divisionID = divisionDAO.getDivisionID(stateProvince.getValue());
+        String customerName = nameTextField.getText();
+        String address = addressTextField.getText();
+        String city = cityTextField.getText();
+//        String[] addressArray = address.split(", ",2);
+//        System.out.println(addressArray[1]);
+        String postalCode = postalTextField.getText();
+        String phoneNumber = phoneTextField.getText();
+        Timestamp lastUpdate = Timestamp.from(Instant.now());
+        String lastUpdatedby = userDAO.getUserInfo().getUserName();
+
+        customerDAO.updateCustomer(customerID,customerName,address, city, postalCode, phoneNumber, lastUpdate,lastUpdatedby,divisionID);
+        customerTableView.setItems(Customer.getAllCustomers());
+    }
+
+    public void clear() {
+        customerIDField.setText(null);
+        nameTextField.setText(null);
+        addressTextField.setText(null);
+        cityTextField.setText(null);
+        postalTextField.setText(null);
+        phoneTextField.setText(null);
+        countryBox.setValue(null);
+        stateProvince.setValue(null);
+        apptIDField.setText(null);
+        customerBox.setValue(null);
+        titleField.setText(null);
+        descriptionField.setText(null);
+        typeField.setText(null);
+        locationField.setText(null);
+        contactBox.setValue(null);
+        datePicker.setValue(null);
+        startTime.setValue(null);
+        endTime.setValue(null);
+        userBox.setValue(null);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setCycleCount(1);
+        fadeOut.setAutoReverse(false);
+
         try {
             customerTableView.setItems(Customer.getAllCustomers());
             customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
@@ -245,6 +414,12 @@ public class MainFormController implements Initializable {
             endCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
             customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
             userIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+            contactBox.setItems(contactDAO.getContactNames());
+            customerBox.setItems(customerDAO.getCustomerIDs());
+            userBox.setItems(userDAO.getUserIDs());
+            countryBox.setItems(divisionDAO.getCountries());
+
 
         } catch (SQLException e) {
             e.printStackTrace();

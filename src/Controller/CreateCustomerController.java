@@ -16,14 +16,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static Utilities.alertError.raiseAlert;
-
 
 public class CreateCustomerController implements Initializable {
     public TextField nameTextField;
@@ -35,8 +34,10 @@ public class CreateCustomerController implements Initializable {
     public ComboBox<String> stateProvince;
     public Button cancelButton;
     public Button createCustomer;
+    public TextField addressTextField1;
+    public TextField cityTextField;
+    public TextField townField;
     private ObservableList<String> countriesList = FXCollections.observableArrayList();
-    private ObservableList<String> divisionsList = FXCollections.observableArrayList();
 
     @FXML
     public void createCustomer(ActionEvent event) throws SQLException, IOException {
@@ -45,7 +46,7 @@ public class CreateCustomerController implements Initializable {
             raiseAlert("Error", "Customer fields cannot be empty", Alert.AlertType.ERROR);
         }
         else{
-            customerDAO.createCustomer(nameTextField.getText(), addressTextField.getText(), postalTextField.getText(), phoneTextField.getText(), countryBox.getSelectionModel().getSelectedItem(), stateProvince.getSelectionModel().getSelectedItem());
+            customerDAO.createCustomer(nameTextField.getText(), addressTextField.getText(), cityTextField.getText(), postalTextField.getText(), phoneTextField.getText(), stateProvince.getSelectionModel().getSelectedItem());
             MainFormController.mainMenu(event);
         }
 
@@ -53,7 +54,7 @@ public class CreateCustomerController implements Initializable {
 
     @FXML
     public void cancel(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/View/MainForm.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/MainForm.fxml")));
         Scene scene = new Scene(parent);
         Stage window = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -61,22 +62,23 @@ public class CreateCustomerController implements Initializable {
         window.show();
     }
 
-    public void updateState(ActionEvent event) throws SQLException {
+    public void updateState() throws SQLException {
 
-        divisionsList = divisionDAO.getStatesProvinces(countryBox.getValue());
+        ObservableList<String> divisionsList = divisionDAO.getStatesProvinces(countryBox.getValue());
         stateProvince.setItems(divisionsList);
+        townField.disableProperty();
+
     }
 
     /**
      * ERROR: NullPointerException: Cannot invoke "String.isEmpty()" because the return value of "javafx.scene.control.SingleSelectionModel.getSelectedItem()" is null
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             countriesList = divisionDAO.getCountries();
-            customerIDField.setText(String.valueOf(customerDAO.getCustomerID()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
