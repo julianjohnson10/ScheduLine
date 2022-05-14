@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="more commits">
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CreateAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateAppointmentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" afterDir="false" />
@@ -10,11 +10,13 @@
       <change beforePath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/contactDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/contactDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/customerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/userDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/alertBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/alertError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utilities/date_time.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/date_time.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/LoginForm.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/MainForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/MainForm.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,34 +96,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1650614327081</updated>
-    </task>
-    <task id="LOCAL-00001" summary="Initial Commit">
-      <created>1650617630201</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1650617630201</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Updated .gitignore">
-      <created>1651122926640</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1651122926640</updated>
-    </task>
-    <task id="LOCAL-00003" summary="added classes, and DAOs">
-      <created>1651214692574</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1651214692574</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Set language properties">
-      <created>1651221559743</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1651221559743</updated>
     </task>
     <task id="LOCAL-00005" summary="Testing Date logic">
       <created>1651221573167</created>
@@ -368,7 +342,105 @@
       <option name="project" value="LOCAL" />
       <updated>1652259103114</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="added error label method">
+      <created>1652345050922</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345050922</updated>
+    </task>
+    <task id="LOCAL-00041" summary="added getAllAppointments method">
+      <created>1652345072459</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345072459</updated>
+    </task>
+    <task id="LOCAL-00042" summary="updated sql to get all appts">
+      <created>1652345106475</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345106475</updated>
+    </task>
+    <task id="LOCAL-00043" summary="added getContactID method">
+      <created>1652345121132</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345121132</updated>
+    </task>
+    <task id="LOCAL-00044" summary="edited createAppt method">
+      <created>1652345144225</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345144225</updated>
+    </task>
+    <task id="LOCAL-00045" summary="minor tweaks">
+      <created>1652345163678</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345163678</updated>
+    </task>
+    <task id="LOCAL-00046" summary="added getAllCustomers method">
+      <created>1652345175382</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345175382</updated>
+    </task>
+    <task id="LOCAL-00047" summary="updated SQL">
+      <created>1652345186126</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345186126</updated>
+    </task>
+    <task id="LOCAL-00048" summary="minor edits">
+      <created>1652345198795</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345198795</updated>
+    </task>
+    <task id="LOCAL-00049" summary="renamed alertBox to alertError">
+      <created>1652345217834</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345217834</updated>
+    </task>
+    <task id="LOCAL-00050" summary="code comments">
+      <created>1652345231197</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345231198</updated>
+    </task>
+    <task id="LOCAL-00051" summary="removed unnecessary parent objects">
+      <created>1652345260241</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345260241</updated>
+    </task>
+    <task id="LOCAL-00052" summary="updated methods">
+      <created>1652345280970</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345280970</updated>
+    </task>
+    <task id="LOCAL-00053" summary="update">
+      <created>1652345299904</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1652345299904</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -383,19 +455,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added customerDAO" />
-    <MESSAGE value="added customer creation" />
-    <MESSAGE value="updated tableview" />
-    <MESSAGE value="added more CRUD functions" />
-    <MESSAGE value="updated login controller" />
-    <MESSAGE value="added more appointment methods" />
-    <MESSAGE value="renamed files" />
-    <MESSAGE value="removed password from printing" />
-    <MESSAGE value="edited Appointment class" />
-    <MESSAGE value="added createCustomer.java" />
-    <MESSAGE value="minor tweaks" />
-    <MESSAGE value="edited alertBox.java" />
-    <MESSAGE value="updated appt logic" />
     <MESSAGE value="updated forms" />
     <MESSAGE value="cleaning up" />
     <MESSAGE value="added create/delete functions" />
@@ -403,12 +462,25 @@
     <MESSAGE value="changed to using mainform" />
     <MESSAGE value="updated appointment queries" />
     <MESSAGE value="added date/time formats" />
-    <MESSAGE value="code comments" />
     <MESSAGE value="removed Simple Properties" />
     <MESSAGE value="added CreateCustomerController" />
     <MESSAGE value="added CreateCustomerForm" />
     <MESSAGE value="more commits" />
-    <option name="LAST_COMMIT_MESSAGE" value="more commits" />
+    <MESSAGE value="added error label method" />
+    <MESSAGE value="added getAllAppointments method" />
+    <MESSAGE value="updated sql to get all appts" />
+    <MESSAGE value="added getContactID method" />
+    <MESSAGE value="edited createAppt method" />
+    <MESSAGE value="minor tweaks" />
+    <MESSAGE value="added getAllCustomers method" />
+    <MESSAGE value="updated SQL" />
+    <MESSAGE value="minor edits" />
+    <MESSAGE value="renamed alertBox to alertError" />
+    <MESSAGE value="code comments" />
+    <MESSAGE value="removed unnecessary parent objects" />
+    <MESSAGE value="updated methods" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -421,6 +493,11 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="4" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Utilities/date_time.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
