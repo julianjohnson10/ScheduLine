@@ -38,11 +38,16 @@ public abstract class contactDAO {
     }
 
     public static int getContactID(String contact_name) throws SQLException {
-        String sqlStatement = "SELECT Contact_ID FROM contacts WHERE Contact_Name = ?";
+        String sqlStatement = "SELECT * FROM contacts WHERE Contact_Name = ?";
 
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         statement.setString(1, contact_name);
         ResultSet results = statement.executeQuery();
-        return results.getInt("Contact_ID");
+        int customerID = 0;
+        while (results.next()) {
+            customerID = results.getInt("Contact_ID");
+        }
+        return customerID;
+
     }
 }
