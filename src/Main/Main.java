@@ -3,15 +3,10 @@ package Main;
 import DAO.JDBC_Connector;
 import DAO.divisionDAO;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.*;
 import java.util.Locale;
 import java.util.Objects;
@@ -29,7 +24,8 @@ public class Main extends Application {
  * Runtime Exception: Location is required.
  * Wasn't pointing to the correct FXML file for the main form.
  */
-    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
+//    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.FRENCH);
 
     /**
      * ERROR: Exception in Application Start Method
@@ -55,13 +51,12 @@ public class Main extends Application {
         JDBC_Connector.openConnection();
 
         launch(args);
-        divisionDAO.getCountries();
+//        divisionDAO.getCountries();
 //        Date date = Date.valueOf(String.valueOf(LocalDate.now()));
 //        ZoneId zone = ZoneId.of("UTC");
 //        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now(zone));
 
-        LocalDate date = LocalDate.now(); // Use a date picker.
-        //        LocalTime time = LocalTime.of(01,16);
+        LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());
 
         LocalDateTime localDateTime = LocalDateTime.of(date, time);
@@ -69,18 +64,18 @@ public class Main extends Application {
         ZoneId zoneId = ZoneId.systemDefault();
         ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime,zoneId);
 
-        System.out.println(localDateTime);
-        System.out.println(zonedDateTime.toLocalDate()); // Local Date
-        System.out.println(zonedDateTime.toLocalTime()); // Local Time
-        System.out.println(zonedDateTime.toLocalDate().toString() + " " + zonedDateTime.toLocalTime().toString()); // Concatenation of dates and times.\
-        System.out.println("User's time: " + zonedDateTime);
+//        System.out.println(localDateTime);
+//        System.out.println(zonedDateTime.toLocalDate()); // Local Date
+//        System.out.println(zonedDateTime.toLocalTime()); // Local Time
+//        System.out.println(zonedDateTime.toLocalDate().toString() + " " + zonedDateTime.toLocalTime().toString()); // Concatenation of dates and times.\
+//        System.out.println("User's time: " + zonedDateTime);
 
-        ZoneId utcZone = ZoneId.of("UTC");
-        ZonedDateTime utcZonedDateTime = ZonedDateTime.ofInstant(zonedDateTime.toInstant(), utcZone);
-        System.out.println("Local Time to UTC: " + utcZonedDateTime);
-
-        zonedDateTime = ZonedDateTime.ofInstant(utcZonedDateTime.toInstant(),zoneId);
-        System.out.println("UTC To User Time: " + zonedDateTime);
+//        ZoneId utcZone = ZoneId.of("UTC");
+//        ZonedDateTime utcZonedDateTime = ZonedDateTime.ofInstant(zonedDateTime.toInstant(), utcZone);
+//        System.out.println("Local Time to UTC: " + utcZonedDateTime);
+//
+//        zonedDateTime = ZonedDateTime.ofInstant(utcZonedDateTime.toInstant(),zoneId);
+//        System.out.println("UTC To User Time: " + zonedDateTime);
         JDBC_Connector.closeConnection();
     }
 }

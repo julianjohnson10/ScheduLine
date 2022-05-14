@@ -15,11 +15,14 @@ public class Customer {
     private String address;
     private String postalCode;
     private String phoneNumber;
+    private String country;
     private LocalDate createDate;
     private String createdBy;
     private Timestamp lastUpdate;
     private String lastUpdatedBy;
     private int divID;
+    private String stateProvince;
+    private String city;
 
     public Customer() {
 
@@ -41,6 +44,9 @@ public class Customer {
     public int getCustomerID(){
         return customerID;
     }
+    public String getStateProvince(){
+        return stateProvince;
+    }
 
     public String getCustomerName(){
         return customerName;
@@ -57,6 +63,14 @@ public class Customer {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
 
     public LocalDate getCreateDate() {
         return createDate;
@@ -116,5 +130,17 @@ public class Customer {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public void setCountry(String country){
+        this.country = country;
+    }
+
+    public void setStateProvince(String stateProvince) {
+        this.stateProvince = stateProvince;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
