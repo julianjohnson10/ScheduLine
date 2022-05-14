@@ -15,6 +15,12 @@ public class date_time {
     }
 
     public static ObservableList<LocalTime> timeList = FXCollections.observableArrayList();
+
+    public static ObservableList<LocalTime> getTimeList(){
+        timeList.add(LocalTime.now());
+        return null;
+    }
+
 //
 //    public static ObservableList<LocalTime> getTimeList{
 //
