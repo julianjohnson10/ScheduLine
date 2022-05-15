@@ -4,8 +4,10 @@ import DAO.JDBC_Connector;
 import DAO.divisionDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.time.*;
 import java.util.Locale;
@@ -24,8 +26,8 @@ public class Main extends Application {
  * Runtime Exception: Location is required.
  * Wasn't pointing to the correct FXML file for the main form.
  */
-//    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
-    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.FRENCH);
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
+//    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.FRENCH); Use this for French test. Changes the title.
 
     /**
      * ERROR: Exception in Application Start Method
@@ -40,10 +42,10 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/LoginForm.fxml")));
         stage.setTitle(resourceBundle.getString("Header"));
-        stage.setScene(new Scene(root));
         stage.centerOnScreen();
-        stage.show();
+        stage.setScene(new Scene(root));
         stage.setResizable(false);
+        stage.show();
     }
 
     public static void main(String[] args) throws Exception {

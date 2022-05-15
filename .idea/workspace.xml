@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="update">
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="setting up date logic">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CreateAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateAppointmentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MainFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/contactDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/contactDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/customerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/userDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/date_time.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/date_time.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilities/alertError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/alertError.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/LoginForm.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/MainForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/MainForm.fxml" afterDir="false" />
     </list>
@@ -96,55 +94,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1650614327081</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Testing Date logic">
-      <created>1651221573167</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1651221573167</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Finished Login logic. Validated using BIND variables.">
-      <created>1651302137743</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1651302137743</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Building FXML for schedule form.">
-      <created>1651302177022</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1651302177022</updated>
-    </task>
-    <task id="LOCAL-00008" summary="updated appointment class">
-      <created>1651302199501</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1651302199501</updated>
-    </task>
-    <task id="LOCAL-00009" summary="updated Main. updated user DAO.">
-      <created>1651302221637</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1651302221637</updated>
-    </task>
-    <task id="LOCAL-00010" summary="added customerDAO">
-      <created>1651384024589</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1651384024589</updated>
-    </task>
-    <task id="LOCAL-00011" summary="added customer creation">
-      <created>1651473148109</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1651473148109</updated>
     </task>
     <task id="LOCAL-00012" summary="updated tableview">
       <created>1651473162039</created>
@@ -440,7 +389,56 @@
       <option name="project" value="LOCAL" />
       <updated>1652345299904</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="updated appointments logic">
+      <created>1652572424463</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1652572424463</updated>
+    </task>
+    <task id="LOCAL-00055" summary="updated DAOs">
+      <created>1652572439772</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1652572439772</updated>
+    </task>
+    <task id="LOCAL-00056" summary="updated controller logic">
+      <created>1652572457589</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1652572457589</updated>
+    </task>
+    <task id="LOCAL-00057" summary="updated languages">
+      <created>1652572472912</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1652572472912</updated>
+    </task>
+    <task id="LOCAL-00058" summary="updated forms">
+      <created>1652572487973</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1652572487973</updated>
+    </task>
+    <task id="LOCAL-00059" summary="updated customer.java and main">
+      <created>1652572497752</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1652572497752</updated>
+    </task>
+    <task id="LOCAL-00060" summary="setting up date logic">
+      <created>1652572512140</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1652572512140</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -455,13 +453,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated forms" />
-    <MESSAGE value="cleaning up" />
-    <MESSAGE value="added create/delete functions" />
-    <MESSAGE value="added daos" />
-    <MESSAGE value="changed to using mainform" />
-    <MESSAGE value="updated appointment queries" />
-    <MESSAGE value="added date/time formats" />
     <MESSAGE value="removed Simple Properties" />
     <MESSAGE value="added CreateCustomerController" />
     <MESSAGE value="added CreateCustomerForm" />
@@ -480,7 +471,14 @@
     <MESSAGE value="removed unnecessary parent objects" />
     <MESSAGE value="updated methods" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="updated appointments logic" />
+    <MESSAGE value="updated DAOs" />
+    <MESSAGE value="updated controller logic" />
+    <MESSAGE value="updated languages" />
+    <MESSAGE value="updated forms" />
+    <MESSAGE value="updated customer.java and main" />
+    <MESSAGE value="setting up date logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="setting up date logic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

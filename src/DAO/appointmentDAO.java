@@ -62,6 +62,112 @@ public abstract class appointmentDAO {
         return apptsList;
     }
 
+
+    private static Integer getWeekNumber() throws SQLException {
+        String sql = "SELECT WEEK(CURDATE())";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet rs = statement.executeQuery();
+        rs.next();
+        return rs.getInt(1);
+    }
+
+    private static Integer getMonthNumber() throws SQLException {
+        String sql = "SELECT MONTH(CURDATE())";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet rs = statement.executeQuery();
+        rs.next();
+        return rs.getInt(1);
+    }
+
+    public static ObservableList<Appointment> getWeekly() throws SQLException {
+        Integer weekNumber = getWeekNumber();
+        String sqlStatement = "SELECT * FROM appointments LEFT JOIN contacts ON contacts.Contact_ID = appointments.Contact_ID WHERE WEEK(Start) = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        statement.setInt(1,weekNumber);
+        ResultSet results = statement.executeQuery();
+        ObservableList<Appointment> apptsList = FXCollections.observableArrayList();
+
+        while (results.next()) {
+            Appointment appointment = new Appointment();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            appointment.setApptId(results.getInt("Appointment_ID"));
+            appointment.setTitle(results.getString("Title"));
+            appointment.setDescription(results.getString("Description"));
+            appointment.setLocation(results.getString("Location"));
+            appointment.setContactName(results.getString("Contact_Name"));
+            appointment.setType(results.getString("Type"));
+
+//            LocalDate startDate = ((LocalDate) results.getObject("Start"));
+//            System.out.println(startDate);
+
+//            appointment.setStartDate(startDate);
+
+            LocalDateTime endDate = (LocalDateTime) results.getObject("End");
+
+////            appointment.setEndDate(endDate);
+//            System.out.println(results.getString("End"));
+////            System.out.println(end_dateZ);
+//            System.out.println(endDate);
+
+            appointment.setCustomerId(results.getInt("Customer_ID"));
+            appointment.setUserId(results.getInt("User_ID"));
+            appointment.setContactId(results.getInt("Contact_ID"));
+
+            Appointment.addAppointment(appointment);
+
+            apptsList.add(appointment);
+        }
+        return apptsList;
+    }
+
+    public static ObservableList<Appointment> getMonthly() throws SQLException {
+        Integer monthNumber = getMonthNumber();
+        String sqlStatement = "SELECT * FROM appointments LEFT JOIN contacts ON contacts.Contact_ID = appointments.Contact_ID WHERE MONTH(Start) = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        statement.setInt(1,monthNumber);
+        ResultSet results = statement.executeQuery();
+        ObservableList<Appointment> apptsList = FXCollections.observableArrayList();
+
+        while (results.next()) {
+            Appointment appointment = new Appointment();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            appointment.setApptId(results.getInt("Appointment_ID"));
+            appointment.setTitle(results.getString("Title"));
+            appointment.setDescription(results.getString("Description"));
+            appointment.setLocation(results.getString("Location"));
+            appointment.setContactName(results.getString("Contact_Name"));
+            appointment.setType(results.getString("Type"));
+
+//            LocalDate startDate = ((LocalDate) results.getObject("Start"));
+//            System.out.println(startDate);
+
+//            appointment.setStartDate(startDate);
+
+            LocalDateTime endDate = (LocalDateTime) results.getObject("End");
+
+////            appointment.setEndDate(endDate);
+//            System.out.println(results.getString("End"));
+////            System.out.println(end_dateZ);
+//            System.out.println(endDate);
+
+            appointment.setCustomerId(results.getInt("Customer_ID"));
+            appointment.setUserId(results.getInt("User_ID"));
+            appointment.setContactId(results.getInt("Contact_ID"));
+
+            Appointment.addAppointment(appointment);
+
+            apptsList.add(appointment);
+        }
+        return apptsList;
+    }
+
+
+
+
     /**
      * ERROR: SQLException: Column count doesn't match value count at row 1. Forgot to update the sqlStatement String with the correct columns and bind parameters.
      * @param Title
@@ -154,5 +260,4 @@ public abstract class appointmentDAO {
         }
         return apptID;
     }
-
 }

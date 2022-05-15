@@ -16,6 +16,7 @@ public class alertError {
     public static Optional<ButtonType> raiseAlert(String title, String message, AlertType alertType){
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
+        alert.setHeaderText(alertType.toString());
         alert.setContentText(message);
         return alert.showAndWait();
     }

@@ -18,17 +18,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -115,7 +112,6 @@ public class MainFormController implements Initializable {
     public Tab appointmentTab;
     public ComboBox<String> countryBox;
     public TableColumn<Appointment, String> contactCol;
-    public TabPane tabPane;
     public TextField apptIDField;
     public ComboBox<Integer> customerBox;
     public TextField titleField;
@@ -138,9 +134,15 @@ public class MainFormController implements Initializable {
     public ComboBox<Integer> userBox;
     public Button clearCustomer;
     public Label deletedLabel;
+    public TabPane tabPane;
 
     private final FadeTransition fadeOut = new FadeTransition(Duration.seconds(4.0));
     public Label deletedLabelAppt;
+    public RadioButton allRadio;
+    public RadioButton weekRadio;
+    public RadioButton monthRadio;
+    public ToggleGroup toggleGroup;
+    public TextField townField;
 
 
     @FXML
@@ -200,24 +202,22 @@ public class MainFormController implements Initializable {
      * ERROR: Runtime Exception: Error resolving onAction='#createAppt'
      */
     @FXML
-    public void createCustomerMenu(ActionEvent event) throws IOException {
+    private void createCustomerMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/CreateCustomerForm.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.centerOnScreen();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
+        stage.centerOnScreen();
     }
 
     @FXML
-    public void createApptMenu(ActionEvent event) throws IOException {
+    private void createApptMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/CreateAppointmentForm.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.centerOnScreen();
+        stage.setScene(new Scene(root));
         stage.show();
-        tabPane.getSelectionModel().selectedItemProperty();
+        stage.centerOnScreen();
     }
 
     /**
@@ -229,15 +229,10 @@ public class MainFormController implements Initializable {
     public static void mainMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/MainForm.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.centerOnScreen();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
-    }
-
-    @FXML
-    public void updateAppt(){
-
+        stage.centerOnScreen();
     }
 
     /**
@@ -256,8 +251,6 @@ public class MainFormController implements Initializable {
         }
     }
 
-
-
     public void updateApptFields() {
         Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
         if(selectedAppointment != null){
@@ -271,7 +264,6 @@ public class MainFormController implements Initializable {
             String contact = selectedAppointment.getContactName();
 
             LocalDate date = selectedAppointment.getStartDate();
-            System.out.println(date);
 
             apptIDField.setText(String.valueOf(apptId));
             customerBox.setValue(customerID);
@@ -299,38 +291,64 @@ public class MainFormController implements Initializable {
             Integer customerID = selectedCustomer.getCustomerID();
             String state_province = selectedCustomer.getStateProvince();
             String customerName = selectedCustomer.getCustomerName();
-            String address = selectedCustomer.getAddress();
-
-            if (address.contains(",")) {
-                String[] addRegex = address.split(", ", 2);
-                String newAddress = addRegex[0];
-                String city = addRegex[1];
-                addressTextField.setText(newAddress);
-                cityTextField.setText(city);
-            }
-            else{
-                addressTextField.setText(address);
-            }
-
-
+            String address = selectedCustomer.getAddress().trim();
             String postalCode = selectedCustomer.getPostalCode();
             String phone = selectedCustomer.getPhoneNumber();
             String country = selectedCustomer.getCountry();
-            Integer divisionID = selectedCustomer.getDivID();
-            customerIDField.setText(String.valueOf(customerID));
-            nameTextField.setText(customerName);
 
-            postalTextField.setText(postalCode);
-            phoneTextField.setText(phone);
             countryBox.setValue(country);
             stateProvince.setValue(state_province);
+
+            if(!Objects.equals(countryBox.getValue(), "UK")){
+                townField.clear();
+                townField.setDisable(true);
+            }
+
+            if (address.contains(",")) {
+                String[] addRegex = address.split(", ", 3);
+                String newAddress = addRegex[0].trim();
+
+
+                String town = null;
+                String city = null;
+                try {
+                    city = addRegex[1].trim();
+                    town = addRegex[2].trim();
+                } catch (Exception ignored) {
+                }
+                addressTextField.setText(newAddress);
+                cityTextField.setText(city);
+                townField.setText(town);
+            }
+            else{
+                addressTextField.setText(address);
+                townField.clear();
+                cityTextField.clear();
+            }
+
+            customerIDField.setText(String.valueOf(customerID));
+            nameTextField.setText(customerName);
+            postalTextField.setText(postalCode);
+            phoneTextField.setText(phone);
+        }
+        else {
+            raiseAlert("Select a customer:", "Please select a customer to update.", Alert.AlertType.INFORMATION);
         }
     }
 
     public void updateState() throws SQLException {
-
         ObservableList<String> divisionsList = divisionDAO.getStatesProvinces(countryBox.getValue());
         stateProvince.setItems(divisionsList);
+
+        if(Objects.equals(countryBox.getValue(), "UK")){
+            System.out.println("UK");
+            townField.setDisable(false);
+        }
+        else if((Objects.equals(countryBox.getValue(), "U.S")|(Objects.equals(countryBox.getValue(), "Canada")))){
+            townField.clear();
+            townField.setDisable(true);
+        }
+
     }
 
     /**
@@ -353,14 +371,12 @@ public class MainFormController implements Initializable {
         String customerName = nameTextField.getText();
         String address = addressTextField.getText();
         String city = cityTextField.getText();
-//        String[] addressArray = address.split(", ",2);
-//        System.out.println(addressArray[1]);
+        String town = townField.getText();
         String postalCode = postalTextField.getText();
         String phoneNumber = phoneTextField.getText();
         Timestamp lastUpdate = Timestamp.from(Instant.now());
         String lastUpdatedby = userDAO.getUserInfo().getUserName();
-
-        customerDAO.updateCustomer(customerID,customerName,address, city, postalCode, phoneNumber, lastUpdate,lastUpdatedby,divisionID);
+        customerDAO.updateCustomer(customerID,customerName,address, city, town, postalCode, phoneNumber, lastUpdate,lastUpdatedby,divisionID);
         customerTableView.setItems(Customer.getAllCustomers());
     }
 
@@ -384,6 +400,22 @@ public class MainFormController implements Initializable {
         startTime.setValue(null);
         endTime.setValue(null);
         userBox.setValue(null);
+        townField.setText(null);
+    }
+
+    public void allFilter() throws SQLException {
+        appointmentTableView.setPlaceholder(new Label("There are no appointments in the database. Click the 'Create Appointment' button below to add one."));
+        appointmentTableView.setItems(Appointment.getAllAppointments());
+    }
+
+    public void weekFilter() throws SQLException {
+        appointmentTableView.setPlaceholder(new Label("There are no appointments scheduled for this week."));
+        appointmentTableView.setItems(Appointment.getWeekly());
+    }
+
+    public void monthFilter() throws SQLException {
+        appointmentTableView.setPlaceholder(new Label("There are no appointments scheduled for this month."));
+        appointmentTableView.setItems(Appointment.getMonthly());
     }
 
     @Override
@@ -393,6 +425,8 @@ public class MainFormController implements Initializable {
         fadeOut.setToValue(0.0);
         fadeOut.setCycleCount(1);
         fadeOut.setAutoReverse(false);
+
+        customerTableView.setPlaceholder(new Label("There are no customers in the database. Click the 'Create Customer' button below to add one."));
 
         try {
             customerTableView.setItems(Customer.getAllCustomers());

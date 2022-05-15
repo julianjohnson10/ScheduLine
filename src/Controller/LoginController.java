@@ -29,7 +29,7 @@ public class LoginController implements Initializable {
     public static Integer userId;
     public Label tzLabel;
 
-    ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.FRENCH);
 
     @FXML
     private void exitPlatform(){
@@ -75,12 +75,11 @@ public class LoginController implements Initializable {
      * Can't find resource for bundle java.util.PropertyResourceBundle, key Time Zone
      * Fix: Accidentally added a space. The resourceBundle calls the Time Zone as "TimeZone"
      * @param url url
-     * @param resourceBundle resourceBundle for the language conversions
+     * @param rb resourceBundle
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        Locale french_test = Locale.FRENCH;
-        resourceBundle = ResourceBundle.getBundle("Utilities/Nat", french_test);
+    public void initialize(URL url, ResourceBundle rb) {
+
         uidLabel.setText(resourceBundle.getString("User_ID") + ":");
         pwdLabel.setText(resourceBundle.getString("Password") + ":");
         loginButton.setText(resourceBundle.getString("LoginButton"));

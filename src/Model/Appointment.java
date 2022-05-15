@@ -30,6 +30,16 @@ public class Appointment {
         allAppointments.setAll(appts);
         return allAppointments;
     }
+    public static ObservableList<Appointment> getWeekly() throws SQLException {
+        ObservableList<Appointment> appts = appointmentDAO.getWeekly();
+        allAppointments.setAll(appts);
+        return allAppointments;
+    }
+    public static ObservableList<Appointment> getMonthly() throws SQLException {
+        ObservableList<Appointment> appts = appointmentDAO.getMonthly();
+        allAppointments.setAll(appts);
+        return allAppointments;
+    }
 
     public static void addAppointment(Appointment newAppointment) {
         allAppointments.add(newAppointment);

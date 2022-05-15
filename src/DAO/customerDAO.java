@@ -1,5 +1,7 @@
 package DAO;
 
+import Controller.MainFormController;
+import Main.Main;
 import Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +29,9 @@ public abstract class customerDAO {
             Customer customer = new Customer();
             customer.setCustomerID(results.getInt("Customer_ID"));
             customer.setCustomerName(results.getString("Customer_Name"));
+
             customer.setAddress(results.getString("Address"));
+
             customer.setPostalCode(results.getString("Postal_Code"));
             customer.setCountry(results.getString("Country"));
             customer.setStateProvince(results.getString("Division"));
@@ -45,53 +49,62 @@ public abstract class customerDAO {
         statement.executeUpdate();
     }
 
-    public static void createCustomer(String customer_name, String address, String city, String postal_code, String phone, String division) throws SQLException {
+    public static void createCustomer(String customer_name, String address, String city, String town, String postal_code, String phone, String division) throws SQLException {
 
         LocalDate date = LocalDate.now(); // Use a date picker.
         LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());
         LocalDate localDateTime = LocalDate.from(LocalDateTime.of(date, time));
 
-        String newAddress = address.trim() + ", " + city;
+        String newAddress = address.trim();
+        String newCity = city.trim();
+        String newTown = town.trim();
 
         String sqlStatement = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
 
         statement.setString(1, customer_name);
 
-        statement.setString(2, newAddress);
+        if(town.isEmpty()){
+            statement.setString(2, newAddress + ", " + city.trim());
+        }
+        else {
+            statement.setString(2, newAddress + ", " + city.trim() + ", " + town.trim());
+        }
+
         statement.setString(3, postal_code);
         statement.setString(4, phone);
         statement.setObject(5, LocalDateTime.now());
-
         statement.setString(6, userDAO.getUserInfo().getUserName());
         statement.setObject(7, LocalDateTime.now());
         statement.setString(8, userDAO.getUserInfo().getUserName());
         statement.setInt(9, divisionDAO.getDivisionID(division));
 
-
         Customer customer = new Customer();
         customer.setCustomerName(customer_name);
-        customer.setAddress(newAddress);
         customer.setPostalCode(postal_code);
         customer.setPhoneNumber(phone);
-
         customer.setCreateDate(localDateTime);
-//        customer.setCreatedBy(createdBy);
         customer.setLastUpdate(Timestamp.from(Instant.now()));
-//        customer.setLastUpdatedBy(lastUpdatedBy);
-//        customer.setDivID(divID);
         Customer.addCustomer(customer);
-
-
         statement.executeUpdate();
     }
 
-    public static void updateCustomer(Integer customerID, String Customer_Name, String Address, String city, String postal_code, String phone, Timestamp last_update, String last_updated_by, Integer divisionID) throws SQLException {
+    public static void updateCustomer(Integer customerID, String Customer_Name, String Address, String city, String town, String postal_code, String phone, Timestamp last_update, String last_updated_by, Integer divisionID) throws SQLException {
         String sqlStatement = "UPDATE Customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
-
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         statement.setString(1, Customer_Name);
-        statement.setString(2, Address + ", " + city);
+
+
+        if(town == null){
+            statement.setString(2, Address.trim() + ", " + city.trim());
+        }
+        else if(town.isEmpty()){
+            statement.setString(2, Address.trim() + ", " + city.trim());
+        }
+        else {
+            statement.setString(2, Address.trim() + ", " + city.trim() + ", " + town.trim());
+        }
+
         statement.setString(3, postal_code);
         statement.setString(4, phone);
         statement.setTimestamp(5, last_update);
