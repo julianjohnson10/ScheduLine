@@ -35,7 +35,6 @@ public abstract class divisionDAO {
 
         while (results.next()) {
             statesProvincesList.add(results.getString("Division"));
-            System.out.println(results.getString("Division"));
         }
         return statesProvincesList;
     }

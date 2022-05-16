@@ -3,6 +3,7 @@ package DAO;
 import Controller.MainFormController;
 import Main.Main;
 import Model.Customer;
+import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
@@ -74,9 +75,9 @@ public abstract class customerDAO {
         statement.setString(3, postal_code);
         statement.setString(4, phone);
         statement.setObject(5, LocalDateTime.now());
-        statement.setString(6, userDAO.getUserInfo().getUserName());
+        statement.setString(6, User.getUser().getUserName());
         statement.setObject(7, LocalDateTime.now());
-        statement.setString(8, userDAO.getUserInfo().getUserName());
+        statement.setString(8, User.getUser().getUserName());
         statement.setInt(9, divisionDAO.getDivisionID(division));
 
         Customer customer = new Customer();
