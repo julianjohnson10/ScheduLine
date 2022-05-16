@@ -7,9 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.ZoomEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -53,31 +55,17 @@ public class Main extends Application {
         JDBC_Connector.openConnection();
 
         launch(args);
-//        divisionDAO.getCountries();
-//        Date date = Date.valueOf(String.valueOf(LocalDate.now()));
-//        ZoneId zone = ZoneId.of("UTC");
-//        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now(zone));
 
-        LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.ofSecondOfDay(LocalTime.now().toSecondOfDay());
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime localTime = LocalTime.parse(LocalTime.now().format(formatter));
+        LocalDateTime localDateTime = LocalDateTime.of(localDate,localTime);
+//        ZoneId myZone = ZoneId.of("US/Eastern");
+        ZoneId myZone = ZoneId.systemDefault();
+//        ZoneId estZone = ZoneId.of("America/New York"); // Get EST time
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, myZone);
+        System.out.println(zonedDateTime);
 
-        LocalDateTime localDateTime = LocalDateTime.of(date, time);
-
-        ZoneId zoneId = ZoneId.systemDefault();
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime,zoneId);
-
-//        System.out.println(localDateTime);
-//        System.out.println(zonedDateTime.toLocalDate()); // Local Date
-//        System.out.println(zonedDateTime.toLocalTime()); // Local Time
-//        System.out.println(zonedDateTime.toLocalDate().toString() + " " + zonedDateTime.toLocalTime().toString()); // Concatenation of dates and times.\
-//        System.out.println("User's time: " + zonedDateTime);
-
-//        ZoneId utcZone = ZoneId.of("UTC");
-//        ZonedDateTime utcZonedDateTime = ZonedDateTime.ofInstant(zonedDateTime.toInstant(), utcZone);
-//        System.out.println("Local Time to UTC: " + utcZonedDateTime);
-//
-//        zonedDateTime = ZonedDateTime.ofInstant(utcZonedDateTime.toInstant(),zoneId);
-//        System.out.println("UTC To User Time: " + zonedDateTime);
         JDBC_Connector.closeConnection();
     }
 }

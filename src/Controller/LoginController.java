@@ -1,7 +1,9 @@
 package Controller;
 
 import DAO.userDAO;
+import Model.User;
 import Utilities.Locales;
+import Utilities.activityLogger;
 import Utilities.alertError;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -56,14 +58,20 @@ public class LoginController implements Initializable {
         //run a query on both username and password to determine if they match in the database.
 
         if(userDAO.getLogin(userId, password)){
+            
 
             errorLabel.setText(resourceBundle.getString("LoginSuccess"));
-
             MainFormController.mainMenu(actionEvent);
+            
         }
         else {
             errorLabel.setText(resourceBundle.getString("LoginError"));
         }
+        User loggedInUser = new User();
+        loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
+        loggedInUser.setUserId(userId);
+        User.addUser(loggedInUser);
+        activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId,password));
     }
 
     public static Integer getUserID(){
@@ -87,15 +95,6 @@ public class LoginController implements Initializable {
         exitButton.setText(resourceBundle.getString("Cancel"));
         headerLabel.setText(resourceBundle.getString("Header"));
         tzLabel.setText(resourceBundle.getString("TimeZone") + ":");
-
-
-//        if(Objects.equals(Locales.getLanguage(), "en")){
-//            System.out.println("Current Language: English");
-//
-//        }
-//        else if (Objects.equals(Locales.getLanguage(), "fr")){
-//            System.out.println("Current Language: English");
-//        }
     }
 
 }
