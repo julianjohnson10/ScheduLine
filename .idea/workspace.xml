@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="setting up date logic">
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="updaetd main form">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CreateAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateAppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MainFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/customerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/alertError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/alertError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/LoginForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/MainForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/MainForm.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/userDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +38,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="28928sCcoKq5dMDVbf0rzv7Yf6O" />
   <component name="ProjectViewState">

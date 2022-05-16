@@ -360,7 +360,7 @@ public class MainFormController implements Initializable {
         Integer userID = userBox.getValue();
         Integer customerID = customerBox.getValue();
         Integer contactID = contactDAO.getContactID(contactBox.getValue());
-        appointmentDAO.updateAppt(Integer.valueOf(apptIDField.getText()),titleField.getText(),descriptionField.getText(),locationField.getText(),typeField.getText(),datePicker.getValue(),datePicker.getValue(), Timestamp.from(Instant.now()), userDAO.getUserInfo(userID).getUserName(),customerID,userID,contactID);
+        appointmentDAO.updateAppt(Integer.valueOf(apptIDField.getText()),titleField.getText(),descriptionField.getText(),locationField.getText(),typeField.getText(),datePicker.getValue(),datePicker.getValue(), Timestamp.from(Instant.now()), User.getUser().getUserName(), customerID,userID,contactID);
         appointmentTableView.setItems(Appointment.getAllAppointments());
     }
 
@@ -375,7 +375,7 @@ public class MainFormController implements Initializable {
         String postalCode = postalTextField.getText();
         String phoneNumber = phoneTextField.getText();
         Timestamp lastUpdate = Timestamp.from(Instant.now());
-        String lastUpdatedby = userDAO.getUserInfo(userID).getUserName();
+        String lastUpdatedby = User.getUser().getUserName();
         customerDAO.updateCustomer(customerID,customerName,address, city, town, postalCode, phoneNumber, lastUpdate,lastUpdatedby,divisionID);
         customerTableView.setItems(Customer.getAllCustomers());
     }

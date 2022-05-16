@@ -28,9 +28,8 @@ public class LoginController implements Initializable {
     public Label uidLabel;
     public Label pwdLabel;
     public Label headerLabel;
-    public static Integer userId;
     public Label tzLabel;
-
+    public static Integer userId;
     ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.FRENCH);
 
     @FXML
@@ -55,27 +54,33 @@ public class LoginController implements Initializable {
         userId = Integer.parseInt(userIDField.getText());
         //get text in password form.
         String password = passwordField.getText();
-        //run a query on both username and password to determine if they match in the database.
 
+        User loggedInUser = new User();
         if(userDAO.getLogin(userId, password)){
-            
+
+
+            loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
+            loggedInUser.setUserId(userId);
+            User.addUser(loggedInUser);
 
             errorLabel.setText(resourceBundle.getString("LoginSuccess"));
+
+            activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId,password));
             MainFormController.mainMenu(actionEvent);
-            
         }
         else {
+            if(userDAO.checkUser(userId)){
+                loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
+                loggedInUser.setUserId(userId);
+                User.addUser(loggedInUser);
+
+                errorLabel.setText(resourceBundle.getString("LoginError"));
+                activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId,password));
+            }
             errorLabel.setText(resourceBundle.getString("LoginError"));
         }
-        User loggedInUser = new User();
-        loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
-        loggedInUser.setUserId(userId);
-        User.addUser(loggedInUser);
-        activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId,password));
-    }
 
-    public static Integer getUserID(){
-        return userId;
+
     }
 
     /**

@@ -21,18 +21,12 @@ public abstract class userDAO {
         statement.setString(2, password);
         ResultSet results = statement.executeQuery();
 
-        try {
-            if (results.next()) {
-                return true;
-            } else if (!results.next()) {
-                return false;
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(results.next()){
+            return true;
         }
-        return false;
+        else {
+            return false;
+        }
     }
 
     public static User getUserInfo() throws SQLException {
@@ -109,6 +103,15 @@ public abstract class userDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static boolean checkUser(Integer userId) throws SQLException {
+        String sqlStatement = "SELECT * FROM users WHERE User_ID = ?";
+        PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+
+        return resultSet.next();
     }
 }
 

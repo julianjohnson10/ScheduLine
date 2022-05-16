@@ -1,10 +1,7 @@
 package Model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 public class User {
-    private static final ObservableList<User> currentUser = FXCollections.observableArrayList();
+    private static User currentUser;
     /**
      * Forgot to change these to public, in order to be accessed by all objects.
      */
@@ -16,10 +13,10 @@ public class User {
     }
 
     public static void addUser(User newUser){
-        currentUser.add(newUser);
+        currentUser = newUser;
     }
 
-    public static ObservableList<User> getUser() {
+    public static User getUser() {
         return currentUser;
     }
 
