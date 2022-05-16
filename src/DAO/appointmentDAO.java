@@ -81,7 +81,7 @@ public abstract class appointmentDAO {
 
     public static ObservableList<Appointment> getWeekly() throws SQLException {
         Integer weekNumber = getWeekNumber();
-        String sqlStatement = "SELECT * FROM appointments LEFT JOIN contacts ON contacts.Contact_ID = appointments.Contact_ID WHERE WEEK(Start) = ?";
+        String sqlStatement = "SELECT * FROM appointments LEFT JOIN contacts ON contacts.Contact_ID = appointments.Contact_ID WHERE WEEK(Start) = ? AND YEAR(Start) = YEAR(CURDATE())";
 
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         statement.setInt(1,weekNumber);
@@ -124,7 +124,7 @@ public abstract class appointmentDAO {
 
     public static ObservableList<Appointment> getMonthly() throws SQLException {
         Integer monthNumber = getMonthNumber();
-        String sqlStatement = "SELECT * FROM appointments LEFT JOIN contacts ON contacts.Contact_ID = appointments.Contact_ID WHERE MONTH(Start) = ?";
+        String sqlStatement = "SELECT * FROM appointments LEFT JOIN contacts ON contacts.Contact_ID = appointments.Contact_ID WHERE MONTH(Start) = ? AND YEAR(Start) = YEAR(CURDATE())";
 
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         statement.setInt(1,monthNumber);
@@ -191,11 +191,10 @@ public abstract class appointmentDAO {
         statement.setObject(5, apptDate);
         statement.setObject(6, LocalDate.now());
         statement.setObject(7, LocalDateTime.now());
-        statement.setString(8, userDAO.getUserInfo().getUserName());
+        statement.setString(8, User.getUser().getUserName());
         statement.setObject(9, LocalDateTime.now());
-        statement.setString(10, userDAO.getUserInfo().getUserName());
-        statement.setInt(11,
-                customerID);
+        statement.setString(10, User.getUser().getUserName());
+        statement.setInt(11, customerID);
         statement.setInt(12, userID);
         statement.setInt(13, contactID);
 

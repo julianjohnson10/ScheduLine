@@ -4,6 +4,8 @@ import DAO.appointmentDAO;
 import DAO.contactDAO;
 import DAO.customerDAO;
 import DAO.userDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +14,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import static Utilities.alertError.raiseAlert;
@@ -102,12 +107,13 @@ public class CreateAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
             contactBox.setItems(contactDAO.getContactNames());
             customerBox.setItems(customerDAO.getCustomerIDs());
             userBox.setItems(userDAO.getUserIDs());
+
             startTime.setValue(LocalTime.now());
+
             endTime.setValue(LocalTime.now());
 
         } catch (SQLException e) {
