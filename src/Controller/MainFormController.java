@@ -4,6 +4,7 @@ import DAO.*;
 import Main.Main;
 import Model.Appointment;
 import Model.Customer;
+import Model.User;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
@@ -341,7 +342,6 @@ public class MainFormController implements Initializable {
         stateProvince.setItems(divisionsList);
 
         if(Objects.equals(countryBox.getValue(), "UK")){
-            System.out.println("UK");
             townField.setDisable(false);
         }
         else if((Objects.equals(countryBox.getValue(), "U.S")|(Objects.equals(countryBox.getValue(), "Canada")))){
@@ -360,12 +360,12 @@ public class MainFormController implements Initializable {
         Integer userID = userBox.getValue();
         Integer customerID = customerBox.getValue();
         Integer contactID = contactDAO.getContactID(contactBox.getValue());
-        appointmentDAO.updateAppt(Integer.valueOf(apptIDField.getText()),titleField.getText(),descriptionField.getText(),locationField.getText(),typeField.getText(),datePicker.getValue(),datePicker.getValue(), Timestamp.from(Instant.now()), userDAO.getUserInfo().getUserName(),customerID,userID,contactID);
+        appointmentDAO.updateAppt(Integer.valueOf(apptIDField.getText()),titleField.getText(),descriptionField.getText(),locationField.getText(),typeField.getText(),datePicker.getValue(),datePicker.getValue(), Timestamp.from(Instant.now()), userDAO.getUserInfo(userID).getUserName(),customerID,userID,contactID);
         appointmentTableView.setItems(Appointment.getAllAppointments());
     }
 
     public void applyUpdateCustomer() throws SQLException {
-
+        Integer userID = User.getUser().getUserId();
         Integer customerID = Integer.valueOf(customerIDField.getText());
         Integer divisionID = divisionDAO.getDivisionID(stateProvince.getValue());
         String customerName = nameTextField.getText();
@@ -375,7 +375,7 @@ public class MainFormController implements Initializable {
         String postalCode = postalTextField.getText();
         String phoneNumber = phoneTextField.getText();
         Timestamp lastUpdate = Timestamp.from(Instant.now());
-        String lastUpdatedby = userDAO.getUserInfo().getUserName();
+        String lastUpdatedby = userDAO.getUserInfo(userID).getUserName();
         customerDAO.updateCustomer(customerID,customerName,address, city, town, postalCode, phoneNumber, lastUpdate,lastUpdatedby,divisionID);
         customerTableView.setItems(Customer.getAllCustomers());
     }

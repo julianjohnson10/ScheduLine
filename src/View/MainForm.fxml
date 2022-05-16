@@ -189,7 +189,7 @@
                      </children>
                   </HBox>
                   <HBox layoutX="1098.0" layoutY="595.0" spacing="20.0" />
-                  <VBox alignment="CENTER" fillWidth="false" layoutX="495.0" layoutY="320.0" prefHeight="40.0" prefWidth="410.0">
+                  <VBox alignment="CENTER" fillWidth="false" layoutY="320.0" prefHeight="40.0" prefWidth="1398.0">
                      <children>
                         <Label fx:id="deletedLabelAppt" alignment="CENTER" contentDisplay="CENTER" textFill="#1ada1a">
                            <font>
