@@ -23,6 +23,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -183,7 +184,16 @@ public class MainFormController implements Initializable {
                 deletedLabelAppt.setText("Appointment " + selectedAppointment.getApptId() + " of type " + selectedAppointment.getType() + " has been canceled!"); //sets the label to show which customer was deleted. Plays a fade transition.
                 fadeOut.setNode(deletedLabelAppt);
                 fadeOut.playFromStart();
-                appointmentTableView.setItems(appointmentDAO.getAllAppts());
+                if(allRadio.isSelected()){
+                    appointmentTableView.setItems(appointmentDAO.getAllAppts());
+                }
+                else if(weekRadio.isSelected()){
+                    appointmentTableView.setItems(appointmentDAO.getWeekly());
+                }
+                else{
+                    appointmentTableView.setItems(appointmentDAO.getMonthly());
+                }
+
             }
         }
         else {
@@ -355,11 +365,33 @@ public class MainFormController implements Initializable {
      * @throws SQLException sqlexceptions
      */
     public void applyUpdateAppt() throws SQLException {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mma");
         Integer userID = userBox.getValue();
         Integer customerID = customerBox.getValue();
         Integer contactID = contactDAO.getContactID(contactBox.getValue());
-        appointmentDAO.updateAppt(Integer.valueOf(apptIDField.getText()),titleField.getText(),descriptionField.getText(),locationField.getText(),typeField.getText(),datePicker.getValue(),datePicker.getValue(), Timestamp.from(Instant.now()), User.getUser().getUserName(), customerID,userID,contactID);
-        appointmentTableView.setItems(Appointment.getAllAppointments());
+        Integer apptID = Integer.valueOf(apptIDField.getText());
+        String title = titleField.getText();
+        String description = descriptionField.getText();
+        String location = locationField.getText();
+        String type = typeField.getText();
+        LocalDate apptDate = datePicker.getValue();
+        LocalTime start = LocalTime.parse(startTime.getValue(),format);
+        LocalTime end = LocalTime.parse(endTime.getValue(),format);
+        Timestamp lastUpdate = Timestamp.valueOf(LocalDateTime.now());
+        String username = User.getUser().getUserName();
+
+        appointmentDAO.updateAppt(apptID,title,description,location,type,apptDate,start,end,lastUpdate,username,customerID,userID,contactID);
+
+        if(allRadio.isSelected()){
+            appointmentTableView.setItems(Appointment.getAllAppointments());
+        }
+        else if(weekRadio.isSelected()){
+            appointmentTableView.setItems(Appointment.getWeekly());
+        }
+        else{
+            appointmentTableView.setItems(Appointment.getMonthly());
+        }
+
         clear();
     }
 

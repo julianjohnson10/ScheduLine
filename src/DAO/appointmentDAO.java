@@ -88,33 +88,23 @@ public abstract class appointmentDAO {
 
         while (results.next()) {
             Appointment appointment = new Appointment();
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mma");
             appointment.setApptId(results.getInt("Appointment_ID"));
             appointment.setTitle(results.getString("Title"));
             appointment.setDescription(results.getString("Description"));
             appointment.setLocation(results.getString("Location"));
             appointment.setContactName(results.getString("Contact_Name"));
             appointment.setType(results.getString("Type"));
-
-//            LocalDate startDate = ((LocalDate) results.getObject("Start"));
-//            System.out.println(startDate);
-
-//            appointment.setStartDate(startDate);
-
-            LocalDateTime endDate = (LocalDateTime) results.getObject("End");
-
-////            appointment.setEndDate(endDate);
-//            System.out.println(results.getString("End"));
-////            System.out.println(end_dateZ);
-//            System.out.println(endDate);
-
+            Timestamp start = results.getTimestamp("Start");
+            Timestamp end = results.getTimestamp("End");
+            LocalDateTime startDate = start.toLocalDateTime();
+            LocalDateTime endDate = end.toLocalDateTime();
+            appointment.setStartDate(startDate);
+            appointment.setEndDate(endDate);
             appointment.setCustomerId(results.getInt("Customer_ID"));
             appointment.setUserId(results.getInt("User_ID"));
             appointment.setContactId(results.getInt("Contact_ID"));
-
             Appointment.addAppointment(appointment);
-
             apptsList.add(appointment);
         }
         return apptsList;
@@ -131,33 +121,23 @@ public abstract class appointmentDAO {
 
         while (results.next()) {
             Appointment appointment = new Appointment();
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mma");
             appointment.setApptId(results.getInt("Appointment_ID"));
             appointment.setTitle(results.getString("Title"));
             appointment.setDescription(results.getString("Description"));
             appointment.setLocation(results.getString("Location"));
             appointment.setContactName(results.getString("Contact_Name"));
             appointment.setType(results.getString("Type"));
-
-//            LocalDate startDate = ((LocalDate) results.getObject("Start"));
-//            System.out.println(startDate);
-
-//            appointment.setStartDate(startDate);
-
-            LocalDateTime endDate = (LocalDateTime) results.getObject("End");
-
-////            appointment.setEndDate(endDate);
-//            System.out.println(results.getString("End"));
-////            System.out.println(end_dateZ);
-//            System.out.println(endDate);
-
+            Timestamp start = results.getTimestamp("Start");
+            Timestamp end = results.getTimestamp("End");
+            LocalDateTime startDate = start.toLocalDateTime();
+            LocalDateTime endDate = end.toLocalDateTime();
+            appointment.setStartDate(startDate);
+            appointment.setEndDate(endDate);
             appointment.setCustomerId(results.getInt("Customer_ID"));
             appointment.setUserId(results.getInt("User_ID"));
             appointment.setContactId(results.getInt("Contact_ID"));
-
             Appointment.addAppointment(appointment);
-
             apptsList.add(appointment);
         }
         return apptsList;
@@ -192,9 +172,6 @@ public abstract class appointmentDAO {
         ZonedDateTime endTarget = endZDT.withZoneSameInstant(ZoneId.of("UTC"));
         LocalDateTime endDate = endTarget.toLocalDateTime();
         Timestamp endTS = Timestamp.valueOf(endDate);
-        System.out.println(startTS);
-        System.out.println(endTS);
-
 
         statement.setString(1, Title);
         statement.setString(2, Description);
@@ -212,16 +189,28 @@ public abstract class appointmentDAO {
         statement.executeUpdate();
     }
 
-    public static void updateAppt(Integer apptID, String Title, String Description, String Location, String Type, LocalDate Start, LocalDate End, Timestamp last_update, String last_updated_by, Integer customerId, Integer userId, Integer contactId) throws SQLException {
+    public static void updateAppt(Integer apptID, String Title, String Description, String Location, String Type, LocalDate apptDate, LocalTime Start, LocalTime End, Timestamp last_update, String last_updated_by, Integer customerId, Integer userId, Integer contactId) throws SQLException {
         String sqlStatement = "UPDATE Appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
 
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        LocalDateTime startLDT = LocalDateTime.of(apptDate, Start);
+        ZonedDateTime startZDT = startLDT.atZone(ZoneId.systemDefault());
+        ZonedDateTime startTarget = startZDT.withZoneSameInstant(ZoneId.of("UTC"));
+        LocalDateTime startDate = startTarget.toLocalDateTime();
+        Timestamp startTS = Timestamp.valueOf(startDate);
+
+        LocalDateTime endLDT = LocalDateTime.of(apptDate, End);
+        ZonedDateTime endZDT = endLDT.atZone(ZoneId.systemDefault());
+        ZonedDateTime endTarget = endZDT.withZoneSameInstant(ZoneId.of("UTC"));
+        LocalDateTime endDate = endTarget.toLocalDateTime();
+        Timestamp endTS = Timestamp.valueOf(endDate);
+
         statement.setString(1, Title);
         statement.setString(2, Description);
         statement.setString(3, Location);
         statement.setString(4, Type);
-        statement.setObject(5, Start);
-        statement.setObject(6, End);
+        statement.setTimestamp(5, startTS);
+        statement.setTimestamp(6, endTS);
         statement.setTimestamp(7, last_update);
         statement.setString(8, last_updated_by);
         statement.setInt(9, customerId);
