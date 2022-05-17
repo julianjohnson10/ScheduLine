@@ -5,11 +5,16 @@ import Model.User;
 import Utilities.Locales;
 import Utilities.activityLogger;
 import Utilities.alertError;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -31,6 +36,7 @@ public class LoginController implements Initializable {
     public Label tzLabel;
     public static Integer userId;
     ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.FRENCH);
+    private final FadeTransition fadeOut = new FadeTransition(Duration.seconds(2.0));
 
     @FXML
     private void exitPlatform(){
@@ -41,15 +47,12 @@ public class LoginController implements Initializable {
     }
 
     /**
-     *
-     * @param actionEvent Login button event. Runs a DAO user/pass query.
-     * @throws SQLException For all SQL errors.
      * Login method holds all login logic, and runs queries from the userQuery dao.
      */
 
     @FXML
-    public void login(ActionEvent actionEvent) throws SQLException, IOException {
-
+    public void login() throws SQLException, IOException, InterruptedException {
+        Stage stage = (Stage) loginButton.getScene().getWindow();
         //get text in username form.
         userId = Integer.parseInt(userIDField.getText());
         //get text in password form.
@@ -63,10 +66,8 @@ public class LoginController implements Initializable {
             loggedInUser.setUserId(userId);
             User.addUser(loggedInUser);
 
-            errorLabel.setText(resourceBundle.getString("LoginSuccess"));
-
             activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId,password));
-            MainFormController.mainMenu(actionEvent);
+            MainFormController.mainMenu(stage);
         }
         else {
             if(userDAO.checkUser(userId)){
@@ -75,6 +76,9 @@ public class LoginController implements Initializable {
                 User.addUser(loggedInUser);
 
                 errorLabel.setText(resourceBundle.getString("LoginError"));
+                fadeOut.setNode(errorLabel);
+                fadeOut.playFromStart();
+
                 activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId,password));
             }
             errorLabel.setText(resourceBundle.getString("LoginError"));
@@ -92,6 +96,11 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setCycleCount(1);
+        fadeOut.setAutoReverse(false);
 
         uidLabel.setText(resourceBundle.getString("User_ID") + ":");
         pwdLabel.setText(resourceBundle.getString("Password") + ":");

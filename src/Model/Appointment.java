@@ -3,9 +3,15 @@ package Model;
 import DAO.appointmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.DatePicker;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Appointment {
     private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -15,8 +21,8 @@ public class Appointment {
     private String location;
     private String contactName;
     private String type;
-    private LocalDate startDate;
-    private String endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private int customerId;
     private int userId;
     private int contactId;
@@ -75,13 +81,20 @@ public class Appointment {
         return type;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public String getStartDate() {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
+        ZonedDateTime zdt =  startDate.atZone(ZoneId.of("UTC"));
+        ZonedDateTime zdtTarget = zdt.withZoneSameInstant(ZoneId.systemDefault());
+        LocalDateTime localDateTime = zdtTarget.toLocalDateTime();
+        return localDateTime.format(format);
     }
 
-
     public String getEndDate() {
-        return endDate;
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
+        ZonedDateTime zdt =  endDate.atZone(ZoneId.of("UTC"));
+        ZonedDateTime zdtTarget = zdt.withZoneSameInstant(ZoneId.systemDefault());
+        LocalDateTime localDateTime = zdtTarget.toLocalDateTime();
+        return localDateTime.format(format);
     }
 
     public int getCustomerId() {
@@ -120,11 +133,11 @@ public class Appointment {
         this.type = type;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

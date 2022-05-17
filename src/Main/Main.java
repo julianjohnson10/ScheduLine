@@ -1,14 +1,11 @@
 package Main;
 
 import DAO.JDBC_Connector;
-import DAO.divisionDAO;
+import Utilities.date_time;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.ZoomEvent;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -53,7 +50,7 @@ public class Main extends Application {
     public static void main(String[] args) throws Exception {
         /* Start the JDBC Connector */
         JDBC_Connector.openConnection();
-
+        date_time.setStartList();
         launch(args);
 
         LocalDate localDate = LocalDate.now();

@@ -4,15 +4,19 @@ import DAO.appointmentDAO;
 import DAO.contactDAO;
 import DAO.customerDAO;
 import DAO.userDAO;
+import Utilities.date_time;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -66,12 +70,12 @@ public class CreateAppointmentController implements Initializable {
     /**
      * Combobox of local start times that map to EST.
      */
-    public ComboBox<LocalTime> startTime;
+    public ComboBox<String> startTime;
 
     /**
      * Combobox of local end times that map to EST.
      */
-    public ComboBox<LocalTime> endTime;
+    public ComboBox<String> endTime;
 
     /**
      * Combobox of customer IDs
@@ -80,22 +84,27 @@ public class CreateAppointmentController implements Initializable {
     public TextField apptIDField;
     public ComboBox<Integer> userBox;
 
-
     @FXML
-    public void cancel(ActionEvent event) throws IOException {
-        MainFormController.mainMenu(event);
+    public void cancel() throws IOException {
+
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        MainFormController.mainMenu(stage);
     }
 
     @FXML
-    public void createAppt(ActionEvent event) throws SQLException, IOException {
+    public void createAppt() throws SQLException, IOException {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+
         String contact_name = contactBox.getValue();
         Integer contactID = contactDAO.getContactID(contact_name);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mma");
+
         if(titleField.getText().isEmpty()|descriptionField.getText().isEmpty()|locationField.getText().isEmpty()|typeField.getText().isEmpty()|contactBox.getValue()==null){
             raiseAlert("Error", "Appointment fields cannot be empty", Alert.AlertType.ERROR);
         }
         else{
-            appointmentDAO.createAppt(titleField.getText(), descriptionField.getText(), locationField.getText(),contactBox.getValue(),typeField.getText(),datePicker.getValue(),startTime.getValue(),endTime.getValue(), customerBox.getValue(),userBox.getValue(),contactID);
-            MainFormController.mainMenu(event);
+            appointmentDAO.createAppt(titleField.getText(), descriptionField.getText(), locationField.getText(),typeField.getText(),datePicker.getValue(),LocalTime.parse(startTime.getValue(),format), LocalTime.parse(endTime.getValue(),format), customerBox.getValue(),userBox.getValue(),contactID);
+            MainFormController.mainMenu(stage);
         }
 
     }
@@ -107,14 +116,13 @@ public class CreateAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         try {
+            startTime.setItems(date_time.startList);
+            endTime.setItems(date_time.startList);
             contactBox.setItems(contactDAO.getContactNames());
             customerBox.setItems(customerDAO.getCustomerIDs());
             userBox.setItems(userDAO.getUserIDs());
-
-            startTime.setValue(LocalTime.now());
-
-            endTime.setValue(LocalTime.now());
 
         } catch (SQLException e) {
             e.printStackTrace();

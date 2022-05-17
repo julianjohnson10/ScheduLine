@@ -5,7 +5,8 @@ import javafx.collections.ObservableList;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class date_time {
 
@@ -14,12 +15,45 @@ public class date_time {
         return date.format(timestamp);
     }
 
-    public static ObservableList<LocalTime> timeList = FXCollections.observableArrayList();
+    public static ObservableList<String> startList = FXCollections.observableArrayList();
 
-    public static ObservableList<LocalTime> getTimeList(){
-        timeList.add(LocalTime.now());
-        return null;
+    public static void setStartList(){
+        String pattern = "hh:mma";
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        ZoneId zone = ZoneId.of("US/Eastern");
+        ZoneId defaultZone = ZoneId.systemDefault();
+        LocalDate localDate = LocalDate.now();
+
+        for(int i = 8; i < 22; i++){
+            for(int n = 0; n<=30; n+=30){
+                LocalTime localTime = LocalTime.of(i,n);
+                ZonedDateTime zonedDateTime = ZonedDateTime.of(localDate,localTime,zone);
+                ZonedDateTime zonedDateTime1 = zonedDateTime.withZoneSameInstant(ZoneId.of(String.valueOf(defaultZone)));
+                startList.add(zonedDateTime1.format(dateTimeFormatter));
+            }
+        }
     }
+
+    public static void printDates(){
+        String pattern = "HH:mm";
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        ZoneId zone = ZoneId.of("US/Eastern");
+        ZoneId defaultZone = ZoneId.systemDefault();
+        LocalDate localDate = LocalDate.now();
+
+
+        for(int i = 8; i < 22; i++){
+            for(int n = 0; n<=30; n+=30){
+                LocalTime localTime = LocalTime.of(i,n);
+
+                ZonedDateTime zonedDateTime = ZonedDateTime.of(localDate,localTime,zone);
+                ZonedDateTime zonedDateTime1 = zonedDateTime.withZoneSameInstant(ZoneId.of(String.valueOf(defaultZone)));
+
+                System.out.println(zonedDateTime1);
+            }
+        }
+    }
+
 
 //
 //    public static ObservableList<LocalTime> getTimeList{

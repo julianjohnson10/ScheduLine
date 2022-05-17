@@ -5,6 +5,7 @@ import Main.Main;
 import Model.Appointment;
 import Model.Customer;
 import Model.User;
+import Utilities.date_time;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
@@ -23,10 +24,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -75,8 +75,8 @@ public class MainFormController implements Initializable {
     public TableColumn<Appointment, String> descriptionColumn;
     public TableColumn<Appointment, String> locCol;
     public TableColumn<Appointment, String> typeCol;
-    public TableColumn<Appointment, ZonedDateTime> startCol;
-    public TableColumn<Appointment, ZonedDateTime> endCol;
+    public TableColumn<Appointment, String> startCol;
+    public TableColumn<Appointment, String> endCol;
     public TableColumn<Appointment, Integer> customerIDCol;
     public TableColumn<Appointment, Integer> userIDCol;
 
@@ -121,8 +121,8 @@ public class MainFormController implements Initializable {
     public TextField locationField;
     public ComboBox<String> contactBox;
     public DatePicker datePicker;
-    public ComboBox<LocalTime> startTime;
-    public ComboBox<LocalTime> endTime;
+    public ComboBox<String> startTime;
+    public ComboBox<String> endTime;
     public ComboBox<String> stateProvince;
     public Button applyUpdateCustomer;
     public Button applyUpdateAppt;
@@ -136,7 +136,6 @@ public class MainFormController implements Initializable {
     public Button clearCustomer;
     public Label deletedLabel;
     public TabPane tabPane;
-
     private final FadeTransition fadeOut = new FadeTransition(Duration.seconds(4.0));
     public Label deletedLabelAppt;
     public RadioButton allRadio;
@@ -144,7 +143,6 @@ public class MainFormController implements Initializable {
     public RadioButton monthRadio;
     public ToggleGroup toggleGroup;
     public TextField townField;
-
 
     @FXML
     public void deleteCustomer() throws SQLException {
@@ -186,8 +184,6 @@ public class MainFormController implements Initializable {
                 fadeOut.setNode(deletedLabelAppt);
                 fadeOut.playFromStart();
                 appointmentTableView.setItems(appointmentDAO.getAllAppts());
-
-
             }
         }
         else {
@@ -223,17 +219,17 @@ public class MainFormController implements Initializable {
 
     /**
      * ERROR: RuntimeException: java.lang.reflect.InvocationTargetException: forgot to add an event handler for clearing customer update fields.
-     * @param event Event is handled on the login controller. when the login is true, mainMenu is called.
+     * @param stage Main form stage.
      * @throws IOException exceptions
      * ERROR: Runtime Exception: Error resolving onAction='#createAppt'
      */
-    public static void mainMenu(ActionEvent event) throws IOException {
+    public static void mainMenu(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/MainForm.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
         stage.setResizable(false);
-        stage.show();
         stage.centerOnScreen();
+        stage.show();
     }
 
     /**
@@ -255,6 +251,8 @@ public class MainFormController implements Initializable {
     public void updateApptFields() {
         Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
         if(selectedAppointment != null){
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
+            DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("hh:mma");
             Integer apptId = selectedAppointment.getApptId();
             Integer customerID = selectedAppointment.getCustomerId();
             Integer userID = selectedAppointment.getUserId();
@@ -263,8 +261,8 @@ public class MainFormController implements Initializable {
             String type = selectedAppointment.getType();
             String location = selectedAppointment.getLocation();
             String contact = selectedAppointment.getContactName();
-
-            LocalDate date = selectedAppointment.getStartDate();
+            LocalDateTime startDate = LocalDateTime.parse(selectedAppointment.getStartDate(), format);
+            LocalDateTime endDate = LocalDateTime.parse(selectedAppointment.getEndDate(), format);
 
             apptIDField.setText(String.valueOf(apptId));
             customerBox.setValue(customerID);
@@ -274,10 +272,10 @@ public class MainFormController implements Initializable {
             locationField.setText(location);
             contactBox.setValue(contact);
 
-            datePicker.setValue(date);
+            datePicker.setValue(LocalDate.from(startDate));
 
-            startTime.setValue(LocalTime.now());
-            endTime.setValue(LocalTime.now());
+            startTime.setValue(LocalTime.from(startDate).format(formatTime));
+            endTime.setValue(LocalTime.from(endDate).format(formatTime));
             userBox.setValue(userID);
         }
         else {
@@ -362,10 +360,11 @@ public class MainFormController implements Initializable {
         Integer contactID = contactDAO.getContactID(contactBox.getValue());
         appointmentDAO.updateAppt(Integer.valueOf(apptIDField.getText()),titleField.getText(),descriptionField.getText(),locationField.getText(),typeField.getText(),datePicker.getValue(),datePicker.getValue(), Timestamp.from(Instant.now()), User.getUser().getUserName(), customerID,userID,contactID);
         appointmentTableView.setItems(Appointment.getAllAppointments());
+        clear();
     }
 
     public void applyUpdateCustomer() throws SQLException {
-        Integer userID = User.getUser().getUserId();
+//        if(customerIDField.getText().isEmpty())
         Integer customerID = Integer.valueOf(customerIDField.getText());
         Integer divisionID = divisionDAO.getDivisionID(stateProvince.getValue());
         String customerName = nameTextField.getText();
@@ -378,6 +377,7 @@ public class MainFormController implements Initializable {
         String lastUpdatedby = User.getUser().getUserName();
         customerDAO.updateCustomer(customerID,customerName,address, city, town, postalCode, phoneNumber, lastUpdate,lastUpdatedby,divisionID);
         customerTableView.setItems(Customer.getAllCustomers());
+        clear();
     }
 
     public void clear() {
@@ -421,6 +421,9 @@ public class MainFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        startTime.setItems(date_time.startList);
+        endTime.setItems(date_time.startList);
+
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
         fadeOut.setCycleCount(1);
@@ -443,6 +446,7 @@ public class MainFormController implements Initializable {
             descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
             locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
             contactCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+
             typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
             startCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
             endCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));

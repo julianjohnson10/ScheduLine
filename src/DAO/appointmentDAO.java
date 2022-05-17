@@ -4,6 +4,8 @@ import Model.Appointment;
 import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.DatePicker;
+
 import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +32,7 @@ public abstract class appointmentDAO {
 
         while (results.next()) {
             Appointment appointment = new Appointment();
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mma");
 
             appointment.setApptId(results.getInt("Appointment_ID"));
             appointment.setTitle(results.getString("Title"));
@@ -39,18 +41,14 @@ public abstract class appointmentDAO {
             appointment.setContactName(results.getString("Contact_Name"));
             appointment.setType(results.getString("Type"));
 
-//            LocalDate startDate = ((LocalDate) results.getObject("Start"));
-//            System.out.println(startDate);
+            Timestamp start = results.getTimestamp("Start");
+            Timestamp end = results.getTimestamp("End");
+            LocalDateTime startDate = start.toLocalDateTime();
+            LocalDateTime endDate = end.toLocalDateTime();
 
-//            appointment.setStartDate(startDate);
 
-            LocalDateTime endDate = (LocalDateTime) results.getObject("End");
-
-////            appointment.setEndDate(endDate);
-//            System.out.println(results.getString("End"));
-////            System.out.println(end_dateZ);
-//            System.out.println(endDate);
-
+            appointment.setStartDate(startDate);
+            appointment.setEndDate(endDate);
             appointment.setCustomerId(results.getInt("Customer_ID"));
             appointment.setUserId(results.getInt("User_ID"));
             appointment.setContactId(results.getInt("Contact_ID"));
@@ -173,23 +171,37 @@ public abstract class appointmentDAO {
      * @param Title
      * @param Description
      * @param Location
-     * @param contact
      * @param Type
      * @param apptDate
      * @param startTime
      * @param endTime
      * @throws SQLException
      */
-    public static void createAppt(String Title, String Description, String Location, String contact, String Type, LocalDate apptDate, LocalTime startTime, LocalTime endTime, Integer customerID, Integer userID, Integer contactID) throws SQLException {
+    public static void createAppt(String Title, String Description, String Location, String Type, LocalDate apptDate, LocalTime startTime, LocalTime endTime, Integer customerID, Integer userID, Integer contactID) throws SQLException {
         String sqlStatement = "INSERT INTO Appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
+        LocalDateTime startLDT = LocalDateTime.of(apptDate, startTime);
+        ZonedDateTime startZDT = startLDT.atZone(ZoneId.systemDefault());
+        ZonedDateTime startTarget = startZDT.withZoneSameInstant(ZoneId.of("UTC"));
+        LocalDateTime startDate = startTarget.toLocalDateTime();
+        Timestamp startTS = Timestamp.valueOf(startDate);
+
+        LocalDateTime endLDT = LocalDateTime.of(apptDate, endTime);
+        ZonedDateTime endZDT = endLDT.atZone(ZoneId.systemDefault());
+        ZonedDateTime endTarget = endZDT.withZoneSameInstant(ZoneId.of("UTC"));
+        LocalDateTime endDate = endTarget.toLocalDateTime();
+        Timestamp endTS = Timestamp.valueOf(endDate);
+        System.out.println(startTS);
+        System.out.println(endTS);
+
+
         statement.setString(1, Title);
         statement.setString(2, Description);
         statement.setString(3, Location);
         statement.setString(4, Type);
-        statement.setObject(5, apptDate);
-        statement.setObject(6, LocalDate.now());
+        statement.setTimestamp(5, startTS);
+        statement.setTimestamp(6, endTS);
         statement.setObject(7, LocalDateTime.now());
         statement.setString(8, User.getUser().getUserName());
         statement.setObject(9, LocalDateTime.now());
@@ -197,7 +209,6 @@ public abstract class appointmentDAO {
         statement.setInt(11, customerID);
         statement.setInt(12, userID);
         statement.setInt(13, contactID);
-
         statement.executeUpdate();
     }
 

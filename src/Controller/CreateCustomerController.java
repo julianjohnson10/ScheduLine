@@ -36,13 +36,14 @@ public class CreateCustomerController implements Initializable {
     private ObservableList<String> countriesList = FXCollections.observableArrayList();
 
     @FXML
-    public void createCustomer(ActionEvent event) throws SQLException, IOException {
+    public void createCustomer() throws SQLException, IOException {
+        Stage stage = (Stage) createCustomer.getScene().getWindow();
         if(nameTextField.getText().isEmpty()|addressTextField.getText().isEmpty()|postalTextField.getText().isEmpty()|phoneTextField.getText().isEmpty()|countryBox.getValue()==null|stateProvince.getValue()==null){
             raiseAlert("Error", "Customer fields cannot be empty", Alert.AlertType.ERROR);
         }
         else{
             customerDAO.createCustomer(nameTextField.getText(), addressTextField.getText(), cityTextField.getText(), townField.getText(), postalTextField.getText(), phoneTextField.getText(), stateProvince.getSelectionModel().getSelectedItem());
-            MainFormController.mainMenu(event);
+            MainFormController.mainMenu(stage);
         }
     }
 
