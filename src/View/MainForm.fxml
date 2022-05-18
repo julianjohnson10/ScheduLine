@@ -205,8 +205,8 @@
                               <ToggleGroup fx:id="toggleGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="weekRadio" mnemonicParsing="false" onAction="#weekFilter" text="Week" toggleGroup="$toggleGroup" />
-                        <RadioButton fx:id="monthRadio" mnemonicParsing="false" onAction="#monthFilter" text="Month" toggleGroup="$toggleGroup" />
+                        <RadioButton fx:id="weekRadio" mnemonicParsing="false" onAction="#weekFilter" text="This Week" toggleGroup="$toggleGroup" />
+                        <RadioButton fx:id="monthRadio" mnemonicParsing="false" onAction="#monthFilter" text="This Month" toggleGroup="$toggleGroup" />
                      </children>
                   </HBox>
                     </AnchorPane>
