@@ -5,21 +5,14 @@ import DAO.contactDAO;
 import DAO.customerDAO;
 import DAO.userDAO;
 import Utilities.date_time;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -100,7 +93,7 @@ public class CreateAppointmentController implements Initializable {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mma");
 
         if(titleField.getText().isEmpty()|descriptionField.getText().isEmpty()|locationField.getText().isEmpty()|typeField.getText().isEmpty()|contactBox.getValue()==null){
-            raiseAlert("Error", "Appointment fields cannot be empty", Alert.AlertType.ERROR);
+            raiseAlert(stage,"Error", "Appointment fields cannot be empty", Alert.AlertType.ERROR);
         }
         else{
             appointmentDAO.createAppt(titleField.getText(), descriptionField.getText(), locationField.getText(),typeField.getText(),datePicker.getValue(),LocalTime.parse(startTime.getValue(),format), LocalTime.parse(endTime.getValue(),format), customerBox.getValue(),userBox.getValue(),contactID);
