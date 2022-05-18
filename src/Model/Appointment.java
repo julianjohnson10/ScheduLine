@@ -3,11 +3,7 @@ package Model;
 import DAO.appointmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.DatePicker;
-
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -88,6 +84,14 @@ public class Appointment {
         LocalDateTime localDateTime = zdtTarget.toLocalDateTime();
         return localDateTime.format(format);
     }
+
+    public LocalDateTime getStartLDT() {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
+        ZonedDateTime zdt =  startDate.atZone(ZoneId.of("UTC"));
+        ZonedDateTime zdtTarget = zdt.withZoneSameInstant(ZoneId.systemDefault());
+        return zdtTarget.toLocalDateTime();
+    }
+
 
     public String getEndDate() {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");

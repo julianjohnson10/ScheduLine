@@ -2,10 +2,9 @@ package DAO;
 
 import Model.Appointment;
 import Model.User;
+import Utilities.date_time;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.DatePicker;
-
 import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import static DAO.JDBC_Connector.connection;
 
 /**
+ * Appointment Data Access Object. Runs SQL queries on the Appointments table and return results.
  * SQLException: Column 'Created_Date' not found.
  * Fix: Typo in name. 'Create_Date'.
  */
@@ -32,8 +32,6 @@ public abstract class appointmentDAO {
 
         while (results.next()) {
             Appointment appointment = new Appointment();
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mma");
-
             appointment.setApptId(results.getInt("Appointment_ID"));
             appointment.setTitle(results.getString("Title"));
             appointment.setDescription(results.getString("Description"));
@@ -88,7 +86,6 @@ public abstract class appointmentDAO {
 
         while (results.next()) {
             Appointment appointment = new Appointment();
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mma");
             appointment.setApptId(results.getInt("Appointment_ID"));
             appointment.setTitle(results.getString("Title"));
             appointment.setDescription(results.getString("Description"));
@@ -179,9 +176,9 @@ public abstract class appointmentDAO {
         statement.setString(4, Type);
         statement.setTimestamp(5, startTS);
         statement.setTimestamp(6, endTS);
-        statement.setObject(7, LocalDateTime.now());
+        statement.setTimestamp(7, date_time.setTimestamp());
         statement.setString(8, User.getUser().getUserName());
-        statement.setObject(9, LocalDateTime.now());
+        statement.setTimestamp(9, date_time.setTimestamp());
         statement.setString(10, User.getUser().getUserName());
         statement.setInt(11, customerID);
         statement.setInt(12, userID);
@@ -191,8 +188,8 @@ public abstract class appointmentDAO {
 
     public static void updateAppt(Integer apptID, String Title, String Description, String Location, String Type, LocalDate apptDate, LocalTime Start, LocalTime End, Timestamp last_update, String last_updated_by, Integer customerId, Integer userId, Integer contactId) throws SQLException {
         String sqlStatement = "UPDATE Appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
-
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
+
         LocalDateTime startLDT = LocalDateTime.of(apptDate, Start);
         ZonedDateTime startZDT = startLDT.atZone(ZoneId.systemDefault());
         ZonedDateTime startTarget = startZDT.withZoneSameInstant(ZoneId.of("UTC"));
@@ -211,7 +208,7 @@ public abstract class appointmentDAO {
         statement.setString(4, Type);
         statement.setTimestamp(5, startTS);
         statement.setTimestamp(6, endTS);
-        statement.setTimestamp(7, last_update);
+        statement.setTimestamp(7, date_time.setTimestamp());
         statement.setString(8, last_updated_by);
         statement.setInt(9, customerId);
         statement.setInt(10, userId);
@@ -247,16 +244,5 @@ public abstract class appointmentDAO {
             e.printStackTrace();
         }
         return false;
-    }
-
-    public static int getAppointmentID() throws SQLException {
-        String sqlStatement = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = \"client_schedule\" AND TABLE_NAME = \"appointments\"";
-        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-        ResultSet result = statement.executeQuery();
-        int apptID = 0;
-        while (result.next()) {
-            apptID = result.getInt("AUTO_INCREMENT");
-        }
-        return apptID;
     }
 }
