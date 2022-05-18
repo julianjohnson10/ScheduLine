@@ -40,7 +40,8 @@ public class LoginController implements Initializable {
 
     @FXML
     private void exitPlatform(){
-        Optional<ButtonType> alertOption = alertError.raiseAlert("Exit?", resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        Optional<ButtonType> alertOption = alertError.raiseAlert(stage,"Exit?", resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
         if(alertOption.isPresent() && alertOption.get() == ButtonType.OK) {
             Platform.exit();
         }
