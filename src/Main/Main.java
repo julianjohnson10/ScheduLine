@@ -47,22 +47,17 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * Entry point of program. Starts the JDBC connection. Closes the connection as the last thing it does before the program closes.
+     * @param args argts
+     * @throws Exception exception handler
+     */
     public static void main(String[] args) throws Exception {
         /* Start the JDBC Connector */
+        date_time.printDates();
         JDBC_Connector.openConnection();
         date_time.setStartList();
         launch(args);
-
-        LocalDate localDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime localTime = LocalTime.parse(LocalTime.now().format(formatter));
-        LocalDateTime localDateTime = LocalDateTime.of(localDate,localTime);
-//        ZoneId myZone = ZoneId.of("US/Eastern");
-        ZoneId myZone = ZoneId.systemDefault();
-//        ZoneId estZone = ZoneId.of("America/New York"); // Get EST time
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, myZone);
-        System.out.println(zonedDateTime);
-
         JDBC_Connector.closeConnection();
     }
 }
