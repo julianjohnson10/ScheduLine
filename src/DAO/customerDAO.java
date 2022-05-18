@@ -4,13 +4,11 @@ import Controller.MainFormController;
 import Main.Main;
 import Model.Customer;
 import Model.User;
+import Utilities.date_time;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 
 import static DAO.JDBC_Connector.connection;
 
@@ -30,9 +28,7 @@ public abstract class customerDAO {
             Customer customer = new Customer();
             customer.setCustomerID(results.getInt("Customer_ID"));
             customer.setCustomerName(results.getString("Customer_Name"));
-
             customer.setAddress(results.getString("Address"));
-
             customer.setPostalCode(results.getString("Postal_Code"));
             customer.setCountry(results.getString("Country"));
             customer.setStateProvince(results.getString("Division"));
@@ -66,17 +62,17 @@ public abstract class customerDAO {
         statement.setString(1, customer_name);
 
         if(town.isEmpty()){
-            statement.setString(2, newAddress + ", " + city.trim());
+            statement.setString(2, newAddress + ", " + newCity);
         }
         else {
-            statement.setString(2, newAddress + ", " + city.trim() + ", " + town.trim());
+            statement.setString(2, newAddress + ", " + newCity + ", " + newTown);
         }
 
         statement.setString(3, postal_code);
         statement.setString(4, phone);
-        statement.setObject(5, LocalDateTime.now());
+        statement.setTimestamp(5, date_time.setTimestamp());
         statement.setString(6, User.getUser().getUserName());
-        statement.setObject(7, LocalDateTime.now());
+        statement.setTimestamp(7, date_time.setTimestamp());
         statement.setString(8, User.getUser().getUserName());
         statement.setInt(9, divisionDAO.getDivisionID(division));
 
@@ -90,17 +86,17 @@ public abstract class customerDAO {
         statement.executeUpdate();
     }
 
-    public static void updateCustomer(Integer customerID, String Customer_Name, String Address, String city, String town, String postal_code, String phone, Timestamp last_update, String last_updated_by, Integer divisionID) throws SQLException {
+    public static void updateCustomer(Integer customerID, String Customer_Name, String Address, String city, String town, String postal_code, String phone, String last_updated_by, Integer divisionID) throws SQLException {
         String sqlStatement = "UPDATE Customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
         statement.setString(1, Customer_Name);
 
-
+        String x = Address.trim() + ", " + city.trim();
         if(town == null){
-            statement.setString(2, Address.trim() + ", " + city.trim());
+            statement.setString(2, x);
         }
         else if(town.isEmpty()){
-            statement.setString(2, Address.trim() + ", " + city.trim());
+            statement.setString(2, x);
         }
         else {
             statement.setString(2, Address.trim() + ", " + city.trim() + ", " + town.trim());
@@ -108,24 +104,11 @@ public abstract class customerDAO {
 
         statement.setString(3, postal_code);
         statement.setString(4, phone);
-        statement.setTimestamp(5, last_update);
+        statement.setTimestamp(5, date_time.setTimestamp());
         statement.setString(6, last_updated_by);
         statement.setInt(7, divisionID);
         statement.setInt(8, customerID);
-
         statement.executeUpdate();
-    }
-
-
-    public static int getCustomerID() throws SQLException {
-        String sqlStatement = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = \"client_schedule\" AND TABLE_NAME = \"customers\"";
-        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-        ResultSet result = statement.executeQuery();
-        int customerID = 0;
-        while (result.next()) {
-            customerID = result.getInt("AUTO_INCREMENT");
-        }
-        return customerID;
     }
 
     public static ObservableList<Integer> getCustomerIDs() throws SQLException {
