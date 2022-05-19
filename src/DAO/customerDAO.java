@@ -1,7 +1,5 @@
 package DAO;
 
-import Controller.MainFormController;
-import Main.Main;
 import Model.Customer;
 import Model.User;
 import Utilities.date_time;
@@ -121,17 +119,5 @@ public abstract class customerDAO {
             customerIDs.add(results.getInt("Customer_ID"));
         }
         return customerIDs;
-    }
-
-    public static int getCustomerIDfromName(String customer_name) throws SQLException {
-        String sqlStatement = "SELECT Customer_ID FROM customers WHERE Customer_Name LIKE ?";
-        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-        statement.setString(1, customer_name);
-        ResultSet result = statement.executeQuery();
-        int customerID = 0;
-        while (result.next()) {
-            customerID = result.getInt("Customer_ID");
-        }
-        return customerID;
     }
 }
