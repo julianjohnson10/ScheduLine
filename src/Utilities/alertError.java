@@ -4,9 +4,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-
 import java.util.Optional;
 
+/**
+ * Class for creating custom alert messages as an alert box.
+ */
 public class alertError {
     /**
      * Custom Alert Box.
@@ -22,9 +24,5 @@ public class alertError {
         alert.setContentText(message);
         stage.centerOnScreen();
         return alert.showAndWait();
-    }
-
-    public static String raiseError(String error){
-        return error;
     }
 }
