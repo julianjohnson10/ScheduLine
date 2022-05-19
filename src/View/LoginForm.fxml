@@ -34,12 +34,10 @@
       </HBox>
    </VBox>
    <VBox layoutX="39.0" layoutY="262.0">
-      <children>
-         <HBox alignment="CENTER" prefHeight="17.0" prefWidth="332.0" spacing="5.0">
-            <Label fx:id="tzLabel" contentDisplay="CENTER" textAlignment="CENTER" />
-            <Label fx:id="timeZoneLabel" contentDisplay="CENTER" />
-         </HBox>
-      </children>
+      <HBox alignment="CENTER" prefHeight="17.0" prefWidth="332.0" spacing="5.0">
+         <Label fx:id="tzLabel" contentDisplay="CENTER" textAlignment="CENTER" />
+         <Label fx:id="timeZoneLabel" contentDisplay="CENTER" />
+      </HBox>
    </VBox>
    <HBox alignment="CENTER" centerShape="false" layoutX="120.0" layoutY="211.0" prefHeight="25.0" prefWidth="171.0" scaleShape="false">
       <Button id="loginButton" fx:id="loginButton" mnemonicParsing="false" onAction="#login" text="Login">
@@ -54,8 +52,6 @@
       </Button>
    </HBox>
    <VBox alignment="CENTER" fillWidth="false" layoutY="179.0" prefHeight="17.0" prefWidth="411.0">
-      <children>
-         <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" textFill="RED" />
-      </children>
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" textFill="RED" />
    </VBox>
 </AnchorPane>
