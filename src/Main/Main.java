@@ -7,8 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -16,8 +14,6 @@ import java.util.ResourceBundle;
 /**
  * Main class. The main method is called in this class.
  * @author Julian Johnson
- * FUTURE ENHANCEMENT:
- *
  */
 
 public class Main extends Application {
@@ -26,7 +22,6 @@ public class Main extends Application {
  * Wasn't pointing to the correct FXML file for the main form.
  */
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.getDefault());
-//    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("Utilities/Nat", Locale.FRENCH); Use this for French test. Changes the title.
 
     /**
      * ERROR: Exception in Application Start Method

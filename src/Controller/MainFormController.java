@@ -298,6 +298,7 @@ public class MainFormController implements Initializable {
      * Town textfield in customers tab.
      */
     public TextField townField;
+    public Button logoutButton;
 
     /**
      * Deletes the selected customer from the database.
@@ -315,7 +316,7 @@ public class MainFormController implements Initializable {
                     customerDAO.deleteCustomer(selectedCustomer.getCustomerID());
                     Customer.deleteCustomer(selectedCustomer);
 
-                    deletedLabel.setText(selectedCustomer.getCustomerName() + " has been deleted!"); //sets the label to show which customer was deleted. Plays a fade transition.
+                    deletedLabel.setText("Customer "+ selectedCustomer.getCustomerName() + " has been deleted!"); //sets the label to show which customer was deleted. Plays a fade transition.
                     fadeOut.setNode(deletedLabel);
                     fadeOut.playFromStart();
 
@@ -437,8 +438,8 @@ public class MainFormController implements Initializable {
         Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
         Stage stage = (Stage) updateAppt.getScene().getWindow();
         if(selectedAppointment != null){
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
-            DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("hh:mma");
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mma");
+            DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("h:mma");
             Integer apptId = selectedAppointment.getApptId();
             Integer customerID = selectedAppointment.getCustomerId();
             Integer userID = selectedAppointment.getUserId();
@@ -447,8 +448,8 @@ public class MainFormController implements Initializable {
             String type = selectedAppointment.getType();
             String location = selectedAppointment.getLocation();
             String contact = selectedAppointment.getContactName();
-            LocalDateTime startDate = LocalDateTime.parse(selectedAppointment.getStartDate(), format);
-            LocalDateTime endDate = LocalDateTime.parse(selectedAppointment.getEndDate(), format);
+            LocalDateTime startDate = LocalDateTime.parse(selectedAppointment.getStartDate(),format);
+            LocalDateTime endDate = LocalDateTime.parse(selectedAppointment.getEndDate(),format);
 
             apptIDField.setText(String.valueOf(apptId));
             customerBox.setValue(customerID);
@@ -552,11 +553,10 @@ public class MainFormController implements Initializable {
     public void applyUpdateAppt() throws SQLException {
 
         Stage stage = (Stage) updateAppt.getScene().getWindow();
+        ObservableList<Appointment> allAppointments = Appointment.getAllAppointments();
 
-        Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
-
-        if(selectedAppointment != null){
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mma");
+        if(!(customerBox.getValue() == null||titleField.getText() == null||descriptionField.getText() == null||typeField.getText() == null||locationField.getText().isEmpty()||contactBox.getValue()==null||datePicker.getValue()==null||startTime.getValue()==null||endTime.getValue()==null||userBox.getValue()==null)) {
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("h:mma");
             Integer userID = userBox.getValue();
             Integer customerID = customerBox.getValue();
             Integer contactID = contactDAO.getContactID(contactBox.getValue());
@@ -566,50 +566,51 @@ public class MainFormController implements Initializable {
             String location = locationField.getText();
             String type = typeField.getText();
             LocalDate apptDate = datePicker.getValue();
-            LocalTime start = LocalTime.parse(startTime.getValue(),format);
-            System.out.println(start);
-            LocalTime end = LocalTime.parse(endTime.getValue(),format);
+            LocalTime start = LocalTime.parse(startTime.getValue(), format);
+            LocalTime end = LocalTime.parse(endTime.getValue(), format);
             Timestamp lastUpdate = Timestamp.valueOf(LocalDateTime.now());
             String username = User.getUser().getUserName();
-            LocalDateTime startDate = LocalDateTime.of(apptDate,start);
-            LocalDateTime endDate = LocalDateTime.of(apptDate,start);
 
-            if(customerBox.getValue() == null||titleField.getText() == null||descriptionField.getText() == null||typeField.getText() == null||locationField.getText() == null||contactBox.getValue()==null||datePicker.getValue()==null||startTime.getValue()==null||endTime.getValue()==null||userBox.getValue()==null){
-                raiseAlert(stage, "Error", "Fields must not be left blank.", Alert.AlertType.ERROR);
-            }
-            else{
-                ObservableList<Appointment> allAppointments = Appointment.getAllAppointments();
+            LocalDateTime startDate = LocalDateTime.from(LocalDateTime.of(apptDate, start).atZone(ZoneId.of("UTC")));
+            LocalDateTime endDate = LocalDateTime.from(LocalDateTime.of(apptDate, end).atZone(ZoneId.of("UTC")));
 
-                for(Appointment appointment: allAppointments){
+            for (Appointment appointment : allAppointments) {
 
-                    int custID = appointment.getCustomerId();
-                    int appt_ID = appointment.getApptId();
+                int custID = appointment.getCustomerId();
+                int appt_ID = appointment.getApptId();
+                LocalDateTime aStart = appointment.getStartLDT();
+                LocalDateTime aEnd = appointment.getEndLDT();
 
-                    //Check if customer ID matches, and don't compare the same appointment.
-                    if(Objects.equals(customerID, custID) && !apptID.equals(appt_ID)){
-                        LocalDateTime ldt = appointment.getStartLDT();
-                        if((ldt.isAfter(startDate) || ldt.isEqual(startDate)) && ldt.isBefore(endDate)){
-                            raiseAlert(stage,"Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
-                        }
+                //Check if customer ID matches, and don't compare the same appointment.
+                if (Objects.equals(customerBox.getValue(), custID) && !apptID.equals(appt_ID)) {
+                    if ((aStart.isAfter(startDate) || aStart.isEqual(startDate)) && aStart.isBefore(endDate)) {
+                        raiseAlert(stage, "Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
+                        break;
+                    } else if (aEnd.isAfter(startDate) && (aEnd.isBefore(endDate)) || aEnd.isEqual(endDate)) {
+                        raiseAlert(stage, "Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
+                        break;
+                    } else if ((aStart.isBefore(startDate) || aStart.isEqual(startDate)) && (aEnd.isAfter(endDate) || aEnd.isEqual(endDate))) {
+                        raiseAlert(stage, "Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
+                        break;
                     }
-                    else {
-                        appointmentDAO.updateAppt(apptID,title,description,location,type,apptDate,start,end,lastUpdate,username,customerID,userID,contactID);
-                    }
-                }
-                if(allRadio.isSelected()){
-                    appointmentTableView.setItems(Appointment.getAllAppointments());
-                }
-                else if(weekRadio.isSelected()){
-                    appointmentTableView.setItems(Appointment.getWeekly());
                 }
                 else{
-                    appointmentTableView.setItems(Appointment.getMonthly());
+                    appointmentDAO.updateAppt(apptID, title, description, location, type, apptDate, start, end, lastUpdate, username, customerID, userID, contactID);
                 }
-                clear();
+
             }
         }
         else{
-            raiseAlert(stage, "Error", "Select an appointment from the table and click 'Update Appointment'", Alert.AlertType.ERROR);
+            raiseAlert(stage, "Error", "Fields must not be left empty or blank.", Alert.AlertType.ERROR);
+        }
+        if(allRadio.isSelected()){
+            appointmentTableView.setItems(Appointment.getAllAppointments());
+        }
+        else if(weekRadio.isSelected()){
+            appointmentTableView.setItems(Appointment.getWeekly());
+        }
+        else{
+            appointmentTableView.setItems(Appointment.getMonthly());
         }
     }
 
@@ -780,5 +781,21 @@ public class MainFormController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println(appointmentTableView.getColumns().toString());
+        System.out.println(customerTableView.getColumns().toString());
+    }
+
+    /**
+     * Logs the user out of the application
+     * @param actionEvent actionevent for the log out button.
+     * @throws IOException exception handler.
+     */
+    public void logOut(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/LoginForm.fxml")));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.show();
+        stage.centerOnScreen();
     }
 }
