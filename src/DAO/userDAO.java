@@ -1,10 +1,8 @@
 package DAO;
 
-
 import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +10,18 @@ import java.util.Objects;
 
 import static DAO.JDBC_Connector.connection;
 
+/**
+ * DAO class for retrieving user data from the database.
+ */
 public abstract class userDAO {
 
+    /**
+     * Get the user and password, and see if they match a record in the DB.
+     * @param userId User ID
+     * @param password Password
+     * @return Boolean true if the user and pass are the same. False if not.
+     * @throws SQLException SQL Exception handler.
+     */
     public static boolean getLogin(Integer userId, String password) throws SQLException {
         String sqlStatement = "SELECT * FROM users WHERE User_ID = ? AND Password = ?";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
@@ -21,28 +29,7 @@ public abstract class userDAO {
         statement.setString(2, password);
         ResultSet results = statement.executeQuery();
 
-        if(results.next()){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    public static User getUserInfo() throws SQLException {
-
-        String sqlStatement = "SELECT User_ID, User_Name FROM users";
-        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-        ResultSet results = statement.executeQuery();
-
-        User user = new User();
-
-        while (results.next()) {
-            user.setUserId(results.getInt("User_ID"));
-            user.setUserName(results.getString("User_Name"));
-            User.addUser(user);
-        }
-        return user;
+        return results.next();
     }
 
     public static ObservableList<Integer> getUserIDs() throws SQLException {
@@ -58,9 +45,8 @@ public abstract class userDAO {
     }
 
     /**
-     *
-     *
-     * @return a boolean value that checks if the current user is "admin".
+     * Method for retrieving the users Name.
+     * @return the username for the overloaded userID.
      * @throws SQLException SQLException
      */
     public static String getUserNamefromID(int userID) throws SQLException {
@@ -80,31 +66,11 @@ public abstract class userDAO {
     }
 
     /**
-     *
-     * @param userId Integer for the userid.
-     * @return a boolean value that checks if the current user is "admin".
-     * @throws SQLException SQLException
+     * Checks if the user with specified userID exists in the database.
+     * @param userId the users id.
+     * @return boolean value.
+     * @throws SQLException exception handler.
      */
-    public static boolean isAdmin(Integer userId) throws SQLException {
-        String sqlStatement = "SELECT * FROM users WHERE User_ID = ?";
-        PreparedStatement statement = connection.prepareStatement(sqlStatement);
-        statement.setInt(1, userId);
-        ResultSet results = statement.executeQuery();
-
-        try {
-            if (results.next()) {
-                String userName = results.getString("User_Name");
-                System.out.println(userName);
-                if (Objects.equals(userName, "admin")) {
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public static boolean checkUser(Integer userId) throws SQLException {
         String sqlStatement = "SELECT * FROM users WHERE User_ID = ?";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
