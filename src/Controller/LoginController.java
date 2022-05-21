@@ -73,6 +73,7 @@ public class LoginController implements Initializable {
      * Label for the words "Time Zone:". These labels will change depending on the system defauly language selection.
      */
     public Label tzLabel;
+    public Label loginLabel;
 
 
     /**
@@ -83,8 +84,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private void exitPlatform(){
-        Stage stage = (Stage) exitButton.getScene().getWindow();
-        Optional<ButtonType> alertOption = alertError.raiseAlert(stage,"Exit?", resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
+        Optional<ButtonType> alertOption = alertError.raiseAlert(resourceBundle.getString("ExitTitle"), resourceBundle.getString("ExitMessage"), Alert.AlertType.CONFIRMATION);
         if(alertOption.isPresent() && alertOption.get() == ButtonType.OK) {
             Platform.exit();
         }
@@ -99,53 +99,43 @@ public class LoginController implements Initializable {
     @FXML
     public void login() throws SQLException, IOException {
         Stage stage = (Stage) loginButton.getScene().getWindow();
-        //get text in username form.
 
-
-        int userId = 0;
-        String password = null;
         User loggedInUser = new User();
 
         if (userIDField.getText().isBlank() || passwordField.getText().isBlank()) {
             errorLabel.setText(resourceBundle.getString("EmptyMessage"));
             fadeOut.setNode(errorLabel);
             fadeOut.playFromStart();
+            return;
         }
-        else{
-            try {
-                userId = Integer.parseInt(userIDField.getText());
-            } catch (NumberFormatException ignored) {
-                errorLabel.setText(resourceBundle.getString("IDNotString"));
-                fadeOut.setNode(errorLabel);
-                fadeOut.playFromStart();
-            }
-            //get text in password form.
-            password = passwordField.getText();
-            if (userDAO.getLogin(userId, password)) {
+        int userId = Integer.parseInt(userIDField.getText());
+        //get text in password form.
+        String password = passwordField.getText();
+        if (userDAO.getLogin(userId, password)) {
 
 
+            loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
+            loggedInUser.setUserId(userId);
+            User.addUser(loggedInUser);
+
+            activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId, password));
+            MainFormController.mainMenu(stage);
+
+        } else {
+            if (userDAO.checkUser(userId)) {
                 loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
                 loggedInUser.setUserId(userId);
                 User.addUser(loggedInUser);
 
+                errorLabel.setText(resourceBundle.getString("LoginError"));
+                fadeOut.setNode(errorLabel);
+                fadeOut.playFromStart();
+
                 activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId, password));
-                MainFormController.mainMenu(stage);
             } else {
-                if (userDAO.checkUser(userId)) {
-                    loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
-                    loggedInUser.setUserId(userId);
-                    User.addUser(loggedInUser);
-
-                    errorLabel.setText(resourceBundle.getString("LoginError"));
-                    fadeOut.setNode(errorLabel);
-                    fadeOut.playFromStart();
-
-                    activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId, password));
-                } else {
-                    errorLabel.setText(resourceBundle.getString("LoginError"));
-                    fadeOut.setNode(errorLabel);
-                    fadeOut.playFromStart();
-                }
+                errorLabel.setText(resourceBundle.getString("LoginError"));
+                fadeOut.setNode(errorLabel);
+                fadeOut.playFromStart();
             }
         }
     }
@@ -167,10 +157,10 @@ public class LoginController implements Initializable {
 
         uidLabel.setText(resourceBundle.getString("User_ID") + ":");
         pwdLabel.setText(resourceBundle.getString("Password") + ":");
-        loginButton.setText(resourceBundle.getString("LoginButton"));
+        loginButton.setText(resourceBundle.getString("Login"));
+        loginLabel.setText(resourceBundle.getString("Login"));
         timeZoneLabel.setText(Locales.getZoneId());
         exitButton.setText(resourceBundle.getString("Cancel"));
-        headerLabel.setText(resourceBundle.getString("Header"));
         tzLabel.setText(resourceBundle.getString("TimeZone") + ":");
     }
 
