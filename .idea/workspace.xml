@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="updated LoginController.java">
-      <change afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="updated Main.java">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CreateAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateAppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CreateCustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MainFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/JDBC_Connector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/JDBC_Connector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/appointmentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/contactDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/contactDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/customerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/divisionDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/divisionDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/userDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/userDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Contact.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Country.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Division.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/Locales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Locales.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/activityLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/activityLogger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/alertError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/alertError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/date_time.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/date_time.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/LoginForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/MainForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/MainForm.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +57,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.31494254" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -86,6 +65,8 @@
       <recent name="DAO" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\julia\OneDrive\School\College\Classes\C195- Software II\Scheduling Application\src" />
+      <recent name="C:\Users\julia\OneDrive\School\College\Classes\C195- Software II\Scheduling Application\logo" />
       <recent name="C:\Users\julia\OneDrive\School\College\Classes\C195- Software II\Scheduling Application\src\Utilities" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -95,7 +76,7 @@
   <component name="RunManager">
     <configuration name="Scheduling Application" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
-      <module name="Scheduling Application" />
+      <module name="ScheduLine" />
       <option name="VM_PARAMETERS" value="--module-path ${PATH_TO_FX} --add-modules javafx.fxml,javafx.controls,javafx.graphics" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -110,125 +91,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1650614327081</updated>
-    </task>
-    <task id="LOCAL-00022" summary="edited alertBox.java">
-      <created>1651944307947</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1651944307947</updated>
-    </task>
-    <task id="LOCAL-00023" summary="updated appt logic">
-      <created>1651944325004</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1651944325004</updated>
-    </task>
-    <task id="LOCAL-00024" summary="updated forms">
-      <created>1651944334093</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1651944334093</updated>
-    </task>
-    <task id="LOCAL-00025" summary="cleaning up">
-      <created>1651944367987</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1651944367987</updated>
-    </task>
-    <task id="LOCAL-00026" summary="added create/delete functions">
-      <created>1651944393480</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1651944393480</updated>
-    </task>
-    <task id="LOCAL-00027" summary="added daos">
-      <created>1651944420263</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1651944420263</updated>
-    </task>
-    <task id="LOCAL-00028" summary="changed to using mainform">
-      <created>1651944455939</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1651944455939</updated>
-    </task>
-    <task id="LOCAL-00029" summary="updated appointment queries">
-      <created>1652006936946</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1652006936946</updated>
-    </task>
-    <task id="LOCAL-00030" summary="more commits">
-      <created>1652006955982</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1652006955982</updated>
-    </task>
-    <task id="LOCAL-00031" summary="added date/time formats">
-      <created>1652167697084</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1652167697084</updated>
-    </task>
-    <task id="LOCAL-00032" summary="added date/time formats">
-      <created>1652167710466</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1652167710466</updated>
-    </task>
-    <task id="LOCAL-00033" summary="code comments">
-      <created>1652167735087</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1652167735087</updated>
-    </task>
-    <task id="LOCAL-00034" summary="removed Simple Properties">
-      <created>1652167762417</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1652167762417</updated>
-    </task>
-    <task id="LOCAL-00035" summary="removed Simple Properties">
-      <created>1652167807288</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1652167807288</updated>
-    </task>
-    <task id="LOCAL-00036" summary="added CreateCustomerController">
-      <created>1652168378438</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1652168378438</updated>
-    </task>
-    <task id="LOCAL-00037" summary="added CreateCustomerForm">
-      <created>1652169090181</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1652169090181</updated>
-    </task>
-    <task id="LOCAL-00038" summary="more commits">
-      <created>1652176565806</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1652176565806</updated>
     </task>
     <task id="LOCAL-00039" summary="more commits">
       <created>1652259103114</created>
@@ -454,7 +316,126 @@
       <option name="project" value="LOCAL" />
       <updated>1652853985121</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="added README.txt&#10;Updated language properties">
+      <created>1652959747280</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1652959747280</updated>
+    </task>
+    <task id="LOCAL-00072" summary="update user">
+      <created>1652959763026</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1652959763026</updated>
+    </task>
+    <task id="LOCAL-00073" summary="updated main forms">
+      <created>1652959778993</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1652959778993</updated>
+    </task>
+    <task id="LOCAL-00074" summary="updated logins">
+      <created>1652959791221</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1652959791221</updated>
+    </task>
+    <task id="LOCAL-00075" summary="updated customer logic">
+      <created>1652959809745</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1652959809745</updated>
+    </task>
+    <task id="LOCAL-00076" summary="removed unused model objects">
+      <created>1652959828160</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1652959828160</updated>
+    </task>
+    <task id="LOCAL-00077" summary="updated appointment logic">
+      <created>1652959844954</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1652959844954</updated>
+    </task>
+    <task id="LOCAL-00078" summary="updated utility classes.">
+      <created>1652959863931</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1652959863931</updated>
+    </task>
+    <task id="LOCAL-00079" summary="updated DAO connectors">
+      <created>1652959876356</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1652959876356</updated>
+    </task>
+    <task id="LOCAL-00080" summary="added a report DAO.">
+      <created>1653126511535</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126511535</updated>
+    </task>
+    <task id="LOCAL-00081" summary="renamed scheduling app">
+      <created>1653126525956</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126525956</updated>
+    </task>
+    <task id="LOCAL-00082" summary="removed stage from alert">
+      <created>1653126542653</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126542653</updated>
+    </task>
+    <task id="LOCAL-00083" summary="updated mainform logic">
+      <created>1653126573073</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126573073</updated>
+    </task>
+    <task id="LOCAL-00084" summary="updated login controller">
+      <created>1653126582587</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126582587</updated>
+    </task>
+    <task id="LOCAL-00085" summary="updated appts and customers controllers">
+      <created>1653126598242</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126598242</updated>
+    </task>
+    <task id="LOCAL-00086" summary="edited date logic">
+      <created>1653126606416</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126606416</updated>
+    </task>
+    <task id="LOCAL-00087" summary="updated Main.java">
+      <created>1653126621142</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126621142</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -469,32 +450,32 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added getAllCustomers method" />
-    <MESSAGE value="updated SQL" />
-    <MESSAGE value="minor edits" />
-    <MESSAGE value="renamed alertBox to alertError" />
-    <MESSAGE value="code comments" />
-    <MESSAGE value="removed unnecessary parent objects" />
-    <MESSAGE value="updated methods" />
-    <MESSAGE value="update" />
-    <MESSAGE value="updated appointments logic" />
-    <MESSAGE value="updated DAOs" />
-    <MESSAGE value="updated controller logic" />
-    <MESSAGE value="updated languages" />
-    <MESSAGE value="updated forms" />
-    <MESSAGE value="updated customer.java and main" />
-    <MESSAGE value="setting up date logic" />
-    <MESSAGE value="more" />
     <MESSAGE value="updated radio button filters." />
     <MESSAGE value="updated alertError.java" />
-    <MESSAGE value="updated appointment logic" />
     <MESSAGE value="updated time overlap detection" />
     <MESSAGE value="updated DAO" />
     <MESSAGE value="built timestamp method" />
     <MESSAGE value="updated main" />
     <MESSAGE value="updated MainForm controller and view" />
     <MESSAGE value="updated LoginController.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated LoginController.java" />
+    <MESSAGE value="added README.txt&#10;Updated language properties" />
+    <MESSAGE value="update user" />
+    <MESSAGE value="updated main forms" />
+    <MESSAGE value="updated logins" />
+    <MESSAGE value="updated customer logic" />
+    <MESSAGE value="removed unused model objects" />
+    <MESSAGE value="updated appointment logic" />
+    <MESSAGE value="updated utility classes." />
+    <MESSAGE value="updated DAO connectors" />
+    <MESSAGE value="added a report DAO." />
+    <MESSAGE value="renamed scheduling app" />
+    <MESSAGE value="removed stage from alert" />
+    <MESSAGE value="updated mainform logic" />
+    <MESSAGE value="updated login controller" />
+    <MESSAGE value="updated appts and customers controllers" />
+    <MESSAGE value="edited date logic" />
+    <MESSAGE value="updated Main.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated Main.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -507,26 +488,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="4" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Controller/CreateAppointmentController.java</url>
-          <line>135</line>
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Controller/CreateAppointmentController.java</url>
-          <line>137</line>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Controller/CreateAppointmentController.java</url>
-          <line>141</line>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Controller/CreateAppointmentController.java</url>
-          <line>145</line>
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
