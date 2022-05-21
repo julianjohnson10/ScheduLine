@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="updated Main.java">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="dbcafb9c-fe78-4d6c-a2c9-b57685274106" name="Changes" comment="cleanup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MainFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/customerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customerDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_en.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/Nat_fr.properties" afterDir="false" />
     </list>
@@ -91,20 +92,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1650614327081</updated>
-    </task>
-    <task id="LOCAL-00039" summary="more commits">
-      <created>1652259103114</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1652259103114</updated>
-    </task>
-    <task id="LOCAL-00040" summary="added error label method">
-      <created>1652345050922</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1652345050922</updated>
     </task>
     <task id="LOCAL-00041" summary="added getAllAppointments method">
       <created>1652345072459</created>
@@ -435,7 +422,21 @@
       <option name="project" value="LOCAL" />
       <updated>1653126621142</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="cleaned resource bundles">
+      <created>1653126732745</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126732745</updated>
+    </task>
+    <task id="LOCAL-00089" summary="cleanup">
+      <created>1653126739540</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1653126739540</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -450,8 +451,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated radio button filters." />
-    <MESSAGE value="updated alertError.java" />
     <MESSAGE value="updated time overlap detection" />
     <MESSAGE value="updated DAO" />
     <MESSAGE value="built timestamp method" />
@@ -475,7 +474,9 @@
     <MESSAGE value="updated appts and customers controllers" />
     <MESSAGE value="edited date logic" />
     <MESSAGE value="updated Main.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated Main.java" />
+    <MESSAGE value="cleaned resource bundles" />
+    <MESSAGE value="cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -487,6 +488,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="4" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NumberFormatException" package="java.lang" />
+          <option name="timeStamp" value="5" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>

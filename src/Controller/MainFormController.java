@@ -326,7 +326,6 @@ public class MainFormController implements Initializable {
     @FXML
     public void deleteCustomer() throws SQLException {
         Customer selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-        Stage stage = (Stage) deleteCustomer.getScene().getWindow();
         if(selectedCustomer != null){
             //Delete selected customer
             Optional<ButtonType> result = raiseAlert("Are you sure?", "Are you sure you want to delete this customer?", Alert.AlertType.CONFIRMATION);
@@ -764,6 +763,117 @@ public class MainFormController implements Initializable {
     }
 
     /**
+     * Generates the first report in the Reports tab.
+     * @throws SQLException exception handler for SQL errors.
+     */
+    @FXML
+    private void generateReport1() throws SQLException {
+
+        for (int i = 1; i <= 12; i++) {
+            System.out.println(Month.of(i).getDisplayName(TextStyle.FULL,Locale.US));
+            String month = Month.of(i).getDisplayName(TextStyle.FULL,Locale.US);
+            report1.appendText(month + ":\n\n");
+            List<String> typesList = reportDAO.getTypes(i);
+
+            if(typesList.size() == 0){
+                report1.appendText("\t0 appointments for the month of " + month + "\n\n");
+            }
+
+            for(String type : typesList){
+
+                List<Integer> countList = reportDAO.generateReport1(type,i);
+                report1.appendText("\tAppointment Type- " + type + ": Total = ");
+                for(Integer count : countList){
+                    report1.appendText(String.valueOf(count));
+                    report1.appendText("\n\n");
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Generates the second report in the Reports tab.
+     * @throws SQLException exception handler for SQL errors.
+     */
+    @FXML
+    private void generateReport2() throws SQLException {
+        ObservableList<String> allContacts = contactDAO.getContactNames();
+        report2.clear();
+        for(String contact : allContacts){
+            List<String> apptsList = reportDAO.generateReport2(contact);
+
+            if(apptsList.size() != 0){
+                if(apptsList.size() == 1){
+                    report2.appendText(contact + " has 1 appointment listed below:\n\n");
+                }
+                else{
+                    report2.appendText(contact + " has " + apptsList.size() + " appointments listed below:\n\n");
+                }
+                for (String appt : apptsList){
+                    report2.appendText(appt);
+                    report2.appendText("\n\n");
+                }
+                report2.appendText("___________________________________\n\n");
+            }
+            else{
+                report2.appendText(contact + " has 0 appointments.\n\n");
+            }
+        }
+    }
+
+    /**
+     * Generates the third report in the Reports tab.
+     * @throws SQLException exception handler for SQL errors.
+     */
+    @FXML
+    private void generateReport3() throws SQLException {
+        ObservableList<String> countries = divisionDAO.getCountries();
+        report3.clear();
+        for(String country : countries){
+            List<String> customerList = reportDAO.generateReport3(country);
+
+            if(customerList.size() != 0){
+                if(customerList.size() == 1){
+                    report3.appendText(country + " has 1 customer listed below:\n\n");
+                }
+                else{
+                    report3.appendText(country + " customers: " + customerList.size() + "\n\n");
+                }
+                for (String appt : customerList){
+                    report3.appendText(appt);
+                    report3.appendText("\n\n");
+                }
+                report3.appendText("___________________________________\n\n");
+            }
+            else{
+                report3.appendText(country + " customers: " + 0 + "\n\n");
+            }
+        }
+    }
+
+    public void copyReport1() {
+        String s = report1.getText();
+        StringSelection stringSelection = new StringSelection(s);
+        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+        cb.setContents(stringSelection,null);
+    }
+
+    public void copyReport2() {
+        String s = report2.getText();
+        StringSelection stringSelection = new StringSelection(s);
+        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+        cb.setContents(stringSelection,null);
+    }
+
+    public void copyReport3() {
+        String s = report3.getText();
+        StringSelection stringSelection = new StringSelection(s);
+        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+        cb.setContents(stringSelection,null);
+    }
+
+    /**
      * Boolean value that once initialize is called, will turn false after the
      * time alert is called, so it doesn't repeat.
      */
@@ -774,6 +884,7 @@ public class MainFormController implements Initializable {
      * @param url url
      * @param resourceBundle resourcebundle
      */
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Appointment> allAppointments = null;
@@ -784,7 +895,7 @@ public class MainFormController implements Initializable {
         }
         LocalDateTime now = LocalDateTime.now();
 
-        //Lambda expression sets an onaction event to the login button.
+        //Lambda expression sets an onaction event to the login button. The event takes the user back to the Login Form.
         logoutButton.setOnAction( event ->
         {
             Parent root = null;
@@ -805,7 +916,7 @@ public class MainFormController implements Initializable {
 
         startTime.setItems(date_time.startList);
         endTime.setItems(date_time.endList);
-        
+
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
         fadeOut.setCycleCount(1);
@@ -814,6 +925,18 @@ public class MainFormController implements Initializable {
         customerTableView.setPlaceholder(new Label("There are no customers in the database. Click the 'Create Customer' button below to add one."));
 
         try {
+
+            if(allRadio.isSelected()){
+                appointmentTableView.setPlaceholder(new Label("There are no appointments in the database. Click the 'Create Appointment' button below to add one."));
+                appointmentTableView.setItems(Appointment.getAllAppointments());
+            }
+            else if(weekRadio.isSelected()){
+                appointmentTableView.setItems(Appointment.getWeekly());
+            }
+            else{
+                appointmentTableView.setItems(Appointment.getMonthly());
+            }
+
             customerTableView.setItems(Customer.getAllCustomers());
             customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
             customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -822,7 +945,6 @@ public class MainFormController implements Initializable {
             phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
             divID.setCellValueFactory(new PropertyValueFactory<>("divID"));
 
-            appointmentTableView.setItems(Appointment.getAllAppointments());
             apptIDColumn.setCellValueFactory(new PropertyValueFactory<>("apptId"));
             titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
             descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -871,104 +993,5 @@ public class MainFormController implements Initializable {
         report1.clear();
         report2.clear();
         report3.clear();
-    }
-
-    @FXML
-    private void generateReport1() throws SQLException {
-
-        for (int i = 1; i <= 12; i++) {
-            System.out.println(Month.of(i).getDisplayName(TextStyle.FULL,Locale.US));
-            String month = Month.of(i).getDisplayName(TextStyle.FULL,Locale.US);
-            report1.appendText(month + ":\n\n");
-            List<String> typesList = reportDAO.getTypes(i);
-
-            if(typesList.size() == 0){
-                report1.appendText("\t0 appointments for the month of " + month + "\n\n");
-            }
-
-            for(String type : typesList){
-
-                List<Integer> countList = reportDAO.generateReport1(type,i);
-                report1.appendText("\tAppointment Type- " + type + ": Total = ");
-                for(Integer count : countList){
-                    report1.appendText(String.valueOf(count));
-                    report1.appendText("\n\n");
-                }
-            }
-        }
-
-    }
-
-    @FXML
-    private void generateReport2() throws SQLException {
-        ObservableList<String> allContacts = contactDAO.getContactNames();
-        report2.clear();
-        for(String contact : allContacts){
-            List<String> apptsList = reportDAO.generateReport2(contact);
-
-            if(apptsList.size() != 0){
-                if(apptsList.size() == 1){
-                    report2.appendText(contact + " has 1 appointment listed below:\n\n");
-                }
-                else{
-                    report2.appendText(contact + " has " + apptsList.size() + " appointments listed below:\n\n");
-                }
-                for (String appt : apptsList){
-                    report2.appendText(appt);
-                    report2.appendText("\n\n");
-                }
-                report2.appendText("___________________________________\n\n");
-            }
-            else{
-                report2.appendText(contact + " has 0 appointments.\n\n");
-            }
-        }
-    }
-
-    @FXML
-    private void generateReport3() throws SQLException {
-        ObservableList<String> countries = divisionDAO.getCountries();
-        report3.clear();
-        for(String country : countries){
-            List<String> customerList = reportDAO.generateReport3(country);
-
-            if(customerList.size() != 0){
-                if(customerList.size() == 1){
-                    report3.appendText(country + " has 1 customer listed below:\n\n");
-                }
-                else{
-                    report3.appendText(country + " customers: " + customerList.size() + "\n\n");
-                }
-                for (String appt : customerList){
-                    report3.appendText(appt);
-                    report3.appendText("\n\n");
-                }
-                report3.appendText("___________________________________\n\n");
-            }
-            else{
-                report3.appendText(country + " customers: " + 0 + "\n\n");
-            }
-        }
-    }
-
-    public void copyReport1() {
-        String s = report1.getText();
-        StringSelection stringSelection = new StringSelection(s);
-        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-        cb.setContents(stringSelection,null);
-    }
-
-    public void copyReport2() {
-        String s = report2.getText();
-        StringSelection stringSelection = new StringSelection(s);
-        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-        cb.setContents(stringSelection,null);
-    }
-
-    public void copyReport3() {
-        String s = report3.getText();
-        StringSelection stringSelection = new StringSelection(s);
-        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-        cb.setContents(stringSelection,null);
     }
 }

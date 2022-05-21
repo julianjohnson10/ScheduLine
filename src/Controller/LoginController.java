@@ -108,36 +108,47 @@ public class LoginController implements Initializable {
             fadeOut.playFromStart();
             return;
         }
-        int userId = Integer.parseInt(userIDField.getText());
-        //get text in password form.
-        String password = passwordField.getText();
-        if (userDAO.getLogin(userId, password)) {
+
+        try
+        {
+            int userId = Integer.parseInt(userIDField.getText());
+            //get text in password form.
+            String password = passwordField.getText();
+            if (userDAO.getLogin(userId, password)) {
 
 
-            loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
-            loggedInUser.setUserId(userId);
-            User.addUser(loggedInUser);
-
-            activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId, password));
-            MainFormController.mainMenu(stage);
-
-        } else {
-            if (userDAO.checkUser(userId)) {
                 loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
                 loggedInUser.setUserId(userId);
                 User.addUser(loggedInUser);
 
-                errorLabel.setText(resourceBundle.getString("LoginError"));
-                fadeOut.setNode(errorLabel);
-                fadeOut.playFromStart();
-
                 activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId, password));
+                MainFormController.mainMenu(stage);
+
             } else {
-                errorLabel.setText(resourceBundle.getString("LoginError"));
-                fadeOut.setNode(errorLabel);
-                fadeOut.playFromStart();
+                if (userDAO.checkUser(userId)) {
+                    loggedInUser.setUserName(userDAO.getUserNamefromID(userId));
+                    loggedInUser.setUserId(userId);
+                    User.addUser(loggedInUser);
+
+                    errorLabel.setText(resourceBundle.getString("LoginError"));
+                    fadeOut.setNode(errorLabel);
+                    fadeOut.playFromStart();
+
+                    activityLogger.logActivity(User.getUser().getUserName(), userDAO.getLogin(userId, password));
+                } else {
+                    errorLabel.setText(resourceBundle.getString("LoginError"));
+                    fadeOut.setNode(errorLabel);
+                    fadeOut.playFromStart();
+                }
             }
         }
+        catch (NumberFormatException e)
+        {
+            errorLabel.setText(resourceBundle.getString("IDnotString"));
+            fadeOut.setNode(errorLabel);
+            fadeOut.playFromStart();
+        }
+
     }
 
     /**
