@@ -3,7 +3,7 @@ package Utilities;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
+
 import java.util.Optional;
 
 /**
@@ -17,12 +17,11 @@ public class alertError {
      * @param alertType Alertbox type.
      * @return The alertBox.
      */
-    public static Optional<ButtonType> raiseAlert(Stage stage, String title, String message, AlertType alertType){
+    public static Optional<ButtonType> raiseAlert(String title, String message, AlertType alertType){
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(alertType.toString());
         alert.setContentText(message);
-        stage.centerOnScreen();
         return alert.showAndWait();
     }
 }
