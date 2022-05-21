@@ -49,9 +49,9 @@ public class Main extends Application {
      */
     public static void main(String[] args) throws Exception {
         /* Start the JDBC Connector */
-        date_time.printDates();
         JDBC_Connector.openConnection();
         date_time.setStartList();
+        date_time.setEndList(date_time.startList);
         launch(args);
         JDBC_Connector.closeConnection();
     }
