@@ -3,7 +3,6 @@ package Controller;
 import DAO.appointmentDAO;
 import DAO.contactDAO;
 import DAO.customerDAO;
-import DAO.userDAO;
 import Model.Appointment;
 import Model.User;
 import Utilities.date_time;
@@ -20,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import static Utilities.alertError.raiseAlert;
 
@@ -107,6 +105,7 @@ public class CreateAppointmentController implements Initializable {
 
     /**
      * Creates the appointment when the "Create" button is pressed on the Create Appointment Form.
+     * Time overlap logic occurs here, for appointment creation cases.
      * @throws SQLException exception handler for SQL errors.
      * @throws IOException exception handler.
      */
@@ -115,7 +114,12 @@ public class CreateAppointmentController implements Initializable {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         ObservableList<Appointment> allAppointments = Appointment.getAllAppointments();
 
-        if(!(titleField.getText().isEmpty()||descriptionField.getText().isEmpty()||locationField.getText().isEmpty()||typeField.getText().isEmpty()||contactBox.getValue()==null)){
+
+        if(customerBox.getValue() == null||titleField.getText().isEmpty()||descriptionField.getText().isEmpty()||typeField.getText().isEmpty()||locationField.getText().isEmpty()||contactBox.getValue() == null||datePicker.getValue() == null||startTime.getValue().isEmpty()||endTime.getValue().isEmpty()) {
+            raiseAlert("Error", "Fields must not be left empty or blank.", Alert.AlertType.ERROR);
+        }
+        else{
+
             String contact_name = contactBox.getValue();
             Integer contactID = contactDAO.getContactID(contact_name);
             Integer userID = User.getUser().userId;
@@ -127,35 +131,43 @@ public class CreateAppointmentController implements Initializable {
 
             LocalDateTime startDate = LocalDateTime.from(LocalDateTime.of(date,start_time).atZone(ZoneId.of("UTC")));
             LocalDateTime endDate = LocalDateTime.from(LocalDateTime.of(date,end_time).atZone(ZoneId.of("UTC")));
+            LocalDateTime now = LocalDateTime.now();
 
-            for(Appointment appointment: allAppointments){
+            if(startDate.isAfter(endDate)){
+                raiseAlert("Error","The appointment end time must be after the start time.", Alert.AlertType.ERROR);
+                return;
+            }
+            if(startDate.isEqual(endDate)){
+                raiseAlert("Error","An appointment cannot start and end at the same time.", Alert.AlertType.ERROR);
+                return;
+            }
+            if(startDate.isBefore(now)){
+                raiseAlert("Error", "The appointment must start in the future.", Alert.AlertType.ERROR);
+                return;
+            }
+
+            for(Appointment appointment: allAppointments) {
                 Integer custID = appointment.getCustomerId();
                 LocalDateTime aStart = appointment.getStartLDT();
                 LocalDateTime aEnd = appointment.getEndLDT();
 
-                if(Objects.equals(customerBox.getValue(), custID)){
-                    System.out.println("TRUE");
-                    if((aStart.isAfter(startDate) || aStart.isEqual(startDate)) && aStart.isBefore(endDate)){
-                        raiseAlert(stage,"Overlapping Appointments", "This appointment overlaps with another one of customer " + custID + "'s appointments", Alert.AlertType.ERROR);
-                        break;
-                    }
-                    else if(aEnd.isAfter(startDate) && (aEnd.isBefore(endDate))||aEnd.isEqual(endDate)){
-                        raiseAlert(stage,"Overlapping Appointments", "This appointment overlaps with another one of customer " + custID + "'s appointments", Alert.AlertType.ERROR);
-                        break;
-                    }
-                    else if((aStart.isBefore(startDate)||aStart.isEqual(startDate)) && (aEnd.isAfter(endDate)||aEnd.isEqual(endDate))){
-                        raiseAlert(stage,"Overlapping Appointments", "This appointment overlaps with another one of customer " + custID + "'s appointments", Alert.AlertType.ERROR);
-                        break;
-                    }
+                //Check if customer ID matches, and don't compare the same appointment.
+                boolean b = custID.equals(customerID);
+                if (b && ((startDate.isAfter(aStart) || startDate.isEqual(aStart)) && startDate.isBefore(aEnd))) {
+                    raiseAlert("Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
+                    return;
                 }
-                else{
-                    appointmentDAO.createAppt(titleField.getText(), descriptionField.getText(), locationField.getText(),typeField.getText(),datePicker.getValue(),LocalTime.parse(startTime.getValue(),format), LocalTime.parse(endTime.getValue(),format), customerBox.getValue(),userID,contactID);
-                    MainFormController.mainMenu(stage);
+                if (b && (endDate.isAfter(aStart) && (endDate.isBefore(aEnd)) || endDate.isEqual(aEnd))) {
+                    raiseAlert("Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
+                    return;
+                }
+                if (b && ((startDate.isBefore(aStart) || startDate.isEqual(aStart)) && (endDate.isAfter(aEnd) || endDate.isEqual(aEnd)))) {
+                    raiseAlert("Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
+                    return;
                 }
             }
-        }
-        else{
-            raiseAlert(stage,"Error", "Appointment fields cannot be empty", Alert.AlertType.ERROR);
+            appointmentDAO.createAppt(titleField.getText(), descriptionField.getText(), locationField.getText(),typeField.getText(),datePicker.getValue(),LocalTime.parse(startTime.getValue(),format), LocalTime.parse(endTime.getValue(),format), customerBox.getValue(),userID,contactID);
+            MainFormController.mainMenu(stage);
         }
     }
 
@@ -170,7 +182,7 @@ public class CreateAppointmentController implements Initializable {
 
         try {
             startTime.setItems(date_time.startList);
-            endTime.setItems(date_time.startList);
+            endTime.setItems(date_time.endList);
             contactBox.setItems(contactDAO.getContactNames());
             customerBox.setItems(customerDAO.getCustomerIDs());
 
