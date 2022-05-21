@@ -26,12 +26,28 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
 
 import static Utilities.alertError.raiseAlert;
 
+/**
+ * The Main Form holds the Appointments Tab, the Customers Tab, and the Reports tab.
+ * If Log Out is clicked, the main form will reinitialize, to include alerts if there is an appointment within 15 minutes.
+ *
+ * FUTURE ENHANCEMENT: I want to note the last selected tab, and pass it to main form. Currently, when you create a customer and are taken back here
+ * to the main form, the appointments tab will get sent to the tabPane selectionmodel, because it is the first tab in the pane.
+ *
+ * FUTURE ENHANCEMENT: I tried to center everything 'properly'. There is a slight flicker. CenterOnScreen doesn't seem to be a viable option, no matter
+ * if it placed before or after show.
+ *
+ * FUTURE ENHANCEMENT: Multi-monitor support. If you use 2 monitors, and move the application to the secondary screen after launch, the alert boxes will
+ * still only show on the primary monitor.
+ */
 public class MainFormController implements Initializable {
 
     /**
@@ -299,6 +315,9 @@ public class MainFormController implements Initializable {
      */
     public TextField townField;
     public Button logoutButton;
+    public TextArea report1;
+    public TextArea report2;
+    public TextArea report3;
 
     /**
      * Deletes the selected customer from the database.
@@ -310,7 +329,7 @@ public class MainFormController implements Initializable {
         Stage stage = (Stage) deleteCustomer.getScene().getWindow();
         if(selectedCustomer != null){
             //Delete selected customer
-            Optional<ButtonType> result = raiseAlert(stage,"Are you sure?", "Are you sure you want to delete this customer?", Alert.AlertType.CONFIRMATION);
+            Optional<ButtonType> result = raiseAlert("Are you sure?", "Are you sure you want to delete this customer?", Alert.AlertType.CONFIRMATION);
             if(result.isPresent() && result.get() == ButtonType.OK) {
                 if(!appointmentDAO.checkCustomer(selectedCustomer.getCustomerID())){
                     customerDAO.deleteCustomer(selectedCustomer.getCustomerID());
@@ -323,12 +342,12 @@ public class MainFormController implements Initializable {
                     customerTableView.setItems(customerDAO.getAllCustomers());
                 }
                 else {
-                    raiseAlert(stage,"Error",selectedCustomer.getCustomerName() + " still has appointments and cannot be deleted. \n\nPlease delete their appointments first before deleting.", Alert.AlertType.ERROR);
+                    raiseAlert("Error",selectedCustomer.getCustomerName() + " still has appointments and cannot be deleted. \n\nPlease delete their appointments first before deleting.", Alert.AlertType.ERROR);
                 }
             }
         }
         else {
-            raiseAlert(stage,"Error", "You have not selected a customer", Alert.AlertType.ERROR);
+            raiseAlert("Error", "You have not selected a customer", Alert.AlertType.ERROR);
         }
     }
 
@@ -342,7 +361,7 @@ public class MainFormController implements Initializable {
         Stage stage = (Stage) deleteApptButton.getScene().getWindow();
         if(selectedAppointment != null){
             //Delete selected appointment
-            Optional<ButtonType> result = raiseAlert(stage,"Are you sure?", "Are you sure you want to cancel this appointment?", Alert.AlertType.CONFIRMATION);
+            Optional<ButtonType> result = raiseAlert("Are you sure?", "Are you sure you want to cancel this appointment?", Alert.AlertType.CONFIRMATION);
             if(result.isPresent() && result.get() == ButtonType.OK) {
                 appointmentDAO.deleteAppt(selectedAppointment.getApptId());
                 Appointment.deleteAppointment(selectedAppointment);
@@ -362,7 +381,7 @@ public class MainFormController implements Initializable {
             }
         }
         else {
-            raiseAlert(stage,"Error", "You have not selected an appointment", Alert.AlertType.ERROR);
+            raiseAlert("Error", "You have not selected an appointment", Alert.AlertType.ERROR);
         }
     }
 
@@ -464,7 +483,7 @@ public class MainFormController implements Initializable {
             userBox.setValue(userID);
         }
         else {
-            raiseAlert(stage,"Select an appointment:", "Please select an appointment to update.", Alert.AlertType.INFORMATION);
+            raiseAlert("Select an appointment:", "Please select an appointment to update.", Alert.AlertType.INFORMATION);
         }
 
     }
@@ -521,7 +540,7 @@ public class MainFormController implements Initializable {
             phoneTextField.setText(phone);
         }
         else {
-            raiseAlert(stage,"Select a customer:", "Please select a customer to update.", Alert.AlertType.INFORMATION);
+            raiseAlert("Select a customer:", "Please select a customer to update.", Alert.AlertType.INFORMATION);
         }
     }
 
@@ -545,7 +564,7 @@ public class MainFormController implements Initializable {
     }
 
     /**
-     * Method for when the apply button is clicked on the Appointments tab.
+     * Method for when the apply button is clicked on the Appointments tab. Time overlap logic occurs here, for update cases.
      * NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "userId" is null
      * forgot to implement updating the user in the updateApptFields method
      * @throws SQLException sqlexception handler.
@@ -555,7 +574,10 @@ public class MainFormController implements Initializable {
         Stage stage = (Stage) updateAppt.getScene().getWindow();
         ObservableList<Appointment> allAppointments = Appointment.getAllAppointments();
 
-        if(!(customerBox.getValue() == null||titleField.getText() == null||descriptionField.getText() == null||typeField.getText() == null||locationField.getText().isEmpty()||contactBox.getValue()==null||datePicker.getValue()==null||startTime.getValue()==null||endTime.getValue()==null||userBox.getValue()==null)) {
+        if(titleField.getText().isEmpty()||descriptionField.getText().isEmpty()||typeField.getText().isEmpty()||locationField.getText().isEmpty()) {
+            raiseAlert("Error", "Fields must not be left empty or blank.", Alert.AlertType.ERROR);
+        }
+        else{
             DateTimeFormatter format = DateTimeFormatter.ofPattern("h:mma");
             Integer userID = userBox.getValue();
             Integer customerID = customerBox.getValue();
@@ -573,44 +595,52 @@ public class MainFormController implements Initializable {
 
             LocalDateTime startDate = LocalDateTime.from(LocalDateTime.of(apptDate, start).atZone(ZoneId.of("UTC")));
             LocalDateTime endDate = LocalDateTime.from(LocalDateTime.of(apptDate, end).atZone(ZoneId.of("UTC")));
+            LocalDateTime now = LocalDateTime.now();
+
+            if(startDate.isAfter(endDate)){
+                raiseAlert("Error","The appointment end time must be after the start time.", Alert.AlertType.ERROR);
+                return;
+            }
+            if(startDate.isEqual(endDate)){
+                raiseAlert("Error","An appointment cannot start and end at the same time.", Alert.AlertType.ERROR);
+                return;
+            }
+            if(startDate.isBefore(now)){
+                raiseAlert("Error", "The appointment must start in the future.", Alert.AlertType.ERROR);
+                return;
+            }
 
             for (Appointment appointment : allAppointments) {
-
-                int custID = appointment.getCustomerId();
-                int appt_ID = appointment.getApptId();
+                Integer custID = appointment.getCustomerId();
+                Integer appt_ID = appointment.getApptId();
                 LocalDateTime aStart = appointment.getStartLDT();
                 LocalDateTime aEnd = appointment.getEndLDT();
 
                 //Check if customer ID matches, and don't compare the same appointment.
-                if (Objects.equals(customerBox.getValue(), custID) && !apptID.equals(appt_ID)) {
-                    if ((aStart.isAfter(startDate) || aStart.isEqual(startDate)) && aStart.isBefore(endDate)) {
-                        raiseAlert(stage, "Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
-                        break;
-                    } else if (aEnd.isAfter(startDate) && (aEnd.isBefore(endDate)) || aEnd.isEqual(endDate)) {
-                        raiseAlert(stage, "Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
-                        break;
-                    } else if ((aStart.isBefore(startDate) || aStart.isEqual(startDate)) && (aEnd.isAfter(endDate) || aEnd.isEqual(endDate))) {
-                        raiseAlert(stage, "Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
-                        break;
-                    }
+                boolean b = custID.equals(customerID) && !appt_ID.equals(apptID);
+                if (b && ((startDate.isAfter(aStart) || startDate.isEqual(aStart)) && startDate.isBefore(aEnd))) {
+                    raiseAlert("Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
+                    return;
                 }
-                else{
-                    appointmentDAO.updateAppt(apptID, title, description, location, type, apptDate, start, end, lastUpdate, username, customerID, userID, contactID);
+                if (b && (endDate.isAfter(aStart) && (endDate.isBefore(aEnd)) || endDate.isEqual(aEnd))) {
+                    raiseAlert("Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
+                    return;
                 }
-
+                if (b && ((startDate.isBefore(aStart) || startDate.isEqual(aStart)) && (endDate.isAfter(aEnd) || endDate.isEqual(aEnd)))) {
+                    raiseAlert("Overlapping Appointments", "This appointment overlaps with another one of customer " + customerID + "'s appointments", Alert.AlertType.ERROR);
+                    return;
+                }
             }
-        }
-        else{
-            raiseAlert(stage, "Error", "Fields must not be left empty or blank.", Alert.AlertType.ERROR);
-        }
-        if(allRadio.isSelected()){
-            appointmentTableView.setItems(Appointment.getAllAppointments());
-        }
-        else if(weekRadio.isSelected()){
-            appointmentTableView.setItems(Appointment.getWeekly());
-        }
-        else{
-            appointmentTableView.setItems(Appointment.getMonthly());
+            appointmentDAO.updateAppt(apptID, title, description, location, type, apptDate, start, end, lastUpdate, username, customerID, userID, contactID);
+            if(allRadio.isSelected()){
+                appointmentTableView.setItems(Appointment.getAllAppointments());
+            }
+            else if(weekRadio.isSelected()){
+                appointmentTableView.setItems(Appointment.getWeekly());
+            }
+            else{
+                appointmentTableView.setItems(Appointment.getMonthly());
+            }
         }
     }
 
@@ -619,8 +649,6 @@ public class MainFormController implements Initializable {
      * @throws SQLException Exception handler.
      */
     public void applyUpdateCustomer() throws SQLException {
-        Stage stage = (Stage) applyUpdateCustomer.getScene().getWindow();
-
         Customer selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
 
         String city;
@@ -647,7 +675,7 @@ public class MainFormController implements Initializable {
                 lastUpdatedby = User.getUser().getUserName();
 
                 if (nameTextField.getText() == null || countryBox.getValue() == null || stateProvince.getValue() == null || addressTextField.getText() == null || cityTextField.getText() == null || townField.getText() == null || postalTextField.getText() == null || phoneTextField.getText() == null) {
-                    raiseAlert(stage, "Error", "Fields must not be left blank.", Alert.AlertType.ERROR);
+                    raiseAlert("Error", "Fields must not be left blank.", Alert.AlertType.ERROR);
                 }
                 else{
                     customerDAO.updateCustomer(customerID, customerName, address, city, town, postalCode, phoneNumber, lastUpdatedby, divisionID);
@@ -666,7 +694,7 @@ public class MainFormController implements Initializable {
                 lastUpdatedby = User.getUser().getUserName();
 
                 if (nameTextField.getText().isEmpty() || countryBox.getValue().isEmpty() || stateProvince.getValue().isEmpty() || addressTextField.getText().isEmpty() || cityTextField.getText().isEmpty() || postalTextField.getText().isEmpty() || phoneTextField.getText().isEmpty()) {
-                    raiseAlert(stage, "Error", "Fields must not be left blank.", Alert.AlertType.ERROR);
+                    raiseAlert("Error", "Fields must not be left blank.", Alert.AlertType.ERROR);
                 }
                 else{
                     customerDAO.updateCustomer(customerID, customerName, address, city, null, postalCode, phoneNumber, lastUpdatedby, divisionID);
@@ -676,7 +704,7 @@ public class MainFormController implements Initializable {
             }
         }
         else {
-            raiseAlert(stage, "Error", "Select a customer from the table and click 'Update Customer'", Alert.AlertType.ERROR);
+            raiseAlert("Error", "Select a customer from the table and click 'Update Customer'", Alert.AlertType.ERROR);
         }
     }
 
@@ -736,16 +764,48 @@ public class MainFormController implements Initializable {
     }
 
     /**
+     * Boolean value that once initialize is called, will turn false after the
+     * time alert is called, so it doesn't repeat.
+     */
+    private static boolean first = true;
+    /**
      * Initializes the main form. Sets the tableviews.
+     * LAMBDA JUSTIFICATION: The lambda expression passes an event handler to the 'Log Out' button, that takes the user back to the Login screen.
      * @param url url
      * @param resourceBundle resourcebundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<Appointment> allAppointments = null;
+        try {
+            allAppointments = Appointment.getAllAppointments();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        LocalDateTime now = LocalDateTime.now();
+
+        //Lambda expression sets an onaction event to the login button.
+        logoutButton.setOnAction( event ->
+        {
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/LoginForm.fxml")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //I set first again, when log out is called, so the mainform can go back to its initial state.
+            first = true;
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            assert root != null;
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+            stage.centerOnScreen();
+        });
 
         startTime.setItems(date_time.startList);
-        endTime.setItems(date_time.startList);
-
+        endTime.setItems(date_time.endList);
+        
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
         fadeOut.setCycleCount(1);
@@ -781,21 +841,134 @@ public class MainFormController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(appointmentTableView.getColumns().toString());
-        System.out.println(customerTableView.getColumns().toString());
+
+        assert allAppointments != null;
+
+        if (!first){
+            return;
+        }
+        //Checks for upcoming appointments within 15 minutes. If there are none, then a green label will briefly appear.
+        //If there are, an alert will show
+        for(Appointment appointment: allAppointments){
+            //Only do it once. Do not reinitialize.
+            first = false;
+
+            long timelapse = ChronoUnit.MINUTES.between(now,appointment.getStartLDT());
+            if((appointment.getUserId()==User.getUser().userId) && (timelapse>0 && timelapse<=15)){
+                raiseAlert("Upcoming appointment:","An appointment is coming up in " + timelapse + " minutes.\n\nAppointment ID: " +appointment.getApptId()+"\nAppointment Date: "+appointment.getStartDate(), Alert.AlertType.INFORMATION);
+                return;
+            }
+        }
+        deletedLabelAppt.setText("You have no upcoming appointments!");
+        fadeOut.setNode(deletedLabelAppt);
+        fadeOut.playFromStart();
     }
 
     /**
-     * Logs the user out of the application
-     * @param actionEvent actionevent for the log out button.
-     * @throws IOException exception handler.
+     * Clears all the report TextAreas.
      */
-    public void logOut(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/View/LoginForm.fxml")));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.show();
-        stage.centerOnScreen();
+    public void clearReports() {
+        report1.clear();
+        report2.clear();
+        report3.clear();
+    }
+
+    @FXML
+    private void generateReport1() throws SQLException {
+
+        for (int i = 1; i <= 12; i++) {
+            System.out.println(Month.of(i).getDisplayName(TextStyle.FULL,Locale.US));
+            String month = Month.of(i).getDisplayName(TextStyle.FULL,Locale.US);
+            report1.appendText(month + ":\n\n");
+            List<String> typesList = reportDAO.getTypes(i);
+
+            if(typesList.size() == 0){
+                report1.appendText("\t0 appointments for the month of " + month + "\n\n");
+            }
+
+            for(String type : typesList){
+
+                List<Integer> countList = reportDAO.generateReport1(type,i);
+                report1.appendText("\tAppointment Type- " + type + ": Total = ");
+                for(Integer count : countList){
+                    report1.appendText(String.valueOf(count));
+                    report1.appendText("\n\n");
+                }
+            }
+        }
+
+    }
+
+    @FXML
+    private void generateReport2() throws SQLException {
+        ObservableList<String> allContacts = contactDAO.getContactNames();
+        report2.clear();
+        for(String contact : allContacts){
+            List<String> apptsList = reportDAO.generateReport2(contact);
+
+            if(apptsList.size() != 0){
+                if(apptsList.size() == 1){
+                    report2.appendText(contact + " has 1 appointment listed below:\n\n");
+                }
+                else{
+                    report2.appendText(contact + " has " + apptsList.size() + " appointments listed below:\n\n");
+                }
+                for (String appt : apptsList){
+                    report2.appendText(appt);
+                    report2.appendText("\n\n");
+                }
+                report2.appendText("___________________________________\n\n");
+            }
+            else{
+                report2.appendText(contact + " has 0 appointments.\n\n");
+            }
+        }
+    }
+
+    @FXML
+    private void generateReport3() throws SQLException {
+        ObservableList<String> countries = divisionDAO.getCountries();
+        report3.clear();
+        for(String country : countries){
+            List<String> customerList = reportDAO.generateReport3(country);
+
+            if(customerList.size() != 0){
+                if(customerList.size() == 1){
+                    report3.appendText(country + " has 1 customer listed below:\n\n");
+                }
+                else{
+                    report3.appendText(country + " customers: " + customerList.size() + "\n\n");
+                }
+                for (String appt : customerList){
+                    report3.appendText(appt);
+                    report3.appendText("\n\n");
+                }
+                report3.appendText("___________________________________\n\n");
+            }
+            else{
+                report3.appendText(country + " customers: " + 0 + "\n\n");
+            }
+        }
+    }
+
+    public void copyReport1() {
+        String s = report1.getText();
+        StringSelection stringSelection = new StringSelection(s);
+        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+        cb.setContents(stringSelection,null);
+    }
+
+    public void copyReport2() {
+        String s = report2.getText();
+        StringSelection stringSelection = new StringSelection(s);
+        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+        cb.setContents(stringSelection,null);
+    }
+
+    public void copyReport3() {
+        String s = report3.getText();
+        StringSelection stringSelection = new StringSelection(s);
+        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+        cb.setContents(stringSelection,null);
     }
 }

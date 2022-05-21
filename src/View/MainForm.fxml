@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="789.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainFormController">
     <BorderPane AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -190,7 +191,7 @@
                      <children>
                         <Label fx:id="deletedLabelAppt" alignment="CENTER" contentDisplay="CENTER" textFill="#1ada1a">
                            <font>
-                              <Font size="17.0" />
+                              <Font name="System Bold" size="25.0" />
                            </font>
                         </Label>
                      </children>
@@ -206,7 +207,7 @@
                         <RadioButton fx:id="monthRadio" mnemonicParsing="false" onAction="#monthFilter" text="This Month" toggleGroup="$toggleGroup" />
                      </children>
                   </HBox>
-                  <Button fx:id="logoutButton" layoutX="29.0" layoutY="708.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+                  <Button fx:id="logoutButton" layoutX="29.0" layoutY="708.0" mnemonicParsing="false" text="Log Out" />
                     </AnchorPane>
                 </Tab>
                 <Tab onSelectionChanged="#resetTable" text="Customers">
@@ -378,6 +379,100 @@
                   </VBox>
                     </AnchorPane>
                 </Tab>
+            <Tab text="Reports">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane layoutX="7.0" prefHeight="739.0" prefWidth="1385.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Total Appointments By Type and Month">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="710.0" prefWidth="1180.0">
+                                       <children>
+                                          <TextArea fx:id="report1" editable="false" layoutX="309.0" layoutY="78.0" prefHeight="575.0" prefWidth="767.0" wrapText="true" />
+                                          <Text layoutX="347.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Appointments By Type and Month" textAlignment="CENTER" wrappingWidth="691.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="25.0" />
+                                             </font>
+                                          </Text>
+                                          <HBox layoutX="806.0" layoutY="661.0" spacing="20.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#generateReport1" text="Generate Report" />
+                                                <Button mnemonicParsing="false" onAction="#copyReport1" text="Copy Report" />
+                                                <Button mnemonicParsing="false" onAction="#clearReports" text="Clear" />
+                                             </children>
+                                          </HBox>
+                                          <Text layoutX="291.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The following report will generate a total count of each appointment by month and type." textAlignment="CENTER" wrappingWidth="802.13671875">
+                                             <font>
+                                                <Font name="System Bold Italic" size="17.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab text="Contact Schedule Report">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <Text layoutX="347.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule Report" textAlignment="CENTER" wrappingWidth="691.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="25.0" />
+                                             </font>
+                                          </Text>
+                                          <TextArea fx:id="report2" editable="false" layoutX="309.0" layoutY="79.0" prefHeight="574.0" prefWidth="767.0" wrapText="true" />
+                                          <HBox layoutX="806.0" layoutY="661.0" spacing="20.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#generateReport2" text="Generate Report" />
+                                                <Button mnemonicParsing="false" onAction="#copyReport2" text="Copy Report" />
+                                                <Button mnemonicParsing="false" onAction="#clearReports" text="Clear" />
+                                             </children>
+                                          </HBox>
+                                          <Text layoutX="347.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The following report will generate a list of appointments for each contact." textAlignment="CENTER" wrappingWidth="691.13671875">
+                                             <font>
+                                                <Font name="System Bold Italic" size="17.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                              <Tab text="Customer Report">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox alignment="CENTER" layoutX="219.0" layoutY="14.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Report" textAlignment="CENTER" wrappingWidth="946.13671875">
+                                                   <font>
+                                                      <Font name="System Bold" size="25.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </VBox>
+                                          <TextArea fx:id="report3" editable="false" layoutX="309.0" layoutY="82.0" prefHeight="571.0" prefWidth="767.0" wrapText="true" />
+                                          <HBox layoutX="806.0" layoutY="661.0" spacing="20.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#generateReport3" text="Generate Report" />
+                                                <Button mnemonicParsing="false" onAction="#copyReport3" text="Copy Report" />
+                                                <Button mnemonicParsing="false" onAction="#clearReports" text="Clear" />
+                                             </children>
+                                          </HBox>
+                                          <Text layoutX="347.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The following report will generate a list of customers living in each country." textAlignment="CENTER" wrappingWidth="691.13671875">
+                                             <font>
+                                                <Font name="System Bold Italic" size="17.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
             </TabPane>
         </center>
     </BorderPane>
