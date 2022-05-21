@@ -17,7 +17,12 @@ public class date_time {
     }
 
     public static ObservableList<String> startList = FXCollections.observableArrayList();
+    public static ObservableList<String> endList = FXCollections.observableArrayList();
 
+    /**
+     * Time is restricted to display as local time, relative to 8-22 hours EST, tacking on 30 minutes for each hour increment.
+     * The start time gets added to the array in the double for.
+     */
     public static void setStartList() {
 
         String pattern = "h:mma";
@@ -36,12 +41,22 @@ public class date_time {
         }
     }
 
-    public static void printDates() {
+    /**
+     * End time list gets filled.
+     * LAMBDA JUSTIFICATION: The lambda expression makes it easier to add 30 minutes to each start time, and add it to the list of end times.
+     * @param startList the start time array.
+     */
+    public static void setEndList(ObservableList<String> startList) {
 
         String pattern = "h:mma";
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-        LocalDateTime localDate = LocalDateTime.now();
-        LocalTime localTime = LocalTime.of(localDate.getHour(), localDate.getMinute());
-        System.out.println(localTime.format(dateTimeFormatter));
+
+        //Lambda expression
+        startList.forEach(
+                start -> {
+                    LocalTime localTime = LocalTime.parse(start,dateTimeFormatter).plusMinutes(30);
+                    endList.add(localTime.format(dateTimeFormatter));
+                }
+        );
     }
 }
