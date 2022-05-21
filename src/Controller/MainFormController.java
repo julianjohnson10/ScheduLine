@@ -768,9 +768,8 @@ public class MainFormController implements Initializable {
      */
     @FXML
     private void generateReport1() throws SQLException {
-
+        //for 1-12 months.
         for (int i = 1; i <= 12; i++) {
-            System.out.println(Month.of(i).getDisplayName(TextStyle.FULL,Locale.US));
             String month = Month.of(i).getDisplayName(TextStyle.FULL,Locale.US);
             report1.appendText(month + ":\n\n");
             List<String> typesList = reportDAO.getTypes(i);
