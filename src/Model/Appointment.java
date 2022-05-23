@@ -1,12 +1,12 @@
 package Model;
 
 import DAO.appointmentDAO;
+import Utilities.Locales;
+import com.sun.scenario.effect.Offset;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -269,6 +269,7 @@ public class Appointment {
      * @param startDate the appointment start date.
      */
     public void setStartDate(LocalDateTime startDate) {
+
         this.startDate = startDate;
     }
 

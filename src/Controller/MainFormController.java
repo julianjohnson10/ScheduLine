@@ -454,7 +454,7 @@ public class MainFormController implements Initializable {
     @FXML
     public void updateApptFields() {
         Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
-        Stage stage = (Stage) updateAppt.getScene().getWindow();
+
         if(selectedAppointment != null){
             DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mma");
             DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("h:mma");
@@ -466,7 +466,7 @@ public class MainFormController implements Initializable {
             String type = selectedAppointment.getType();
             String location = selectedAppointment.getLocation();
             String contact = selectedAppointment.getContactName();
-            LocalDateTime startDate = LocalDateTime.parse(selectedAppointment.getStartDate(),format);
+            LocalDateTime startDate = selectedAppointment.getStartLDT();
             LocalDateTime endDate = LocalDateTime.parse(selectedAppointment.getEndDate(),format);
 
             apptIDField.setText(String.valueOf(apptId));
@@ -494,7 +494,6 @@ public class MainFormController implements Initializable {
     @FXML
     public void updateCustomerFields() {
         Customer selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-        Stage stage = (Stage) customerTableView.getScene().getWindow();
         if (selectedCustomer != null) {
             Integer customerID = selectedCustomer.getCustomerID();
             String state_province = selectedCustomer.getStateProvince();
@@ -569,8 +568,6 @@ public class MainFormController implements Initializable {
      * @throws SQLException sqlexception handler.
      */
     public void applyUpdateAppt() throws SQLException {
-
-        Stage stage = (Stage) updateAppt.getScene().getWindow();
         ObservableList<Appointment> allAppointments = Appointment.getAllAppointments();
 
         if(titleField.getText().isEmpty()||descriptionField.getText().isEmpty()||typeField.getText().isEmpty()||locationField.getText().isEmpty()) {
@@ -673,7 +670,7 @@ public class MainFormController implements Initializable {
                 phoneNumber = phoneTextField.getText();
                 lastUpdatedby = User.getUser().getUserName();
 
-                if (nameTextField.getText() == null || countryBox.getValue() == null || stateProvince.getValue() == null || addressTextField.getText() == null || cityTextField.getText() == null || townField.getText() == null || postalTextField.getText() == null || phoneTextField.getText() == null) {
+                if (nameTextField.getText() == null || townField.getText() == null || countryBox.getValue() == null || stateProvince.getValue() == null || addressTextField.getText() == null || cityTextField.getText() == null || postalTextField.getText() == null || phoneTextField.getText() == null) {
                     raiseAlert("Error", "Fields must not be left blank.", Alert.AlertType.ERROR);
                 }
                 else{

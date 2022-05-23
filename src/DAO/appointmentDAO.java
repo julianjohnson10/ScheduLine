@@ -36,8 +36,8 @@ public abstract class appointmentDAO {
             appointment.setLocation(results.getString("Location"));
             appointment.setContactName(results.getString("Contact_Name"));
             appointment.setType(results.getString("Type"));
-            Timestamp start = results.getTimestamp("Start");
-            Timestamp end = results.getTimestamp("End");
+            Timestamp start = Timestamp.valueOf(results.getString("Start"));
+            Timestamp end = Timestamp.valueOf(results.getString("End"));
             LocalDateTime startDate = start.toLocalDateTime();
             LocalDateTime endDate = end.toLocalDateTime();
             appointment.setStartDate(startDate);
@@ -96,8 +96,8 @@ public abstract class appointmentDAO {
             appointment.setLocation(results.getString("Location"));
             appointment.setContactName(results.getString("Contact_Name"));
             appointment.setType(results.getString("Type"));
-            Timestamp start = results.getTimestamp("Start");
-            Timestamp end = results.getTimestamp("End");
+            Timestamp start = Timestamp.valueOf(results.getString("Start"));
+            Timestamp end = Timestamp.valueOf(results.getString("End"));
             LocalDateTime startDate = start.toLocalDateTime();
             LocalDateTime endDate = end.toLocalDateTime();
             appointment.setStartDate(startDate);
@@ -132,8 +132,8 @@ public abstract class appointmentDAO {
             appointment.setLocation(results.getString("Location"));
             appointment.setContactName(results.getString("Contact_Name"));
             appointment.setType(results.getString("Type"));
-            Timestamp start = results.getTimestamp("Start");
-            Timestamp end = results.getTimestamp("End");
+            Timestamp start = Timestamp.valueOf(results.getString("Start"));
+            Timestamp end = Timestamp.valueOf(results.getString("End"));
             LocalDateTime startDate = start.toLocalDateTime();
             LocalDateTime endDate = end.toLocalDateTime();
             appointment.setStartDate(startDate);
