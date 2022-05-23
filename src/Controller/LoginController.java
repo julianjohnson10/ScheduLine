@@ -161,7 +161,6 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("Initialize");
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
         fadeOut.setCycleCount(1);
@@ -173,6 +172,6 @@ public class LoginController implements Initializable {
         loginLabel.setText(resourceBundle.getString("Login"));
         exitButton.setText(resourceBundle.getString("Cancel"));
         tzLabel.setText(resourceBundle.getString("TimeZone") + ":");
-        timeZoneLabel.setText(ZoneId.systemDefault().toString());
+        timeZoneLabel.setText(Locales.getZoneId());
     }
 }
