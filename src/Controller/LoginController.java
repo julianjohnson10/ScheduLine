@@ -15,6 +15,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -160,7 +161,7 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        System.out.println("Initialize");
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
         fadeOut.setCycleCount(1);
@@ -170,9 +171,8 @@ public class LoginController implements Initializable {
         pwdLabel.setText(resourceBundle.getString("Password") + ":");
         loginButton.setText(resourceBundle.getString("Login"));
         loginLabel.setText(resourceBundle.getString("Login"));
-        timeZoneLabel.setText(Locales.getZoneId());
         exitButton.setText(resourceBundle.getString("Cancel"));
         tzLabel.setText(resourceBundle.getString("TimeZone") + ":");
+        timeZoneLabel.setText(ZoneId.systemDefault().toString());
     }
-
 }

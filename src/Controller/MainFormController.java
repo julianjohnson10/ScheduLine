@@ -357,7 +357,6 @@ public class MainFormController implements Initializable {
     @FXML
     public void deleteAppt() throws SQLException {
         Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
-        Stage stage = (Stage) deleteApptButton.getScene().getWindow();
         if(selectedAppointment != null){
             //Delete selected appointment
             Optional<ButtonType> result = raiseAlert("Are you sure?", "Are you sure you want to cancel this appointment?", Alert.AlertType.CONFIRMATION);

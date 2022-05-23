@@ -21,7 +21,10 @@ public abstract class appointmentDAO {
      * @return List of all appointments. Creates appointment objects for each Appointment currently in the database, and adds them to an observable array.
      * @throws SQLException Sql error exceptions.
      * ERROR: SQLException: Column 'Created_Date' not found. Fixed by changing to 'Create_Date'
-     */
+     * Attempt#1: My error was that I was pulling in a Timestamp as a timestamp, which gets auto-converted to local time.
+     * I decided to switch to the value of the timestamp given the string in the database. Makes more sense.
+     * I was very confused about how MST would add two hours. I focused too much time trying to fix my setters and getters in my Appointments class.
+     **/
     public static ObservableList<Appointment> getAllAppts() throws SQLException {
         String sqlStatement = "SELECT * FROM appointments LEFT JOIN contacts ON contacts.Contact_ID = appointments.Contact_ID;";
         PreparedStatement statement = connection.prepareStatement(sqlStatement);
