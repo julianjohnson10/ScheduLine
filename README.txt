@@ -1,7 +1,6 @@
 Title: ScheduLine: Desktop Scheduling Application
 Purpose: To create customers and to schedule customer appointments.
 Author: Julian Johnson
-Contact Info: jjo2644@wgu.edu
 Version: v1.1
 Date: 23-May-2022
 IDE: IntelliJ IDEA 2021.3.3 (Community Edition)
